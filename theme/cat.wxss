@@ -1,0 +1,58 @@
+/* Whisk & Purr: warm paper, forest ink, rose paws. */
+page {
+  --ink:#30382f; --muted:#716f63; --mint:#e6ebdf; --mint-deep:#42583e;
+  --cream:#fffbed; --yellow:#efcf7f; --coral:#a95344; --lavender:#e9e4ed;
+  --line:#e7e6dc; --surface:#fffef9;
+  background:#f7f7ef; color:var(--ink);
+}
+page .eyebrow { color:var(--muted); font-size:19rpx; letter-spacing:3rpx; font-weight:500; }
+page .big { font-size:42rpx; font-weight:650; letter-spacing:-1.5rpx; }
+page .income, page .income-text { color:#425f40; }
+page .expense, page .expense-text { color:#a95344; }
+page .field-input, page input, page textarea { color:var(--ink); }
+page .primary-button:active, page .secondary-button:active { opacity:.84; }
+page .empty-face { font-size:56rpx; }
+/* Paw shapes echo the supplied wordmark without platform-dependent emoji. */
+.paw { position:relative; display:inline-block; width:34rpx; height:34rpx; transform:rotate(-16deg); }
+.paw-pad { position:absolute; width:22rpx; height:18rpx; left:6rpx; bottom:1rpx; border-radius:60% 60% 42% 42%; background:#e7a7b5; }
+.paw-toe { position:absolute; width:8rpx; height:11rpx; background:#e7a7b5; border-radius:50%; }
+.paw-toe.a { left:0; top:10rpx; transform:rotate(-30deg); }
+.paw-toe.b { left:8rpx; top:1rpx; transform:rotate(-12deg); }
+.paw-toe.c { right:8rpx; top:0; transform:rotate(12deg); }
+.paw-toe.d { right:0; top:9rpx; transform:rotate(30deg); }
+.companion { position:relative; overflow:hidden; background:#fffdeb; border:1rpx solid #eeecd9; border-radius:26rpx; }
+.companion-copy { position:relative; z-index:1; padding:26rpx; }
+.companion-kicker { display:block; color:#756d51; font-size:18rpx; letter-spacing:2rpx; }
+.companion-title { display:block; margin-top:8rpx; font-size:27rpx; font-weight:600; line-height:1.6; }
+.companion-title > text { display:block; }
+.companion-art { position:absolute; right:-12rpx; top:25rpx; width:348rpx; height:132rpx; overflow:hidden; }
+.companion-art image { position:absolute; width:450rpx; height:188rpx; top:-20rpx; left:-53rpx; }
+.companion-foot { display:flex; align-items:center; justify-content:center; gap:14rpx; padding:36rpx 0 8rpx; color:var(--muted); font-size:22rpx; }
+.wordmark-frame { position:relative; overflow:hidden; width:274rpx; height:104rpx; margin:0 auto; }
+.wordmark-frame image { position:absolute; width:352rpx; height:202rpx; left:-38rpx; top:-52rpx; }
+.brand-signoff { padding:28rpx 0; text-align:center; background:#fffdeb; border-radius:26rpx; margin-top:28rpx; }
+.brand-signoff-note { color:#746a57; font-size:22rpx; margin-top:12rpx; }
+/* Secondary controls sit below the native WeChat capsule. */
+page .edit-page .nav, page .asset-edit .nav, page .bill-page .nav,
+page .settings-page .nav, page .manage-page .nav { padding-right:0; padding-top:64rpx; }
+page .edit-page, page .asset-edit, page .bill-page, page .settings-page,
+page .manage-page { background:transparent; }
+page .helper, page .meta, page .setting-desc { color:var(--muted); }
+page .ledger-card.active { border:2rpx solid #8e9d7a; background:#f2f4e9; }
+page .check, page .status { color:var(--mint-deep); }
+page .bill-hero { background:#e6ebdd; border-color:#dce2d2; }
+page .hero-label, page .hero-average { color:#58674f; }
+page .hero-money { font-weight:500; overflow-wrap:break-word; }
+page .table-head { background:#eceee2; color:#5a6652; }
+page .table-row { border-color:var(--line); }
+page .mode-tabs { background:#e9ecdf; }
+page .mode-tabs .active { background:#42583e; }
+page .filter-row { gap:18rpx; }
+page .ledger-filter { background:var(--surface); font-size:24rpx; }
+page .hero-flower { display:none; }
+/* Physical minimums keep key controls usable on narrow screens. */
+page .bill-link, page .visibility-toggle, page .month-picker,
+page .eye, page .add-button, page .settings, page .cancel,
+page .ledger-switch, page .close { min-height:44px; min-width:44px; }
+page .type-switch view { min-height:44px; min-width:32px; }
+page .detail-layer .keypad { min-height:176px; }

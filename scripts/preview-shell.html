@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>哆哆记账 · 界面预览</title>
+<style id="page-style"></style><style>
+html,body { margin:0; padding:0; }
+page,view,picker,scroll-view { display:block; } text { display:inline; }
+scroll-view { overflow-y:auto; }
+page { min-height:100vh; } input,button { box-sizing:border-box; }
+button { display:block; width:100%; border:0; cursor:pointer; } input { border:0; background:transparent; outline:0; padding:0; font:inherit; }
+.preview-switch { width:46px; height:27px; border-radius:20px; background:#42583e; position:relative; }
+.preview-switch::after { content:""; position:absolute; right:2px; top:2px; width:23px; height:23px; border-radius:50%; background:white; }
+img { object-fit:fill; } [data-handler],picker { cursor:pointer; }
+img[mode="aspectFill"] { object-fit:cover; } img[mode="aspectFit"] { object-fit:contain; }
+.status { position:absolute; left:22px; top:10px; font:600 12px -apple-system,"Microsoft YaHei",sans-serif; color:#30382f; }
+.capsule { position:absolute; top:38px; right:10px; height:29px; width:81px; border-radius:18px; border:1px solid #d8d9ce; background:#fffef988; display:flex; align-items:center; justify-content:space-evenly; font-size:18px; }
+</style></head><body><page id="root"></page><div class="status">9:41</div><div class="capsule" aria-hidden="true"><span>•••</span><span>│</span><span>⊙</span></div>
+<script>
+/* PREVIEW_DATA */
+const names = Object.keys(source.pages);
+const current = new URLSearchParams(location.search).get('page') || 'ledger';
+const pageData = structuredClone(source.pages[current].data);
+const params = new URLSearchParams(location.search);
+if (params.has('hidden')) pageData.hidden = true;
+if (params.has('empty')) { pageData.groups = []; pageData.ranking = []; }
+// Layout fixture only; never added to the actual mini program's seed data.
+if (params.has('photos') && pageData.groups && pageData.groups.length) {
+  pageData.groups[0].items[0].photos=['/assets/brand/kitchen-cats.jpg','/assets/brand/whisk-purr.jpg'];
+}
+if (params.has('large')) {
+  if (pageData.summary) for(const key of ['totalExpense','totalIncome','remaining']) pageData.summary[key] = '123456789012.88';
+  pageData.total = '123456789012.88'; pageData.average='123456789012.88';
+  for(const group of pageData.groups || []) for(const tx of group.items) tx.amountText='123456789012.88';
+  for(const asset of pageData.assets || []) asset.balanceText='123456789012.88';
+  for(const rank of pageData.ranking || []) rank.amount='123456789012.88';
+}
+if (params.has('detail')) {
+  pageData.selectedCategory = pageData.categories[0]; pageData.selectedCategoryId = pageData.categories[0].id;
+  pageData.detailVisible = true; pageData.amount = params.has('large') ? '123456789012345678.99' : '36';
+}
+function evaluate(expression, scope) { return Function('scope', 'with(scope){return (' + expression + ')}')(scope); }
+function interpolate(value, scope) { return value.replace(/{{([\s\S]*?)}}/g, (_, expr) => { const v = evaluate(expr, scope); return v == null ? '' : String(v); }); }
+function expr(value, scope) { return evaluate(value.replace(/^{{|}}$/g, ''), scope); }
+function renderChildren(children, scope, parent) {
+  let matched = false;
+  for (const node of children) {
+    if (node.nodeType === 1 && !node.hasAttribute('wx:for')) {
+      if (node.hasAttribute('wx:if')) { matched = !!expr(node.getAttribute('wx:if'), scope); if (!matched) continue; }
+      else if (node.hasAttribute('wx:elif')) { if (matched) continue; matched = !!expr(node.getAttribute('wx:elif'), scope); if (!matched) continue; }
+      else if (node.hasAttribute('wx:else')) { if (matched) continue; matched = true; }
+      else matched = false;
+    }
+    render(node, scope, parent);
+  }
+}
+function render(node, scope, parent) {
+  if (node.nodeType === 3) { parent.append(document.createTextNode(interpolate(node.textContent, scope))); return; }
+  if (node.nodeType !== 1) return;
+  if (node.hasAttribute('wx:for')) {
+    const items = expr(node.getAttribute('wx:for'), scope) || [];
+    items.forEach((item,index) => {
+      const clone = node.cloneNode(true); clone.removeAttribute('wx:for');
+      const childScope = {...scope,[node.getAttribute('wx:for-item') || 'item']:item,[node.getAttribute('wx:for-index') || 'index']:index};
+      if (clone.hasAttribute('wx:if') && !expr(clone.getAttribute('wx:if'),childScope)) return;
+      render(clone,childScope,parent);
+    }); return;
+  }
+  if (node.tagName.toLowerCase() === 'progress-bar') {
+    const track = document.createElement('div');
+    track.style.cssText = 'height:5px;background:#eeeee4;border-radius:4px;overflow:hidden';
+    const fill = document.createElement('div'); fill.style.cssText = 'height:100%;width:' + interpolate(node.getAttribute('value'),scope) + '%;background:' + interpolate(node.getAttribute('color'),scope);
+    track.append(fill); parent.append(track); return;
+  }
+  const tag = node.tagName.toLowerCase();
+  if(tag === 'switch') {
+    const toggle = document.createElement('div'); toggle.className='preview-switch'; parent.append(toggle); return;
+  }
+  const element = document.createElement(tag);
+  for (const a of node.attributes) {
+    if (a.name.startsWith('wx:')) continue;
+    const value = interpolate(a.value,scope);
+    if (/^(bind|catch)/.test(a.name)) { element.setAttribute('data-handler',value); element.onclick = () => act(value,element); }
+    else if (a.name === 'src' && value.startsWith('/assets/')) element.setAttribute('src','../..' + value);
+    else element.setAttribute(a.name,value);
+  }
+  renderChildren([...node.childNodes],scope,element); parent.append(element);
+}
+function markup(text,scope,target) {
+  const template = document.createElement('template');
+  template.innerHTML = text.replace(/<image\b/g,'<img').replace(/<(?!img\b|input\b|br\b)([\w-]+)([^>]*?)\/>/g,'<$1$2></$1>').replace(/\s*\/>/g,'>');
+  renderChildren([...template.content.childNodes],scope,target);
+}
+function act(handler,element) {
+  if (handler === 'toggleHidden') { pageData.hidden = !pageData.hidden; draw(); }
+  else if (handler === 'chooseCategory') { pageData.selectedCategory = pageData.categories.find(x=>x.id===element.dataset.id); pageData.selectedCategoryId=element.dataset.id; pageData.detailVisible=true; pageData.amount='0'; draw(); }
+  else if (handler === 'closeDetail') { pageData.detailVisible=false; draw(); }
+  else if (handler === 'setType') { const url = new URL(location); url.searchParams.set('page',current === 'record' ? 'record' : 'charts'); pageData.type=element.dataset.type; if(current==='record') pageData.categories=element.dataset.type==='income'?[{id:'salary',name:'工资',icon:'💼',color:'#CBE8D8'}]:source.pages.record.data.categories; draw(); }
+  else if (handler === 'setPeriod') { pageData.period=element.dataset.period; draw(); }
+  else if (handler === 'switchTab') location.search='?page='+element.dataset.path.split('/')[2];
+  else if (handler === 'cancel') location.search='?page=ledger';
+}
+function draw() {
+  const data = source.pages[current], root = document.querySelector('#root'); root.innerHTML='';
+  document.querySelector('#page-style').textContent=(data.css+'\n'+source.tab.css).replace(/ image([ ,.{:>])/g,' img$1').replace(/(-?[\d.]+)rpx/g,(_,n)=>'calc('+n+' * 100vw / 750)');
+  markup(data.wxml,pageData,root);
+  if(['ledger','assets','charts','profile'].includes(current)) markup(source.tab.wxml,{...source.tab.data,selected:names.indexOf(current)},root);
+  const canvas=root.querySelector('canvas');
+  if(canvas) {
+    canvas.width=canvas.clientWidth*2; canvas.height=canvas.clientHeight*2;
+    const ctx=canvas.getContext('2d'); ctx.scale(2,2); const w=canvas.clientWidth,h=canvas.clientHeight,pad=22;
+    ctx.strokeStyle='#e6e8dc'; for(let i=1;i<=3;i++){const y=pad+(h-pad*2)*i/4;ctx.beginPath();ctx.moveTo(pad,y);ctx.lineTo(w-pad,y);ctx.stroke();}
+    const points=pageData.values.map((v,i)=>({x:pad+(w-pad*2)*i/(pageData.values.length-1),y:h-pad-(h-pad*2)*v/pageData.max}));
+    ctx.strokeStyle=pageData.type==='expense'?'#A95344':'#425F40';ctx.lineWidth=3;ctx.beginPath();
+    points.forEach((p,i)=>{if(!i)ctx.moveTo(p.x,p.y);else {const mid=(points[i-1].x+p.x)/2;ctx.bezierCurveTo(mid,points[i-1].y,mid,p.y,p.x,p.y)}});ctx.stroke();
+  }
+}
+draw();
+</script></body></html>
