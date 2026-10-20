@@ -1,0 +1,59 @@
+.record-page { padding-bottom:calc(36rpx + env(safe-area-inset-bottom)); }
+.record-nav { min-height:100rpx; display:flex; align-items:center; gap:28rpx; padding-right:184rpx; }
+.cancel { min-width:88rpx; min-height:88rpx; display:flex; align-items:center; color:#59654e; font-size:26rpx; }
+.record-nav .eyebrow { font-size:17rpx; }
+.record-title { display:flex; align-items:center; gap:20rpx; font-size:40rpx; font-weight:600; letter-spacing:-1rpx; margin:18rpx 0 28rpx; }
+.type-tabs { display:flex; padding:6rpx; gap:6rpx; border-radius:22rpx; background:#e9ecdf; }
+.type-tab { flex:1; text-align:center; line-height:82rpx; border-radius:18rpx; font-size:28rpx; color:#67715e; }
+.type-tab.active { background:#42583e; color:#fffdf5; font-weight:600; }
+.target-row { display:flex; align-items:center; justify-content:space-between; gap:20rpx; margin:32rpx 0; }
+.target-label,.target-sub { display:block; }
+.target-label { font-size:25rpx; font-weight:500; }
+.target-sub { font-size:21rpx; color:var(--muted); margin-top:6rpx; }
+.target-row picker { max-width:52%; }
+.target-pill { display:flex; align-items:center; justify-content:space-between; gap:12rpx; min-height:88rpx; padding:0 18rpx; border:1rpx solid var(--line); border-radius:18rpx; background:var(--surface); font-size:25rpx; }
+.target-pill text { flex:none; color:var(--muted); }
+.category-heading { display:flex; align-items:center; justify-content:space-between; margin:28rpx 0 22rpx; font-size:28rpx; font-weight:600; }
+.category-count { font-size:21rpx; font-weight:400; color:var(--muted); }
+.category-grid { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:26rpx 8rpx; padding:28rpx 12rpx; background:var(--surface); border:1rpx solid var(--line); border-radius:28rpx; }
+.category-tile { min-width:0; min-height:116rpx; display:flex; flex-direction:column; align-items:center; color:var(--ink); font-size:23rpx; text-align:center; }
+.category-icon { width:78rpx; height:78rpx; box-sizing:border-box; border:2rpx solid transparent; border-radius:27rpx; display:flex; align-items:center; justify-content:center; font-size:38rpx; margin-bottom:10rpx; }
+.category-tile.selected .category-icon { border-color:#42583e; }
+.category-tile.selected { font-weight:600; }
+.select-tip { text-align:center; color:var(--muted); font-size:22rpx; padding:28rpx 0; }
+.companion { min-height:178rpx; }
+.detail-mask { position:fixed; z-index:68; left:0; right:0; top:0; bottom:0; background:rgba(32,40,29,.28); }
+.detail-layer { position:fixed; z-index:70; left:0; right:0; bottom:0; height:860rpx; max-height:calc(100vh - 160rpx); box-sizing:border-box; padding-bottom:env(safe-area-inset-bottom); display:flex; flex-direction:column; background:#f7f7ef; border-radius:36rpx 36rpx 0 0; box-shadow:0 -12rpx 48rpx rgba(32,40,29,.12); overflow:hidden; }
+.layer-grab { flex:none; width:64rpx; height:7rpx; border-radius:8rpx; background:#d2d7c6; margin:14rpx auto 6rpx; }
+.detail-header { flex:none; display:flex; align-items:center; justify-content:space-between; padding:4rpx 24rpx 8rpx; }
+.detail-category { display:flex; align-items:center; gap:16rpx; }
+.detail-icon { width:64rpx; height:64rpx; border-radius:22rpx; display:flex; align-items:center; justify-content:center; font-size:34rpx; }
+.detail-type,.detail-name { display:block; }
+.detail-type { font-size:20rpx; color:var(--muted); }
+.detail-name { font-size:28rpx; font-weight:600; margin-top:2rpx; }
+.close { width:88rpx; height:88rpx; display:flex; align-items:center; justify-content:center; color:#68715c; font-size:42rpx; }
+.detail-scroll { flex:1; min-height:0; height:0; padding:0 24rpx; box-sizing:border-box; }
+.amount-card { padding:0 8rpx 12rpx; }
+.amount-line { display:flex; align-items:baseline; justify-content:flex-end; gap:12rpx; min-height:90rpx; }
+.amount { font-size:64rpx; line-height:1.25; letter-spacing:-2rpx; font-variant-numeric:tabular-nums; overflow-wrap:anywhere; word-break:break-all; min-width:0; }
+.currency { flex:none; font-size:32rpx; color:var(--muted); }
+.formula { display:block; color:var(--muted); font-size:22rpx; text-align:right; overflow-wrap:anywhere; }
+.detail-card { padding:0 22rpx; background:var(--surface); border:1rpx solid var(--line); border-radius:22rpx; margin-bottom:14rpx; }
+.detail-row { min-height:74rpx; display:flex; align-items:center; justify-content:space-between; gap:16rpx; border-bottom:1rpx solid var(--line); font-size:24rpx; }
+.detail-row input { flex:1; min-width:0; text-align:right; }
+.detail-target { max-width:78%; overflow:hidden; white-space:nowrap; text-overflow:ellipsis; }
+.photos { display:flex; gap:14rpx; padding:14rpx 0; }
+.photo-wrap,.photo-add { width:88rpx; height:88rpx; border-radius:16rpx; position:relative; }
+.photo-wrap image { width:100%; height:100%; border-radius:16rpx; }
+.remove { position:absolute; right:-8rpx; top:-8rpx; width:44rpx; height:44rpx; background:#42583e; color:#fffdf5; border-radius:50%; text-align:center; line-height:42rpx; }
+.photo-add { box-sizing:border-box; border:1rpx dashed #aeb8a0; display:flex; flex-direction:column; align-items:center; justify-content:center; color:#637256; font-size:30rpx; }
+.camera-text { font-size:19rpx; }
+.keypad { flex:none; height:344rpx; display:flex; background:var(--surface); border-top:1rpx solid var(--line); }
+.key-grid { flex:1; display:grid; grid-template-columns:repeat(3,1fr); grid-template-rows:repeat(4,1fr); }
+.key { display:flex; align-items:center; justify-content:center; min-height:0; border-right:1rpx solid var(--line); border-bottom:1rpx solid var(--line); font-size:36rpx; }
+.key:active,.action-key:active { background:#e6ebdf; }
+.action-column { width:180rpx; display:flex; flex-direction:column; }
+.action-column picker { height:25%; }
+.action-key,.finish { box-sizing:border-box; width:100%; height:25%; min-height:0; margin:0; padding:0; border-radius:0; display:flex; align-items:center; justify-content:center; border-bottom:1rpx solid var(--line); background:#e9ecdf; color:#42583e; font-size:36rpx; }
+.date-key { height:100%; flex-direction:column; gap:2rpx; font-size:21rpx; }
+.finish { background:#42583e; color:#fffdf5; font-size:26rpx; font-weight:600; line-height:1; }

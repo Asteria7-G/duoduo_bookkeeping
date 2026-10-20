@@ -1,0 +1,14 @@
+<view class="page edit-page">
+  <view class="safe-top"></view>
+  <view class="nav"><view class="back" bindtap="back" aria-role="button" aria-label="返回">‹</view><view class="nav-title">{{id ? '编辑账本' : '新建账本'}}</view><view class="nav-action" bindtap="save" aria-role="button">保存</view></view>
+  <view class="edit-intro">给生活留一本小账，把每一笔记得清楚。</view>
+  <view class="field-card">
+    <view class="field-row"><text class="field-label">账本名称</text><input class="field-input" value="{{name}}" maxlength="12" placeholder="给账本起个名字" bindinput="inputName" aria-label="账本名称"/></view>
+    <view class="field-row"><text class="field-label">按月度汇总</text><switch checked="{{monthlySummary}}" color="#42583E" bindchange="toggleSummary"/></view>
+    <view wx:if="{{monthlySummary}}" class="field-row"><text class="field-label">每月预算</text><input class="field-input" type="digit" value="{{budget}}" placeholder="0.00" bindinput="inputBudget" aria-label="每月预算"/><text>元</text></view>
+    <picker class="picker-full" range="{{assets}}" range-key="name" value="{{assetIndex}}" bindchange="chooseAsset"><view class="field-row"><text class="field-label">绑定资产</text><text class="bound-asset">{{assets[assetIndex].name}}　›</text></view></picker>
+  </view>
+  <view class="edit-hint">支出会从绑定的资产账户扣除。</view>
+  <button class="primary-button save-button" bindtap="save">保存账本</button>
+  <button wx:if="{{canDelete}}" class="delete-button" bindtap="remove">删除账本</button>
+</view>

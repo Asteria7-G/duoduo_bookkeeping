@@ -1,0 +1,16 @@
+<view class="page assets-page">
+  <view class="safe-top"></view>
+  <view class="nav"><view><view class="eyebrow">YOUR LITTLE RESERVE</view><view class="nav-title big">我的资产</view></view></view>
+  <view class="total-card card">
+    <view class="total-top"><text class="total-label">总资产</text><view class="eye" bindtap="toggleHidden" aria-role="button" aria-label="{{hidden ? '显示金额' : '隐藏金额'}}">{{hidden ? '显示金额' : '隐藏金额'}}</view></view>
+    <view class="total-money money"><text>¥</text> {{hidden ? '••••••' : total}}</view>
+    <view class="total-bottom"><text class="total-note">{{assets.length}} 个账户，装着生活的底气</text><view class="paw" aria-hidden="true"><view class="paw-pad"></view><view class="paw-toe a"></view><view class="paw-toe b"></view><view class="paw-toe c"></view><view class="paw-toe d"></view></view></view>
+  </view>
+  <view class="title-row"><view class="section-title">资产账户</view></view>
+  <view class="asset-grid">
+    <view wx:for="{{assets}}" wx:key="id" class="asset-card card" data-id="{{item.id}}" bindtap="edit" aria-role="button" aria-label="编辑{{item.name}}"><view class="asset-top"><view class="asset-icon" style="background:{{item.color}}"><image src="{{item.iconPath}}" mode="aspectFit" aria-hidden="true"/></view><text class="more">↗</text></view><view class="asset-name">{{item.name}}</view><view class="asset-kind">{{item.categoryLabel}}</view><view class="asset-money money">¥ {{hidden ? '••••' : item.balanceText}}</view></view>
+    <view class="asset-card add-card" bindtap="add" aria-role="button"><view class="plus-circle">＋</view><view>添加一个小金库</view></view>
+  </view>
+  <view class="tip"><text class="tip-mark">i</text><view><text class="tip-title">每一笔，都替你记好</text><text class="tip-text">支出从账本绑定的资产扣除，收入存入你选择的资产。</text></view></view>
+  <view class="companion"><view class="companion-copy"><text class="companion-kicker">LITTLE BY LITTLE</text><view class="companion-title"><text>每一份积累，</text><text>都在悄悄长大。</text></view></view><view class="companion-art"><image src="/assets/brand/kitchen-cats.jpg" mode="scaleToFill" aria-hidden="true"/></view></view>
+</view>

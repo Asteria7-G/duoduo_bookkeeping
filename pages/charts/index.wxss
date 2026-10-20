@@ -1,0 +1,29 @@
+.nav { height:124rpx; }
+.type-switch { display:flex; align-items:center; gap:2rpx; background:#e9ecdf; padding:4rpx; border-radius:18rpx; }
+.type-switch view { min-width:60rpx; min-height:72rpx; display:flex; align-items:center; justify-content:center; padding:0 12rpx; border-radius:14rpx; color:#646b5c; font-size:23rpx; }
+.type-switch .active { background:#42583e; color:#fffdf5; }
+.type-switch .active.income { background:#42583e; }
+.period-tabs { display:grid; grid-template-columns:repeat(3,1fr); border-bottom:1rpx solid var(--line); margin:18rpx 0 28rpx; }
+.period-tabs view { text-align:center; min-height:88rpx; line-height:88rpx; color:var(--muted); position:relative; }
+.period-tabs .active { color:var(--ink); font-weight:600; }
+.period-tabs .active::after { content:""; position:absolute; width:40rpx; height:5rpx; bottom:-1rpx; left:calc(50% - 20rpx); background:#42583e; border-radius:8rpx; }
+.chart-card { padding:28rpx; box-shadow:none; }
+.chart-summary { display:flex; justify-content:space-between; align-items:flex-end; gap:20rpx; }
+.chart-summary > view:first-child { min-width:0; }
+.summary-label,.summary-money,.average text { display:block; }
+.summary-label { color:var(--muted); font-size:23rpx; }
+.summary-money { font-size:48rpx; font-weight:500; margin-top:12rpx; font-variant-numeric:tabular-nums; letter-spacing:-1.5rpx; overflow-wrap:anywhere; }
+.average { flex:none; max-width:38%; text-align:right; color:var(--muted); font-size:21rpx; overflow-wrap:anywhere; }
+.average text:last-child { color:var(--ink); font-size:25rpx; margin-top:8rpx; }
+.canvas { display:block; width:100%; height:280rpx; margin-top:24rpx; }
+.axis { display:flex; justify-content:space-between; color:var(--muted); font-size:20rpx; }
+.rank-card { padding:4rpx 24rpx; }
+.rank-row { display:flex; align-items:center; min-height:120rpx; border-bottom:1rpx solid var(--line); }
+.rank-row:last-child { border:0; }
+.rank-icon { flex:none; width:62rpx; height:62rpx; border-radius:22rpx; display:flex; align-items:center; justify-content:center; font-size:32rpx; }
+.rank-main { flex:1; min-width:0; margin:0 18rpx; }
+.rank-info { display:flex; justify-content:space-between; margin-bottom:12rpx; font-size:23rpx; }
+.rank-info text:first-child { font-weight:500; }
+.rank-info text:last-child { color:var(--muted); }
+.rank-money { max-width:36%; text-align:right; overflow-wrap:anywhere; font-weight:500; font-size:26rpx; font-variant-numeric:tabular-nums; }
+.chart-note { color:var(--muted); font-size:22rpx; text-align:center; padding:28rpx 0; }

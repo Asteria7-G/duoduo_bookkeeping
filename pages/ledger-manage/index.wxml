@@ -1,0 +1,7 @@
+<view class="page manage-page"><view class="safe-top"></view><view class="nav"><view class="back" bindtap="back">‹</view><view class="nav-title">我的账本</view><view class="nav-action" bindtap="add">＋ 新建</view></view>
+<view class="helper">选择账本查看收支，也可以编辑月度预算</view>
+<view wx:for="{{ledgers}}" wx:key="id" class="ledger-card card {{item.id === activeId ? 'active' : ''}}" data-id="{{item.id}}" bindtap="select">
+  <view class="ledger-info"><view class="name">{{item.name}}</view><view class="meta">{{item.monthlySummary ? '月预算 ¥' + item.budget : '不按月汇总'}}</view></view>
+  <view wx:if="{{item.id === activeId}}" class="check">✓</view><view class="edit" catchtap="edit" data-id="{{item.id}}">•••</view>
+</view>
+</view>

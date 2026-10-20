@@ -1,0 +1,60 @@
+<view class="page ledger-page">
+  <view class="safe-top"></view>
+  <view class="nav">
+    <view class="brand" aria-label="哆哆记账">
+      <view class="eyebrow">DUODUO BOOKKEEPING</view>
+      <view class="brand-wordmark" aria-hidden="true">
+        <view class="dodo-character"><view class="paw brand-paw"><view class="paw-pad"></view><view class="paw-toe a"></view><view class="paw-toe b"></view><view class="paw-toe c"></view><view class="paw-toe d"></view></view><text class="dodo-duo">多</text></view>
+        <view class="dodo-character"><view class="paw brand-paw"><view class="paw-pad"></view><view class="paw-toe a"></view><view class="paw-toe b"></view><view class="paw-toe c"></view><view class="paw-toe d"></view></view><text class="dodo-duo">多</text></view>
+        <text class="brand-suffix">记账</text>
+      </view>
+    </view>
+  </view>
+  <view class="ledger-heading">
+    <view class="ledger-heading-row">
+      <view class="ledger-switch" bindtap="openLedgers" aria-role="button" aria-label="切换或管理账本"><view class="ledger-name">{{ledger.name}}</view><text class="switch-mark">⌄</text></view>
+      <view class="bill-link" bindtap="openBill" aria-role="button" aria-label="查看月度和年度账单">账单 <text>↗</text></view>
+    </view>
+    <text class="ledger-caption">生活的小账，慢慢记</text>
+  </view>
+  <view class="overview">
+    <view class="overview-head">
+      <picker mode="date" fields="month" value="{{month}}" bindchange="changeMonth"><view class="month-picker">{{monthText}} <text class="chev">⌄</text></view></picker>
+      <view class="visibility-toggle" bindtap="toggleHidden" aria-role="button" aria-label="{{hidden ? '显示金额' : '隐藏金额'}}">{{hidden ? '显示金额' : '隐藏金额'}}</view>
+    </view>
+    <view class="expense-caption">本月支出 <text>MONTHLY SPENDING</text></view>
+    <view class="hero-amount money"><text class="currency">¥</text>{{hidden ? '••••' : summary.totalExpense}}</view>
+    <view class="summary-grid">
+      <view><text class="summary-label">本月收入</text><text class="summary-value money">{{hidden ? '••••' : summary.totalIncome}}</text></view>
+      <view><text class="summary-label">{{remainingLabel}}</text><text class="summary-value money {{summary.over ? 'negative' : ''}}">{{hidden ? '••••' : summary.remaining}}</text></view>
+    </view>
+    <view wx:if="{{hasBudget}}" class="budget-area">
+      <view class="budget-track" aria-hidden="true"><view class="budget-fill {{summary.over ? 'over' : ''}}" style="width: {{budgetProgress}}%;"></view></view>
+      <view class="budget-meta"><text>{{hidden ? '月度预算' : budgetLabel}}</text><text>{{hidden ? '••••' : budgetStatus}}</text></view>
+    </view>
+    <view wx:else class="balance-note">小小记录，让每一笔都有迹可循。</view>
+  </view>
+  <view class="companion ledger-companion">
+    <view class="companion-copy"><text class="companion-kicker">WHISK &amp; PURR</text><view class="companion-title"><text>日常有数，</text><text>生活有猫。</text></view></view>
+    <view class="companion-art"><image src="/assets/brand/kitchen-cats.jpg" mode="scaleToFill" aria-label="三只小猫在厨房准备食物"/></view>
+  </view>
+  <view class="detail-title"><view>本月明细 <text class="detail-dot"></text></view><text class="count">{{groups.length}} 天有记录</text></view>
+  <view wx:if="{{groups.length}}">
+    <view wx:for="{{groups}}" wx:key="date" class="day-card card">
+      <view class="day-head"><view><text class="day-date">{{item.label}}</text><text class="weekday">{{item.weekday}}</text></view><text>支出 {{hidden ? '••••' : item.totalText}}</text></view>
+      <view wx:for="{{item.items}}" wx:for-item="tx" wx:key="id" class="tx-entry">
+        <view class="tx-row">
+          <view class="category-icon" style="background: {{tx.category.color}};">{{tx.category.icon}}</view>
+          <view class="tx-main"><text class="tx-category">{{tx.category.name}}</text><text class="tx-note">{{tx.note || '日常的小事，也值得记下'}}</text></view>
+          <text class="tx-amount money">−{{hidden ? '••••' : tx.amountText}}</text>
+        </view>
+        <view wx:if="{{tx.photos.length}}" class="tx-photos">
+          <image wx:for="{{tx.photos}}" wx:for-item="photo" wx:for-index="photoIndex" wx:key="*this" src="{{photo}}" mode="aspectFill" lazy-load class="tx-photo" data-id="{{tx.id}}" data-index="{{photoIndex}}" bindtap="previewPhotos" aria-role="button" aria-label="查看{{tx.category.name}}的第{{photoIndex + 1}}张照片"/>
+          <text class="tx-photo-hint">{{tx.photos.length}} 张 · 点击查看</text>
+        </view>
+      </view>
+    </view>
+  </view>
+  <view wx:else class="empty card"><view class="empty-face">ฅ^•ﻌ•^ฅ</view><view>这个月，等你写下第一笔</view><button class="secondary-button empty-tip" bindtap="goRecord">去记一笔</button></view>
+  <view class="companion-foot"><view class="paw" aria-hidden="true"><view class="paw-pad"></view><view class="paw-toe a"></view><view class="paw-toe b"></view><view class="paw-toe c"></view><view class="paw-toe d"></view></view><text>把平凡日子，过得有滋有味</text></view>
+</view>

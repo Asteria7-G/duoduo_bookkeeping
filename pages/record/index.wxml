@@ -1,0 +1,27 @@
+<view class="page record-page">
+  <view class="safe-top"></view>
+  <view class="record-nav"><view class="cancel" bindtap="cancel" aria-role="button">取消</view><view class="eyebrow">ONE LITTLE NOTE</view></view>
+  <view class="record-title">记下生活的这一笔 <view class="paw" aria-hidden="true"><view class="paw-pad"></view><view class="paw-toe a"></view><view class="paw-toe b"></view><view class="paw-toe c"></view><view class="paw-toe d"></view></view></view>
+  <view class="type-tabs"><view data-type="expense" bindtap="setType" aria-role="button" aria-label="记录支出" class="type-tab {{type === 'expense' ? 'active' : ''}}">支出</view><view data-type="income" bindtap="setType" aria-role="button" aria-label="记录收入" class="type-tab {{type === 'income' ? 'active income' : ''}}">收入</view></view>
+  <view class="target-row"><view><text class="target-label">{{type === 'expense' ? '记入账本' : '存入资产'}}</text><text class="target-sub">每笔小事，都有自己的位置</text></view><picker range="{{targets}}" range-key="name" value="{{targetIndex}}" bindchange="chooseTarget"><view class="target-pill">{{targets[targetIndex].name}} <text>⌄</text></view></picker></view>
+  <view class="category-heading"><text>{{type === 'expense' ? '这笔钱花在哪里？' : '这笔钱从哪里来？'}}</text><text class="category-count">{{categories.length}} 个分类</text></view>
+  <view class="category-grid">
+    <view wx:for="{{categories}}" wx:key="id" data-id="{{item.id}}" bindtap="chooseCategory" aria-role="button" aria-label="{{item.name}}" class="category-tile {{selectedCategoryId === item.id ? 'selected' : ''}}"><view class="category-icon" style="background: {{item.color}};">{{item.icon}}</view><text>{{item.name}}</text></view>
+  </view>
+  <view class="select-tip">选个分类，就可以填写金额和详情了。</view>
+  <view class="companion" wx:if="{{!detailVisible}}"><view class="companion-copy"><text class="companion-kicker">WHISK &amp; PURR</text><view class="companion-title"><text>一餐一饭，</text><text>都有小猫陪你记。</text></view></view><view class="companion-art"><image src="/assets/brand/kitchen-cats.jpg" mode="scaleToFill" aria-hidden="true"/></view></view>
+  <view wx:if="{{detailVisible}}" class="detail-mask" bindtap="closeDetail" aria-label="关闭记账详情"></view>
+  <view wx:if="{{detailVisible}}" class="detail-layer">
+    <view class="layer-grab" aria-hidden="true"></view>
+    <view class="detail-header"><view class="detail-category"><view class="detail-icon" style="background: {{selectedCategory.color}};">{{selectedCategory.icon}}</view><view><text class="detail-type">{{type === 'expense' ? '支出分类' : '收入分类'}}</text><text class="detail-name">{{selectedCategory.name}}</text></view></view><view class="close" bindtap="closeDetail" aria-role="button" aria-label="关闭记账详情">×</view></view>
+    <scroll-view class="detail-scroll" scroll-y enhanced show-scrollbar="false">
+      <view class="amount-card"><text wx:if="{{formula}}" class="formula">{{formula}}</text><view class="amount-line"><text class="currency">¥</text><text class="amount">{{amount}}</text></view></view>
+      <view class="detail-card">
+        <picker range="{{targets}}" range-key="name" value="{{targetIndex}}" bindchange="chooseTarget"><view class="detail-row"><text>{{type === 'expense' ? '账本' : '资产'}}</text><text class="detail-target">{{targets[targetIndex].name}}　›</text></view></picker>
+        <view class="detail-row"><text>备注</text><input value="{{note}}" maxlength="40" placeholder="记下这一刻的小事…" bindinput="inputNote" aria-label="备注"/></view>
+        <view class="photos"><view wx:for="{{photos}}" wx:key="*this" class="photo-wrap"><image src="{{item}}" mode="aspectFill" data-url="{{item}}" bindtap="preview" aria-label="预览记账照片"/><view class="remove" data-index="{{index}}" catchtap="removePhoto" aria-role="button" aria-label="移除这张照片">×</view></view><view wx:if="{{canAddPhoto}}" class="photo-add" bindtap="choosePhoto" aria-role="button" aria-label="添加记账照片"><text>＋</text><text class="camera-text">{{photosSaving ? '保存中' : '照片'}}</text></view></view>
+      </view>
+    </scroll-view>
+    <view class="keypad"><view class="key-grid"><view wx:for="{{keys}}" wx:key="*this" data-key="{{item}}" bindtap="keyTap" class="key" aria-role="button" aria-label="{{item === '⌫' ? '删除上一位' : item}}">{{item}}</view></view><view class="action-column"><picker mode="date" value="{{date}}" bindchange="changeDate"><view class="action-key date-key"><text>日期</text><text>{{dateShort}}</text></view></picker><view class="action-key operator-key" data-key="+" bindtap="keyTap" aria-role="button" aria-label="加">＋</view><view class="action-key operator-key" data-key="-" bindtap="keyTap" aria-role="button" aria-label="减">－</view><button class="finish" bindtap="finish" loading="{{photosSaving}}" disabled="{{photosSaving}}">记好了 ✓</button></view></view>
+  </view>
+</view>

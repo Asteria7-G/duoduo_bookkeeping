@@ -1,0 +1,21 @@
+<view class="page asset-edit">
+  <view class="safe-top"></view>
+  <view class="nav"><view class="back" bindtap="back" aria-role="button" aria-label="返回">‹</view><view class="nav-title">{{id ? '编辑小金库' : '添加小金库'}}</view><view class="nav-action" bindtap="save" aria-role="button">保存</view></view>
+  <view class="asset-preview">
+    <view class="preview" style="background:{{colors[colorIndex]}}"><image src="{{selectedCategory.iconPath}}" mode="aspectFit" aria-hidden="true"/></view>
+    <view class="preview-title">{{selectedCategory.label}}</view><view class="preview-description">{{selectedCategory.description}}</view>
+  </view>
+  <view class="field-card">
+    <view class="field-row"><text class="field-label">小金库名称</text><input class="field-input" value="{{name}}" maxlength="16" placeholder="例如：{{selectedCategory.defaultName}}" bindinput="name" aria-label="小金库名称"/></view>
+    <view class="field-row"><text class="field-label">当前金额</text><input class="field-input" type="digit" value="{{balance}}" placeholder="0.00" bindinput="balance" aria-label="当前金额"/><text>元</text></view>
+  </view>
+  <view class="section-title">这份钱，放在哪里</view>
+  <view class="category-options card">
+    <view wx:for="{{categories}}" wx:key="id" data-id="{{item.id}}" bindtap="selectCategory" class="category-option {{selectedCategory.id === item.id ? 'selected' : ''}}" aria-role="button" aria-label="{{item.label}}" aria-checked="{{selectedCategory.id === item.id}}">
+      <view class="option-icon" style="background:{{item.color}}"><image src="{{item.iconPath}}" mode="aspectFit" aria-hidden="true"/></view><text>{{item.label}}</text><text wx:if="{{selectedCategory.id === item.id}}" class="option-check">✓</text>
+    </view>
+  </view>
+  <view class="section-title">选个喜欢的底色</view>
+  <view class="color-options"><view wx:for="{{colors}}" wx:key="*this" data-index="{{index}}" bindtap="pickColor" class="color-target" aria-role="button" aria-label="选择底色{{index + 1}}"><view class="color-option {{colorIndex === index ? 'selected' : ''}}" style="background:{{item}}"><text wx:if="{{colorIndex === index}}">✓</text></view></view></view>
+  <button class="primary-button" bindtap="save">保存小金库</button>
+</view>

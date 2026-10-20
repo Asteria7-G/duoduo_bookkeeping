@@ -1,0 +1,25 @@
+.total-card { padding:30rpx; margin-top:26rpx; background:#e6ebdd; border-color:#dce2d2; box-shadow:none; }
+.total-top { display:flex; align-items:center; justify-content:space-between; }
+.total-label { color:#4c6045; font-size:24rpx; }
+.eye { min-height:64rpx; display:flex; align-items:center; font-size:21rpx; color:#4c6045; }
+.total-money { font-size:64rpx; font-weight:500; margin:10rpx 0 28rpx; overflow-wrap:break-word; }
+.total-money > text { font-size:32rpx; }
+.total-bottom { display:flex; align-items:center; justify-content:space-between; gap:12rpx; }
+.total-note { color:#4c6045; font-size:22rpx; }
+.title-row { display:flex; align-items:center; justify-content:space-between; }
+.asset-grid { display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1fr); gap:20rpx; }
+.asset-card { padding:24rpx; min-height:228rpx; box-sizing:border-box; }
+.asset-top { display:flex; align-items:center; justify-content:space-between; }
+.asset-icon { width:64rpx; height:64rpx; border-radius:22rpx; display:flex; align-items:center; justify-content:center; font-size:32rpx; }
+.asset-icon image { width:46rpx; height:46rpx; }
+.asset-kind { margin-top:4rpx; color:var(--muted); font-size:21rpx; }
+.more { color:var(--muted); font-size:26rpx; }
+.asset-name { font-weight:500; margin-top:24rpx; overflow:hidden; white-space:nowrap; text-overflow:ellipsis; }
+.asset-money { font-size:30rpx; font-weight:550; margin-top:6rpx; overflow-wrap:break-word; }
+.add-card { grid-column:1 / -1; min-height:112rpx; border:1rpx dashed #c4cbb8; border-radius:24rpx; background:transparent; display:flex; gap:16rpx; align-items:center; justify-content:center; color:#5c6a51; font-size:24rpx; }
+.plus-circle { font-size:36rpx; line-height:1.2; }
+.tip { margin:30rpx 0; display:flex; gap:18rpx; align-items:flex-start; }
+.tip-mark { flex:none; width:32rpx; height:32rpx; border:1rpx solid #7b836d; border-radius:50%; text-align:center; line-height:32rpx; color:#5c6a51; font-size:22rpx; }
+.tip-title,.tip-text { display:block; } .tip-title { font-size:24rpx; font-weight:500; }
+.tip-text { color:var(--muted); font-size:23rpx; line-height:1.7; margin-top:6rpx; }
+.companion { min-height:178rpx; }

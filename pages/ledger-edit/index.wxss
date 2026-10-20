@@ -1,0 +1,6 @@
+.edit-intro { color:var(--muted); font-size:24rpx; margin:24rpx 0 30rpx; line-height:1.7; }
+.picker-full { width:100%; }
+.bound-asset { max-width:70%; overflow:hidden; white-space:nowrap; text-overflow:ellipsis; }
+.edit-hint { color:var(--muted); font-size:23rpx; padding:0 4rpx; }
+.save-button { margin-top:36rpx; }
+.delete-button { background:transparent; color:#a95344; margin-top:18rpx; min-height:88rpx; }
