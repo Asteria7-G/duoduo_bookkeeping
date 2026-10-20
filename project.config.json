@@ -1,0 +1,25 @@
+{
+  "description": "哆哆记账 - 微信小程序",
+  "packOptions": {
+    "ignore": [
+      { "type": "folder", "value": "prototype" },
+      { "type": "folder", "value": "demo" },
+      { "type": "folder", "value": "design" },
+      { "type": "folder", "value": "tests" },
+      { "type": "folder", "value": "scripts" },
+      { "type": "folder", "value": "node_modules" }
+    ]
+  },
+  "setting": {
+    "urlCheck": false,
+    "es6": true,
+    "enhance": true,
+    "postcss": true,
+    "minified": true
+  },
+  "compileType": "miniprogram",
+  "libVersion": "3.7.8",
+  "appid": "touristappid",
+  "projectname": "duoduo-bookkeeping-miniprogram",
+  "condition": {}
+}

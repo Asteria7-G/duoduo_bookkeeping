@@ -1,0 +1,4 @@
+{
+  "desc": "哆哆记账页面索引",
+  "rules": [{ "action": "allow", "page": "*" }]
+}

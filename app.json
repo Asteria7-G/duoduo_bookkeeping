@@ -1,0 +1,36 @@
+{
+  "pages": [
+    "pages/ledger/index",
+    "pages/assets/index",
+    "pages/record/index",
+    "pages/charts/index",
+    "pages/profile/index",
+    "pages/ledger-manage/index",
+    "pages/ledger-edit/index",
+    "pages/bill/index",
+    "pages/asset-edit/index",
+    "pages/settings/index"
+  ],
+  "window": {
+    "navigationStyle": "custom",
+    "navigationBarTitleText": "哆哆记账",
+    "backgroundColor": "#F7F7EF",
+    "backgroundTextStyle": "dark"
+  },
+  "tabBar": {
+    "custom": true,
+    "color": "#716F63",
+    "selectedColor": "#42583E",
+    "backgroundColor": "#FFFEF9",
+    "borderStyle": "white",
+    "list": [
+      { "pagePath": "pages/ledger/index", "text": "账本" },
+      { "pagePath": "pages/assets/index", "text": "资产" },
+      { "pagePath": "pages/record/index", "text": "记账" },
+      { "pagePath": "pages/charts/index", "text": "图表" },
+      { "pagePath": "pages/profile/index", "text": "我的" }
+    ]
+  },
+  "style": "v2",
+  "sitemapLocation": "sitemap.json"
+}
