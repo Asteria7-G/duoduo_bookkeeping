@@ -1,0 +1,23 @@
+[
+  {
+    "fetchedAt": "2026-10-19",
+    "commit": "56ea9cf174ed86786187daa9de0e6247cb0747e4",
+    "repository": "nextlevelbuilder/ui-ux-pro-max-skill",
+    "path": "design/references/ui-ux-pro-max",
+    "stars": 137312
+  },
+  {
+    "fetchedAt": "2026-10-19",
+    "commit": "0665bd812ae0908fcab17b96fd4f840defb882d9",
+    "repository": "pbakaus/impeccable",
+    "path": "design/references/impeccable",
+    "stars": 82781
+  },
+  {
+    "fetchedAt": "2026-10-19",
+    "commit": "7fd5c01b57c087f2dd8ba88a346946b72128e479",
+    "repository": "Tencent/tdesign-miniprogram",
+    "path": "design/references/tdesign-miniprogram",
+    "stars": 1779
+  }
+]
