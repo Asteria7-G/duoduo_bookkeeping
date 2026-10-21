@@ -4,13 +4,13 @@ const path = require('node:path')
 const crypto = require('node:crypto')
 const root = path.resolve(__dirname,'..')
 const store = require('../store/bookkeeping')
-const {assetCategories,presentAsset} = require('../utils/asset-categories')
+const {assetCategories,legacyAssetCategories,presentAsset} = require('../utils/asset-categories')
 const pngSignature = Buffer.from([137,80,78,71,13,10,26,10])
 const categories = [...store.expenseCategories,...store.incomeCategories,store.getCategory('legacy-unknown')]
 assert.equal(store.expenseCategories.length,24)
 assert.equal(store.incomeCategories.length,5)
-assert.equal(assetCategories.length,9)
-for(const item of [...categories,...assetCategories]) {
+assert.equal(assetCategories.length,10)
+for(const item of [...categories,...assetCategories,...legacyAssetCategories]) {
   assert.match(item.iconPath,/^\/assets\/doodles\/.+\.png$/)
   const file=fs.readFileSync(path.join(root,item.iconPath))
   assert.ok(file.subarray(0,8).equals(pngSignature),item.id+' is not a PNG')

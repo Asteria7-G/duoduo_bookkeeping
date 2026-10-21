@@ -1,15 +1,18 @@
 .settings { width:88rpx; height:88rpx; display:flex; align-items:center; justify-content:center; font-size:34rpx; color:#42583e; }
 .profile-card { display:flex; align-items:center; padding:32rpx 0 36rpx; }
-.avatar-frame { position:relative; box-sizing:border-box; flex:none; width:116rpx; height:116rpx; }
-.avatar-button { box-sizing:border-box; display:block; width:100%; max-width:100%; min-width:0; height:100%; min-height:0; padding:0; margin:0; border-radius:0; background:#e8ecdd; overflow:hidden; line-height:normal; }
-.avatar-button .avatar-image { display:block; width:100%; height:100%; border-radius:0; }
+.avatar-frame { position:relative; box-sizing:border-box; flex:0 0 116rpx; width:116rpx; min-width:116rpx; max-width:116rpx; height:116rpx; min-height:116rpx; max-height:116rpx; }
+.avatar-crop { position:absolute; top:0; left:0; width:116rpx; height:116rpx; border-radius:24rpx; overflow:hidden; background:#e8ecdd; }
+.avatar-crop::after { content:""; position:absolute; top:0; left:0; right:0; bottom:0; box-sizing:border-box; border:2rpx solid #a4a98a; border-radius:24rpx; pointer-events:none; }
+.avatar-crop .avatar-image { position:absolute; top:0; left:0; display:block; width:116rpx; height:116rpx; }
+.profile-card .avatar-button { position:absolute; z-index:2; top:0; left:0; box-sizing:border-box; display:block; width:116rpx; max-width:116rpx; min-width:0; height:116rpx; min-height:0; padding:0; margin:0; border:0; border-radius:24rpx; background:transparent; opacity:0; line-height:normal; }
+.avatar-button::after { border:0; }
 .avatar-placeholder { display:flex; align-items:center; justify-content:center; }
 .cat-avatar { position:relative; width:64rpx; height:54rpx; border:3rpx solid #46553f; border-radius:40% 40% 46% 46%; color:#46553f; font-size:27rpx; line-height:54rpx; }
 .cat-avatar::before,.cat-avatar::after { content:""; position:absolute; width:19rpx; height:22rpx; top:-12rpx; border-top:3rpx solid #46553f; background:#e8ecdd; }
 .cat-avatar::before { left:-2rpx; border-left:3rpx solid #46553f; border-radius:3rpx; transform:rotate(15deg); }
 .cat-avatar::after { right:-2rpx; border-right:3rpx solid #46553f; border-radius:3rpx; transform:rotate(-15deg); }
 .cat-avatar text { position:relative; z-index:1; }
-.camera { position:absolute; right:-4rpx; bottom:-4rpx; width:36rpx; height:36rpx; border:4rpx solid #f7f7ef; border-radius:50%; background:#42583e; color:#fffdf5; font-size:24rpx; line-height:34rpx; }
+.camera { position:absolute; z-index:3; pointer-events:none; right:-4rpx; bottom:-4rpx; width:36rpx; height:36rpx; border:4rpx solid #f7f7ef; border-radius:50%; background:#42583e; color:#fffdf5; font-size:24rpx; line-height:34rpx; }
 .profile-info { flex:1; min-width:0; margin-left:28rpx; }
 .nickname { font-size:38rpx; font-weight:600; width:100%; }
 .profile-tag { color:var(--muted); font-size:23rpx; margin-top:12rpx; }

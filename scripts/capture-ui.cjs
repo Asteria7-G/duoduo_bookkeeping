@@ -6,6 +6,17 @@ const preview = path.resolve(__dirname, '../design/preview')
 const output = path.resolve(process.argv[2] || preview)
 fs.mkdirSync(output,{recursive:true})
 const url = pathToFileURL(path.join(preview, 'index.html')).href
+function avatarMetrics() {
+  const button=document.querySelector('.avatar-button'),crop=document.querySelector('.avatar-crop'),img=document.querySelector('.avatar-image')
+  const rect=button.getBoundingClientRect(),frame=crop.getBoundingClientRect(),image=img.getBoundingClientRect()
+  const hit=document.elementFromPoint(rect.left+rect.width/2,rect.top+rect.height/2)
+  return {squareAvatar:[rect,frame,image].every(box=>Math.abs(box.width-box.height)<1),
+    roundedAvatar:parseFloat(getComputedStyle(crop).borderRadius)>0 && getComputedStyle(crop).overflow==='hidden',
+    avatarFits:image.left>=frame.left-1 && image.top>=frame.top-1 && image.right<=frame.right+1 && image.bottom<=frame.bottom+1,
+    avatarCropped:getComputedStyle(img).objectFit==='cover',
+    avatarHitTarget:hit===button || button.contains(hit),
+    vipText:document.querySelector('.vip-desc').textContent.trim()==='拍照数上限 / 照片漫画风 / 家庭账本'}
+}
 ;(async () => {
   const browser = await chromium.launch({ headless: true })
   try {
@@ -55,13 +66,28 @@ const url = pathToFileURL(path.join(preview, 'index.html')).href
         metrics.catReducedMotion=await page.evaluate(()=>getComputedStyle(document.querySelector('.cat-tail')).animationName==='none')
         await page.emulateMedia({reducedMotion:'no-preference'})
       }
-      if(name==='profile') Object.assign(metrics,await page.evaluate(()=>{
-        const button=document.querySelector('.avatar-button'),rect=button.getBoundingClientRect(),image=button.querySelector('img').getBoundingClientRect()
-        return {squareAvatar:Math.abs(rect.width-rect.height)<1 && getComputedStyle(button).borderRadius==='0px',avatarFits:image.width<=rect.width && image.height<=rect.height,
-          vipText:document.querySelector('.vip-desc').textContent.trim()==='拍照数上限 / 照片漫画风 / 家庭账本'}
-      }))
+      if(name==='profile') Object.assign(metrics,await page.evaluate(avatarMetrics))
+      if(name==='ledger') metrics.ledgerSummaryCorrect=await page.evaluate(()=>!document.querySelector('.overview').textContent.includes('本月收入') && document.querySelector('.journal-motto').textContent.includes('lovely days'))
+      if(name==='asset-edit') metrics.fundCategoriesCorrect=await page.evaluate(()=>{
+        const labels=[...document.querySelectorAll('.category-option')].map(node=>node.textContent.trim())
+        return ['娱乐','教育基金','养老基金','住房基金'].every(label=>labels.includes(label)) && !labels.some(label=>['现金零钱','银行卡','支付账户'].includes(label))
+      })
       if(name==='profile') metrics.brandCorrect=await page.locator('.signoff-title').textContent().then(t=>t==='哆哆记账') && await page.locator('.signoff-credit').textContent().then(t=>t==='呼噜厨房出品')
       results.push({ page: name, ...metrics, errors: [...errors] })
+      if(name==='profile') {
+        for(const [shape,w,h] of [['portrait',240,720],['landscape',720,240]]) {
+          await page.evaluate(async({w,h})=>{
+            const img=document.querySelector('.avatar-image')
+            img.src='data:image/svg+xml;charset=utf-8,'+encodeURIComponent(`<svg xmlns="http://www.w3.org/2000/svg" width="${w}" height="${h}"><rect width="100%" height="100%" fill="#e0bd99"/><circle cx="${w/2}" cy="${h/2}" r="85" fill="#fff8e7"/><path d="M${w/2-25} ${h/2}h50" stroke="#55483d" stroke-width="8"/></svg>`)
+            await img.decode()
+            // Native button content may have its own dimensions. The avatar
+            // must stay independent of this internal content's layout.
+            document.querySelector('.avatar-button').innerHTML='<div style="width:22px;height:130px">native button wrapper</div>'
+          },{w,h})
+          results.push({page:'profile-'+shape,width,...await page.evaluate(avatarMetrics)})
+          if(width===393) await page.screenshot({path:path.join(output,'profile-'+shape+'.png'),fullPage:true})
+        }
+      }
     }
     await page.goto(url + '?page=record&detail=1')
     await page.evaluate(()=>document.fonts.ready)
@@ -176,6 +202,7 @@ const url = pathToFileURL(path.join(preview, 'index.html')).href
     r.keypadGap>1 || r.labelOffsetX>2 || r.labelOffsetY>2 || r.columnWidthDifference>1 || r.keypadRightOverflow>1 ||
     r.labelFits===false || r.deleteNoBackground===false || r.deleteFits===false || r.deleteTouchable===false || r.eraserVisible===false || r.eraserFits===false || r.deleteHitSize===false || r.brandCorrect===false ||
     r.sameCalico===false || r.animatedCat===false || r.catBreathes===false || r.catWagsTail===false || r.catBlinks===false || r.catReducedMotion===false || r.squareAvatar===false || r.avatarFits===false || r.vipText===false ||
+    r.roundedAvatar===false || r.avatarCropped===false || r.avatarHitTarget===false || r.ledgerSummaryCorrect===false || r.fundCategoriesCorrect===false ||
     r.dateFillsCell===false || r.datePickerCovers===false || r.dateTouchable===false || r.handwritingLoaded===false || r.handwritingApplied===false)) process.exitCode = 1
   } finally { await browser.close() }
 })().catch(error => { console.error(error); process.exitCode = 1 })

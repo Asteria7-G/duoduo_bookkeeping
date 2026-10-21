@@ -7,15 +7,18 @@ Page({
   onLoad(options = {}) {
     const asset = options.id && store.getState().assets.find(item => item.id === options.id)
     if (!asset) return
-    const colors = [...new Set([...baseColors, asset.color].filter(Boolean))]
+    const selectedCategory = getAssetCategory(asset)
+    const categories = assetCategories.some(category => category.id === selectedCategory.id)
+      ? assetCategories : [...assetCategories, selectedCategory]
+    const colors = [...new Set([...baseColors, asset.color, selectedCategory.color].filter(Boolean))]
     this.setData({ id:asset.id, name:asset.name, balance:asset.balance,
-      selectedCategory:getAssetCategory(asset), colors, colorIndex:Math.max(0, colors.indexOf(asset.color)), colorCustomized:true })
+      selectedCategory, categories, colors, colorIndex:Math.max(0, colors.indexOf(asset.color)), colorCustomized:true })
   },
   back() { wx.navigateBack() },
   name(event) { this.setData({ name:event.detail.value }) },
   balance(event) { this.setData({ balance:event.detail.value }) },
   selectCategory(event) {
-    const category = assetCategories.find(item => item.id === event.currentTarget.dataset.id)
+    const category = this.data.categories.find(item => item.id === event.currentTarget.dataset.id)
     if (!category) return
     const name = !this.data.name.trim() || this.data.name === this.data.selectedCategory.defaultName
       ? category.defaultName : this.data.name

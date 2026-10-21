@@ -24,9 +24,8 @@
     </view>
     <view class="expense-caption">本月支出 <text>MONTHLY SPENDING</text></view>
     <view class="hero-amount money"><text class="currency">¥</text>{{hidden ? '••••' : summary.totalExpense}}</view>
-    <view class="summary-grid">
-      <view><text class="summary-label">本月收入</text><text class="summary-value money">{{hidden ? '••••' : summary.totalIncome}}</text></view>
-      <view><text class="summary-label">{{remainingLabel}}</text><text class="summary-value money {{summary.over ? 'negative' : ''}}">{{hidden ? '••••' : summary.remaining}}</text></view>
+    <view class="balance-summary">
+      <text class="summary-label">{{remainingLabel}}</text><text class="summary-value money {{summary.over ? 'negative' : ''}}">{{hidden ? '••••' : summary.remaining}}</text>
     </view>
     <view wx:if="{{hasBudget}}" class="budget-area">
       <view class="budget-track" aria-hidden="true"><view class="budget-fill {{summary.over ? 'over' : ''}}" style="width: {{budgetProgress}}%;"></view></view>
@@ -35,7 +34,7 @@
     <view wx:else class="balance-note">小小记录，让每一笔都有迹可循。</view>
   </view>
   <view class="companion ledger-companion">
-    <view class="companion-copy"><text class="companion-kicker">WHISK &amp; PURR</text><view class="companion-title"><text>日常有数，</text><text>生活有猫。</text></view></view>
+    <view class="companion-copy"><view class="journal-motto"><text>Little notes,</text><text>lovely days</text></view><view class="companion-title"><text>日常有数，</text><text>生活有猫。</text></view></view>
     <view class="companion-art journal-scene"><calico-cat scene="journal" label="三花猫哆哆陪你写手账"/></view>
   </view>
   <view class="detail-title"><view>本月明细 <text class="detail-dot"></text></view><text class="count">{{groups.length}} 天有记录</text></view>

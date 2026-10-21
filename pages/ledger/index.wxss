@@ -23,8 +23,9 @@
 .expense-caption text { margin-left:16rpx; font-size:15rpx; letter-spacing:2rpx; }
 .hero-amount { font-size:68rpx; font-weight:500; letter-spacing:-2rpx; line-height:1.2; margin:4rpx 0 18rpx; overflow-wrap:break-word; }
 .currency { font-size:34rpx; margin-right:14rpx; color:#d1d9c7; }
-.summary-grid { display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1fr); gap:24rpx; }
-.summary-grid > view + view { border-left:1rpx solid #54614b; padding-left:32rpx; }
+.balance-summary { display:flex; align-items:baseline; flex-wrap:wrap; column-gap:24rpx; row-gap:4rpx; }
+.balance-summary .summary-label { flex:none; }
+.balance-summary .summary-value { min-width:0; }
 .summary-label, .summary-value { display:block; }
 .summary-label { font-size:22rpx; color:#d1d9c7; margin-bottom:4rpx; }
 .summary-value { font-size:31rpx; font-weight:500; overflow-wrap:anywhere; }
@@ -36,6 +37,10 @@
 .budget-meta { display:flex; align-items:center; justify-content:space-between; gap:12rpx; margin-top:10rpx; color:#d1d9c7; font-size:20rpx; }
 .balance-note { margin-top:24rpx; padding-top:18rpx; border-top:1rpx solid #54614b; font-size:21rpx; color:#d1d9c7; }
 .ledger-companion { margin-top:22rpx; min-height:178rpx; }
+.journal-motto { position:relative; display:table; padding:0 8rpx 4rpx 0; color:#8e7159; font-size:23rpx; line-height:1.05; letter-spacing:1rpx; transform:rotate(-3deg); }
+.journal-motto text { display:block; }
+.journal-motto text + text { padding-left:18rpx; }
+.journal-motto::after { content:""; position:absolute; bottom:0; left:18rpx; right:0; height:6rpx; border-bottom:2rpx solid #c8a477; border-radius:50%; transform:rotate(2deg); }
 .detail-title { margin:34rpx 0 18rpx; display:flex; justify-content:space-between; align-items:center; font-size:30rpx; font-weight:650; }
 .detail-dot { display:inline-block; width:9rpx; height:9rpx; border-radius:50%; background:#d7a8b0; margin:0 0 4rpx 10rpx; }
 .count { font-size:22rpx; font-weight:400; color:var(--muted); }

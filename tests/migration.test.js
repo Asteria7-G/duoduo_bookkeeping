@@ -40,4 +40,7 @@ assert.equal(getAssetCategory({ name:'旅游基金' }).id, 'travel')
 assert.equal(getAssetCategory({ name:'基金账户' }).id, 'investment')
 assert.equal(getAssetCategory({ name:'我的银行卡' }).id, 'bank-card')
 assert.equal(getAssetCategory({ categoryId:'emergency', name:'现金账户' }).id, 'emergency')
+for(const [name,id] of [['娱乐基金','entertainment'],['教育基金','education'],['养老基金','retirement'],['住房基金','housing']]) {
+  assert.equal(getAssetCategory({name}).id,id)
+}
 console.log('Legacy accounts, balances, photos and records preserved by migration')

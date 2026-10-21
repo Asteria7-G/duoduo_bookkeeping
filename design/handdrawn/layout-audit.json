@@ -17,6 +17,7 @@
     "catWagsTail": true,
     "catBlinks": true,
     "catReducedMotion": true,
+    "ledgerSummaryCorrect": true,
     "errors": []
   },
   {
@@ -83,10 +84,33 @@
     "handwritingApplied": true,
     "expectedBars": 1,
     "squareAvatar": true,
+    "roundedAvatar": true,
     "avatarFits": true,
+    "avatarCropped": true,
+    "avatarHitTarget": true,
     "vipText": true,
     "brandCorrect": true,
     "errors": []
+  },
+  {
+    "page": "profile-portrait",
+    "width": 393,
+    "squareAvatar": true,
+    "roundedAvatar": true,
+    "avatarFits": true,
+    "avatarCropped": true,
+    "avatarHitTarget": true,
+    "vipText": true
+  },
+  {
+    "page": "profile-landscape",
+    "width": 393,
+    "squareAvatar": true,
+    "roundedAvatar": true,
+    "avatarFits": true,
+    "avatarCropped": true,
+    "avatarHitTarget": true,
+    "vipText": true
   },
   {
     "page": "ledger-manage",
@@ -125,6 +149,7 @@
     "handwritingLoaded": true,
     "handwritingApplied": true,
     "expectedBars": 0,
+    "fundCategoriesCorrect": true,
     "errors": []
   },
   {
@@ -261,6 +286,7 @@
     "catWagsTail": true,
     "catBlinks": true,
     "catReducedMotion": true,
+    "ledgerSummaryCorrect": true,
     "errors": []
   },
   {
@@ -327,10 +353,33 @@
     "handwritingApplied": true,
     "expectedBars": 1,
     "squareAvatar": true,
+    "roundedAvatar": true,
     "avatarFits": true,
+    "avatarCropped": true,
+    "avatarHitTarget": true,
     "vipText": true,
     "brandCorrect": true,
     "errors": []
+  },
+  {
+    "page": "profile-portrait",
+    "width": 320,
+    "squareAvatar": true,
+    "roundedAvatar": true,
+    "avatarFits": true,
+    "avatarCropped": true,
+    "avatarHitTarget": true,
+    "vipText": true
+  },
+  {
+    "page": "profile-landscape",
+    "width": 320,
+    "squareAvatar": true,
+    "roundedAvatar": true,
+    "avatarFits": true,
+    "avatarCropped": true,
+    "avatarHitTarget": true,
+    "vipText": true
   },
   {
     "page": "ledger-manage",
@@ -369,6 +418,7 @@
     "handwritingLoaded": true,
     "handwritingApplied": true,
     "expectedBars": 0,
+    "fundCategoriesCorrect": true,
     "errors": []
   },
   {
@@ -505,6 +555,7 @@
     "catWagsTail": true,
     "catBlinks": true,
     "catReducedMotion": true,
+    "ledgerSummaryCorrect": true,
     "errors": []
   },
   {
@@ -571,10 +622,33 @@
     "handwritingApplied": true,
     "expectedBars": 1,
     "squareAvatar": true,
+    "roundedAvatar": true,
     "avatarFits": true,
+    "avatarCropped": true,
+    "avatarHitTarget": true,
     "vipText": true,
     "brandCorrect": true,
     "errors": []
+  },
+  {
+    "page": "profile-portrait",
+    "width": 430,
+    "squareAvatar": true,
+    "roundedAvatar": true,
+    "avatarFits": true,
+    "avatarCropped": true,
+    "avatarHitTarget": true,
+    "vipText": true
+  },
+  {
+    "page": "profile-landscape",
+    "width": 430,
+    "squareAvatar": true,
+    "roundedAvatar": true,
+    "avatarFits": true,
+    "avatarCropped": true,
+    "avatarHitTarget": true,
+    "vipText": true
   },
   {
     "page": "ledger-manage",
@@ -613,6 +687,7 @@
     "handwritingLoaded": true,
     "handwritingApplied": true,
     "expectedBars": 0,
+    "fundCategoriesCorrect": true,
     "errors": []
   },
   {

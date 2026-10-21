@@ -45,6 +45,10 @@ const icons = {
   'asset-cash':p('M10 22 L51 17 L56 45 L14 51Z',sage)+p('M9 16 L52 21 L50 49 L7 44Z',yellow)+c(30,32,9,paper)+p('M30 26 L30 38 M26 29 L34 29 M26 34 L34 34 M13 26 L17 27 M41 39 L45 40'),
   'asset-bank-card':p('M9 18 Q30 15 55 19 L54 48 Q31 52 8 48Z',blue)+p('M9 27 L54 28 M15 35 L24 35 L24 42 L15 41Z',yellow)+p('M31 42 L37 42 M42 42 L47 42'),
   'asset-payment':p('M19 8 L43 9 L43 54 L18 53Z',sage)+p('M23 15 L39 15 L39 42 L22 42Z',paper)+p('M27 25 L34 25 M27 31 L33 31 M31 22 L30 35')+c(31,48,1.5,ink),
+  'asset-entertainment':p('M9 23 L49 14 L52 25 Q45 29 54 33 L57 44 L16 53 L13 42 Q20 37 11 35Z',rose)+p('M19 22 L22 29 M24 34 L25 38 M27 43 L28 49')+p('M36 23 L39 28 L45 28 L41 33 L43 39 L37 36 L32 40 L33 33 L28 30 L35 29Z',yellow)+p('M10 11 L13 7 M7 8 L16 11 M51 54 L55 49'),
+  'asset-education':p('M10 40 Q20 35 31 41 Q43 35 54 40 L53 54 Q43 50 31 56 Q20 51 10 54Z',paper)+p('M31 42 L31 54 M15 45 L24 46 M39 46 L48 44')+p('M18 24 L18 34 Q31 43 45 33 L45 24Z',sage)+p('M7 21 L31 10 L56 20 L31 31Z',blue)+p('M53 22 L53 35 M50 36 L56 36 L57 42 L50 42Z',yellow)+p('M24 19 L31 16'),
+  'asset-retirement':p('M19 15 Q28 12 38 16 L35 36 L19 35Z',sage)+p('M16 33 Q26 30 40 35 L45 40 L17 39Z',rose)+p('M21 40 L17 50 M38 40 L44 50 M13 47 Q30 60 51 46 M36 23 L46 27 L45 31 M43 29 L41 36')+c(48,13,6,yellow)+p('M48 3 L48 1 M58 13 L61 13 M56 5 L58 3'),
+  'asset-housing':p('M7 29 L28 11 L49 28 M13 26 L14 52 L42 52 L43 26',yellow)+p('M24 52 L24 37 L33 37 L33 52 M19 29 L22 29 M35 29 L38 29')+c(47,38,7,paper)+c(47,38,2,yellow)+p('M47 45 L47 57 L54 57 M47 52 L52 52')+p('M21 16 L21 10 L27 10'),
   'asset-investment':c(30,42,14,yellow)+p('M29 29 L30 11 M29 23 Q14 23 15 12 Q27 10 29 23Z',sage)+p('M30 19 Q35 6 47 10 Q46 23 30 19Z',sage)+p('M27 38 L34 38 M27 44 L33 44 M30 35 L30 48'),
   'asset-travel':p('M24 19 L24 12 L40 12 L40 19 M13 20 L51 21 L52 51 L12 52Z',yellow)+p('M21 22 L21 51 M43 22 L44 50 M25 33 L38 33 L38 42 L25 42Z',paper)+c(20,55,2,ink)+c(45,55,2,ink),
   'asset-emergency':p('M12 15 L31 9 L51 16 Q51 43 31 55 Q10 42 12 15Z',sage)+p('M27 22 L35 22 L35 29 L42 29 L42 36 L35 36 L35 43 L27 43 L27 36 L20 36 L20 29 L27 29Z',paper),
@@ -117,6 +121,8 @@ async function write(name, text, width) {
     <path d="M213 77 L217 67 L221 76 L231 80 L221 83 L218 94 L214 84 L204 81Z" fill="${yellow}"/>
     <path d="M77 47 L80 40 M75 41 L83 46 M274 66 L277 57 M271 60 L280 64" fill="none"/>`
   await write('cat-wealth',svg(wealth,300,185),900)
-  fs.writeFileSync(path.join(out,'manifest.json'),JSON.stringify({icons:Object.keys(icons),illustration:'cat-journal',illustrations:['cat-journal','cat-wealth'],style:'original ink and pastel journal doodles'},null,2)+'\n')
+  const manifestPath=path.join(out,'manifest.json')
+  const previous=fs.existsSync(manifestPath)?JSON.parse(fs.readFileSync(manifestPath,'utf8')):{}
+  fs.writeFileSync(manifestPath,JSON.stringify({...previous,icons:Object.keys(icons),illustration:'cat-journal',illustrations:['cat-journal','cat-wealth'],style:'original ink and pastel journal doodles'},null,2)+'\n')
   console.log('Generated '+Object.keys(icons).length+' hand-drawn icons and two cat illustrations')
 })().catch(e=>{console.error(e);process.exitCode=1})
