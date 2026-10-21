@@ -65,22 +65,35 @@ const url = pathToFileURL(path.join(output, 'index.html')).href
       thumbnails:document.querySelectorAll('.tx-photo').length,
       brokenImages:[...document.images].filter(img=>!img.naturalWidth).map(img=>img.src)
     })))
-    await page.goto(url + '?page=ledger&swipe=1&photos=1')
+    for (const photos of [false,true]) {
+    await page.goto(url + '?page=ledger&swipe=1' + (photos ? '&photos=1' : ''))
+    // Stress native-button defaults; the delete control must not inherit them.
+    await page.addStyleTag({content:'button { min-width:184px; padding:0 14px; line-height:2.56; }'})
     await page.evaluate(() => Promise.all([...document.images].map(img => img.decode().catch(() => {}))))
     await page.evaluate(() => new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(resolve))))
-    if(width===393)await page.screenshot({path:path.join(output,'ledger-swipe.png'),fullPage:true})
-    results.push(await page.evaluate(() => {
+    if(width===393)await page.screenshot({path:path.join(output,photos ? 'ledger-swipe.png' : 'ledger-swipe-plain.png'),fullPage:true})
+    // Hit testing is meaningful only after the row is inside the viewport.
+    await page.locator('.tx-entry.is-open').evaluate(node=>node.scrollIntoView({block:'center'}))
+    results.push(await page.evaluate(photos => {
       const row=document.querySelector('.tx-entry.is-open').getBoundingClientRect()
       const content=document.querySelector('.tx-entry.is-open .tx-content').getBoundingClientRect()
       const button=document.querySelector('.tx-delete').getBoundingClientRect()
-      const style=getComputedStyle(document.querySelector('.tx-delete'))
-      return {page:'ledger-swipe',width:innerWidth,scrollWidth:document.documentElement.scrollWidth,
+      const circleNode=document.querySelector('.tx-delete-circle')
+      const circle=circleNode.getBoundingClientRect()
+      const style=getComputedStyle(circleNode)
+      const lid=document.querySelector('.trash-lid').getBoundingClientRect()
+      const body=document.querySelector('.trash-body').getBoundingClientRect()
+      const iconCenter=document.elementFromPoint(circle.left+circle.width/2,circle.top+circle.height/2)
+      return {page:photos ? 'ledger-swipe' : 'ledger-swipe-plain',width:innerWidth,scrollWidth:document.documentElement.scrollWidth,
         revealWidth:row.right-content.right,deleteWidth:button.width,
-        deleteCircle:Math.abs(button.width-button.height)<1 && style.borderRadius==='50%',
+        deleteCircle:Math.abs(circle.width-circle.height)<1 && style.borderRadius==='50%',
         deleteRed:style.backgroundColor==='rgb(220, 75, 75)',
-        deleteFits:button.left>=content.right && button.right<=row.right && button.top>=row.top && button.bottom<=row.bottom,
+        deleteFits:circle.left>=content.right && circle.right<=row.right && circle.top>=row.top && circle.bottom<=row.bottom,
+        deleteTouchable:!!iconCenter?.closest('.tx-delete'),
+        trashVisible:lid.width>0 && body.height>0 && getComputedStyle(document.querySelector('.trash-lid')).backgroundColor==='rgb(255, 255, 255)' && getComputedStyle(document.querySelector('.trash-body')).borderLeftColor==='rgb(255, 255, 255)',
         brokenImages:[...document.images].filter(img=>!img.naturalWidth).map(img=>img.src)}
-    }))
+    },photos))
+    }
     await page.goto(url + '?page=ledger')
     await page.locator('.visibility-toggle').click()
     results.push({ page:'ledger-privacy',width,hidden:await page.locator('.hero-amount').textContent().then(t=>t.includes('••••')) })
@@ -97,5 +110,5 @@ const url = pathToFileURL(path.join(output, 'index.html')).href
   if (results.some(r => r.scrollWidth > r.width + 1 || r.brokenImages?.length || r.errors?.length ||
     r.finishVisible === false || r.hidden === false || (r.expectedBars!==undefined && r.barCount!==r.expectedBars) ||
     r.keypadGap>1 || r.labelOffsetX>2 || r.labelOffsetY>2 || r.columnWidthDifference>1 || r.keypadRightOverflow>1 ||
-    r.labelFits===false || r.deleteCircle===false || r.deleteRed===false || r.deleteFits===false || r.brandCorrect===false)) process.exitCode = 1
+    r.labelFits===false || r.deleteCircle===false || r.deleteRed===false || r.deleteFits===false || r.deleteTouchable===false || r.trashVisible===false || r.brandCorrect===false)) process.exitCode = 1
 })().catch(error => { console.error(error); process.exitCode = 1 })
