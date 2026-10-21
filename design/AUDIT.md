@@ -2,6 +2,10 @@
 
 日期：2026-10-19。设计来源与固定版本见 REFERENCES.md、references-lock.json。
 
+橡皮擦图案精修：移除红色底圈与白色线框橡皮擦，改为原创透明 PNG，采用淡粉色橡皮、奶油色纸套、铅笔棕轮廓、立体边线与少量擦屑。图案显示为 40×40px，保留 64px 宽、至少 52px 高的触控区。源文件位于 handdrawn/sources/action-eraser.svg，运行资源为 assets/doodles/action-eraser.png；余额回算逻辑不变。
+
+本次十组测试、12 个 WXML 与 17 个 WXSS 官方编译通过；三种屏宽的 63 项布局检查通过，含有/无照片记录的透明背景、图标加载、显示边界与点击命中。新截图位于 preview/pastel-eraser/，本轮布局记录同步到 handdrawn/layout-audit.json。尚未进行手机微信验收。
+
 手账后续调整：左滑删除的红色圆圈由 44px 缩至 36px，白色图案改为用原生 view 绘制的倾斜橡皮擦，保持外围 64px 宽、至少 52px 高的点击区及原有余额回算行为。资产页移除厨房三猫，使用与账本页同源造型的原创富足小猫，配有小皇冠、金币堆和宝箱；插画以本地透明 PNG 展示，SVG 源文件与生成脚本同步保留。
 
 本次十组测试、12 个 WXML 与 17 个 WXSS 官方编译通过。三种屏宽的 63 项布局检查通过，含有/无照片记录的橡皮擦可见性、完整圆形及点击范围；资产页新插画均加载成功。截图工具支持独立输出目录，避免覆盖正在查看的截图，并在异常时关闭自身浏览器。总览与布局记录更新于 handdrawn/review.png、handdrawn/layout-audit.json；本轮新截图位于 preview/wealth-eraser/。尚未进行手机微信验收。

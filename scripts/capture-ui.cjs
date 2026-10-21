@@ -114,22 +114,18 @@ const url = pathToFileURL(path.join(preview, 'index.html')).href
       const row=document.querySelector('.tx-entry.is-open').getBoundingClientRect()
       const content=document.querySelector('.tx-entry.is-open .tx-content').getBoundingClientRect()
       const button=document.querySelector('.tx-delete').getBoundingClientRect()
-      const circleNode=document.querySelector('.tx-delete-circle')
-      const circle=circleNode.getBoundingClientRect()
-      const style=getComputedStyle(circleNode)
+      const style=getComputedStyle(document.querySelector('.tx-delete'))
       const eraserNode=document.querySelector('.eraser-icon')
       const eraser=eraserNode.getBoundingClientRect()
-      const iconCenter=document.elementFromPoint(circle.left+circle.width/2,circle.top+circle.height/2)
+      const iconCenter=document.elementFromPoint(eraser.left+eraser.width/2,eraser.top+eraser.height/2)
       return {page:photos ? 'ledger-swipe' : 'ledger-swipe-plain',width:innerWidth,scrollWidth:document.documentElement.scrollWidth,
         revealWidth:row.right-content.right,deleteWidth:button.width,
-        deleteCircle:Math.abs(circle.width-circle.height)<1 && style.borderRadius==='50%',
-        deleteDiameter:circle.width,
         deleteHitSize:button.width>=44 && button.height>=44,
-        deleteRed:style.backgroundColor==='rgb(220, 75, 75)',
-        deleteFits:circle.left>=content.right && circle.right<=row.right && circle.top>=row.top && circle.bottom<=row.bottom,
+        deleteNoBackground:style.backgroundColor==='rgba(0, 0, 0, 0)',
+        deleteFits:button.left>=content.right && button.right<=row.right && button.top>=row.top && button.bottom<=row.bottom,
         deleteTouchable:!!iconCenter?.closest('.tx-delete'),
-        eraserVisible:eraser.width>0 && eraser.height>0 && getComputedStyle(eraserNode).borderLeftColor==='rgb(255, 255, 255)' && getComputedStyle(document.querySelector('.eraser-end')).backgroundColor==='rgb(255, 255, 255)',
-        eraserFits:eraser.left>=circle.left && eraser.right<=circle.right && eraser.top>=circle.top && eraser.bottom<=circle.bottom,
+        eraserVisible:eraser.width>0 && eraser.height>0 && eraserNode.naturalWidth===192,
+        eraserFits:eraser.left>=button.left && eraser.right<=button.right && eraser.top>=button.top && eraser.bottom<=button.bottom,
         brokenImages:[...document.images].filter(img=>!img.naturalWidth).map(img=>img.src)}
     },photos))
     }
@@ -149,7 +145,7 @@ const url = pathToFileURL(path.join(preview, 'index.html')).href
   if (results.some(r => r.scrollWidth > r.width + 1 || r.brokenImages?.length || r.errors?.length ||
     r.finishVisible === false || r.hidden === false || (r.expectedBars!==undefined && r.barCount!==r.expectedBars) ||
     r.keypadGap>1 || r.labelOffsetX>2 || r.labelOffsetY>2 || r.columnWidthDifference>1 || r.keypadRightOverflow>1 ||
-    r.labelFits===false || r.deleteCircle===false || r.deleteRed===false || r.deleteFits===false || r.deleteTouchable===false || r.eraserVisible===false || r.eraserFits===false || r.deleteHitSize===false || r.wealthCatVisible===false || r.brandCorrect===false ||
+    r.labelFits===false || r.deleteNoBackground===false || r.deleteFits===false || r.deleteTouchable===false || r.eraserVisible===false || r.eraserFits===false || r.deleteHitSize===false || r.wealthCatVisible===false || r.brandCorrect===false ||
     r.dateFillsCell===false || r.datePickerCovers===false || r.dateTouchable===false || r.handwritingLoaded===false || r.handwritingApplied===false)) process.exitCode = 1
   } finally { await browser.close() }
 })().catch(error => { console.error(error); process.exitCode = 1 })

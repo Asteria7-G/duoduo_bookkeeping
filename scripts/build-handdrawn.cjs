@@ -9,6 +9,7 @@ const ink = '#5b4b40', paper = '#fff9eb', rose = '#dda5a1', sage = '#afbd95', ye
 const p = (d, fill='none') => `<path d="${d}" fill="${fill}"/>`
 const c = (x,y,r,fill=paper) => `<circle cx="${x}" cy="${y}" r="${r}" fill="${fill}"/>`
 const icons = {
+  'action-eraser':p('M12 35 L33 12 Q36 9 39 12 L54 25 Q57 28 54 31 L32 53 Q30 55 27 53 L12 41 Q9 38 12 35Z',rose)+p('M23 23 L35 11 L54 26 L41 40Z',paper)+p('M13 37 L30 51 L54 27 M30 51 L30 54')+p('M32 22 L38 27 M29 26 L35 31',sage)+p('M11 55 L21 55 M32 58 L38 58')+c(47,50,1,rose)+c(53,46,1,yellow),
   'category-food':p('M10 31 Q31 27 54 32 Q51 53 32 54 Q15 53 10 31Z',yellow)+p('M14 31 Q30 37 51 32 M20 18 L43 24 M23 12 L46 19 M26 30 Q22 24 29 22 M35 31 Q39 23 34 21'),
   'category-shopping':p('M15 24 L49 23 L53 54 Q32 58 11 53Z',rose)+p('M23 26 L23 17 Q31 6 41 17 L42 25 M26 39 Q32 45 39 38'),
   'category-snack':p('M12 29 L49 29 L52 51 Q30 57 11 52Z',yellow)+p('M12 30 L40 14 L49 29Z',rose)+p('M12 40 Q20 35 26 40 T49 40')+c(37,13,4,rose)+p('M38 9 Q44 5 47 9'),

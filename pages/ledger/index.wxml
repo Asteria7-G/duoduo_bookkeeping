@@ -44,7 +44,7 @@
       <view class="day-head"><view><text class="day-date">{{item.label}}</text><text class="weekday">{{item.weekday}}</text></view><text>支出 {{hidden ? '••••' : item.totalText}}</text></view>
       <view wx:for="{{item.items}}" wx:for-item="tx" wx:key="id" class="tx-entry {{openSwipeId === tx.id ? 'is-open' : ''}}" data-id="{{tx.id}}" bindtouchstart="startSwipe" bindtouchend="endSwipe" bindtouchcancel="cancelSwipe">
         <view wx:if="{{openSwipeId === tx.id}}" class="tx-delete" data-id="{{tx.id}}" catchtap="deleteRecord" aria-role="button" aria-label="删除这笔{{tx.category.name}}记录">
-          <view class="tx-delete-circle" aria-hidden="true"><view class="eraser-icon"><view class="eraser-end"></view></view></view>
+          <image class="eraser-icon" src="/assets/doodles/action-eraser.png" mode="aspectFit" aria-hidden="true"/>
         </view>
         <view class="tx-content" bindtap="closeSwipe">
           <view class="tx-row">

@@ -48,11 +48,9 @@
 .tx-entry + .tx-entry { border-top:1rpx solid #f0f0e8; }
 .tx-content { position:relative; z-index:1; background:var(--surface); transform:translateX(0); transition:transform .18s ease-out; }
 .tx-entry.is-open .tx-content { transform:translateX(-64px); }
-.tx-delete { position:absolute; z-index:2; top:0; right:0; box-sizing:border-box; width:64px; height:120rpx; min-height:52px; display:flex; align-items:center; justify-content:center; }
-.tx-delete-circle { box-sizing:border-box; flex:none; width:36px; height:36px; border-radius:50%; display:flex; align-items:center; justify-content:center; background:#dc4b4b; }
-.tx-delete:active .tx-delete-circle { background:#c63c3c; }
-.eraser-icon { position:relative; box-sizing:border-box; flex:none; width:21px; height:14px; border:2px solid #fff; border-radius:3px; transform:rotate(-38deg); overflow:hidden; }
-.eraser-end { position:absolute; top:0; right:0; bottom:0; width:7px; background:#fff; }
+.tx-delete { position:absolute; z-index:2; top:0; right:0; box-sizing:border-box; width:64px; height:120rpx; min-height:52px; display:flex; align-items:center; justify-content:center; background:transparent; }
+.eraser-icon { display:block; flex:none; width:40px; height:40px; }
+.tx-delete:active .eraser-icon { transform:rotate(-5deg) scale(.94); opacity:.8; }
 .tx-photos { display:flex; flex-wrap:wrap; align-items:center; gap:12rpx; padding:0 0 22rpx 86rpx; }
 .tx-photo { flex:none; width:92rpx; height:92rpx; min-width:44px; min-height:44px; border:1rpx solid var(--line); border-radius:16rpx; background:#eeeee3; }
 .tx-photo-hint { color:var(--muted); font-size:20rpx; line-height:1.5; }
