@@ -2,12 +2,10 @@ const store = require('../../store/bookkeeping')
 const dateUtil = require('../../utils/date')
 
 Page({
-  data: { month: '', monthText: '', ledger: {}, summary: {}, groups: [], hidden: false, hasBudget: false, budgetProgress: 0, budgetStatus: '', remainingLabel: '本月结余' },
+  data: { month: '', monthText: '', ledger: {}, summary: {}, groups: [], hidden: false, hasBudget: false, budgetProgress: 0, budgetStatus: '', remainingLabel: '本月结余', openSwipeId:'' },
   onLoad() { this.setData({ month: dateUtil.monthKey(new Date()) }) },
   onShow() {
-    wx.showTabBar({ animation: false })
-    const tabBar = this.getTabBar && this.getTabBar()
-    if (tabBar) tabBar.setData({ selected: 0, hidden: false })
+    wx.hideTabBar({ animation:false })
     this.refresh()
   },
   refresh() {
@@ -35,7 +33,7 @@ Page({
       items: byDate[date]
     }))
     this.setData({
-      ledger, groups, hidden: state.settings.amountHidden,
+      ledger, groups, hidden: state.settings.amountHidden, openSwipeId:'',
       hasBudget, budgetProgress: Math.min(100, Math.max(0, budgetPercent)),
       budgetStatus: hasBudget && totalExpense > Number(ledger.budget) ? '已超出月度预算' : `已使用 ${budgetPercent}%`,
       remainingLabel: hasBudget ? '预算剩余' : '本月结余',
@@ -49,6 +47,32 @@ Page({
     const hidden = !this.data.hidden
     store.updateSettings({ amountHidden: hidden })
     this.setData({ hidden })
+  },
+  startSwipe(event) {
+    const touch = event.touches && event.touches[0]
+    if (!touch) return
+    const id = event.currentTarget.dataset.id
+    this._swipeStart = { id, x:touch.clientX, y:touch.clientY }
+    if (this.data.openSwipeId && this.data.openSwipeId !== id) this.setData({ openSwipeId:'' })
+  },
+  endSwipe(event) {
+    const start = this._swipeStart
+    this._swipeStart = null
+    const touch = event.changedTouches && event.changedTouches[0]
+    if (!start || !touch || start.id !== event.currentTarget.dataset.id) return
+    const dx = touch.clientX - start.x
+    const dy = touch.clientY - start.y
+    // Leave vertical scrolling and ordinary taps alone.
+    if (Math.abs(dx) < 32 || Math.abs(dx) < Math.abs(dy) * 1.4) return
+    this.setData({ openSwipeId:dx < 0 ? start.id : '' })
+  },
+  cancelSwipe() { this._swipeStart = null },
+  closeSwipe() { this.setData({ openSwipeId:'' }) },
+  deleteRecord(event) {
+    const id = event.currentTarget.dataset.id
+    if (!id || !store.removeTransaction(id)) return
+    this.refresh()
+    wx.showToast({ title:'记录已删除', icon:'success' })
   },
   previewPhotos(event) {
     const { id, index } = event.currentTarget.dataset

@@ -20,8 +20,10 @@ const url = pathToFileURL(path.join(output, 'index.html')).href
         width: innerWidth, scrollWidth: document.documentElement.scrollWidth,
         brokenImages: [...document.images].filter(i => !i.naturalWidth).map(i => i.src),
         pageTitle: document.querySelector('.brand')?.getAttribute('aria-label') || document.querySelector('.big,.nav-title')?.textContent.trim(),
-        tabVisible: !!document.querySelector('.bar')
+        tabVisible: !!document.querySelector('.bar'),
+        barCount:document.querySelectorAll('.bar').length
       }))
+      metrics.expectedBars=['ledger','assets','charts','profile'].includes(name)?1:0
       results.push({ page: name, ...metrics, errors: [...errors] })
     }
     await page.goto(url + '?page=record&detail=1')
@@ -30,9 +32,17 @@ const url = pathToFileURL(path.join(output, 'index.html')).href
     results.push(await page.evaluate(() => {
       const sheet = document.querySelector('.detail-layer').getBoundingClientRect()
       const finish = document.querySelector('.finish').getBoundingClientRect()
+      const date=document.querySelector('.date-key').getBoundingClientRect()
+      const plus=document.querySelector('.operator-key').getBoundingClientRect()
+      const range=document.createRange()
+      range.selectNodeContents(document.querySelector('.finish-label'))
+      const label=range.getBoundingClientRect()
       return { page:'record-detail',width:innerWidth,scrollWidth:document.documentElement.scrollWidth,
         finishVisible:finish.top >= sheet.top && finish.bottom <= innerHeight + 1,
-        detailScroll:document.querySelector('.detail-scroll').clientHeight }
+        detailScroll:document.querySelector('.detail-scroll').clientHeight,
+        keypadGap:Math.abs(plus.top-date.bottom),
+        labelOffsetX:Math.abs((label.left+label.right-finish.left-finish.right)/2),
+        labelOffsetY:Math.abs((label.top+label.bottom-finish.top-finish.bottom)/2) }
     }))
     for (const name of ['ledger','assets','charts']) {
       await page.goto(url + '?page=' + name + '&large=1')
@@ -48,6 +58,18 @@ const url = pathToFileURL(path.join(output, 'index.html')).href
       thumbnails:document.querySelectorAll('.tx-photo').length,
       brokenImages:[...document.images].filter(img=>!img.naturalWidth).map(img=>img.src)
     })))
+    await page.goto(url + '?page=ledger&swipe=1&photos=1')
+    await page.evaluate(() => Promise.all([...document.images].map(img => img.decode().catch(() => {}))))
+    await page.evaluate(() => new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(resolve))))
+    if(width===393)await page.screenshot({path:path.join(output,'ledger-swipe.png'),fullPage:true})
+    results.push(await page.evaluate(() => {
+      const row=document.querySelector('.tx-entry.is-open').getBoundingClientRect()
+      const content=document.querySelector('.tx-entry.is-open .tx-content').getBoundingClientRect()
+      const button=document.querySelector('.tx-delete').getBoundingClientRect()
+      return {page:'ledger-swipe',width:innerWidth,scrollWidth:document.documentElement.scrollWidth,
+        revealWidth:row.right-content.right,deleteWidth:button.width,
+        deleteGap:Math.abs(content.right-button.left)}
+    }))
     await page.goto(url + '?page=ledger')
     await page.locator('.visibility-toggle').click()
     results.push({ page:'ledger-privacy',width,hidden:await page.locator('.hero-amount').textContent().then(t=>t.includes('••••')) })
@@ -61,5 +83,7 @@ const url = pathToFileURL(path.join(output, 'index.html')).href
   await board.close()
   console.log(JSON.stringify(results,null,2))
   await browser.close()
-  if (results.some(r => r.scrollWidth > r.width + 1 || r.brokenImages?.length || r.errors?.length || r.finishVisible === false || r.hidden === false)) process.exitCode = 1
+  if (results.some(r => r.scrollWidth > r.width + 1 || r.brokenImages?.length || r.errors?.length ||
+    r.finishVisible === false || r.hidden === false || (r.expectedBars!==undefined && r.barCount!==r.expectedBars) ||
+    r.keypadGap>1 || r.labelOffsetX>2 || r.labelOffsetY>2 || r.deleteGap>1)) process.exitCode = 1
 })().catch(error => { console.error(error); process.exitCode = 1 })

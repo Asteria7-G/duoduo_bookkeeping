@@ -136,11 +136,27 @@ function addTransaction(data) {
   persist(); return tx
 }
 
+function removeTransaction(id) {
+  init()
+  const index = state.transactions.findIndex(item => item.id === id)
+  if (index < 0) return false
+  const transaction = state.transactions[index]
+  // Reverse the original account, even if the ledger was rebound later.
+  const asset = state.assets.find(item => item.id === transaction.assetId)
+  if (asset) {
+    const adjustment = transaction.type === 'income' ? -transaction.amount : transaction.amount
+    asset.balance = Math.round((Number(asset.balance) + adjustment) * 100) / 100
+  }
+  state.transactions.splice(index, 1)
+  persist()
+  return true
+}
+
 function updateProfile(data) { init(); state.profile = { ...state.profile, ...data }; persist() }
 function updateSettings(data) { init(); state.settings = { ...state.settings, ...data }; persist() }
 function reset() { storage.clear(); state = seed(); persist() }
 
 module.exports = {
-  init, getState, setActiveLedger, saveLedger, removeLedger, saveAsset, addTransaction,
+  init, getState, setActiveLedger, saveLedger, removeLedger, saveAsset, addTransaction, removeTransaction,
   updateProfile, updateSettings, reset, getCategory, expenseCategories, incomeCategories
 }

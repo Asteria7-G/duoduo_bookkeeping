@@ -17,8 +17,11 @@
     "backgroundColor": "#F7F7EF",
     "backgroundTextStyle": "dark"
   },
+  "usingComponents": {
+    "app-tab-bar": "/custom-tab-bar/index"
+  },
   "tabBar": {
-    "custom": true,
+    "custom": false,
     "color": "#716F63",
     "selectedColor": "#42583E",
     "backgroundColor": "#FFFEF9",

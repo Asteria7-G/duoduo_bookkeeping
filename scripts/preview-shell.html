@@ -25,6 +25,7 @@ if (params.has('empty')) { pageData.groups = []; pageData.ranking = []; }
 if (params.has('photos') && pageData.groups && pageData.groups.length) {
   pageData.groups[0].items[0].photos=['/assets/brand/kitchen-cats.jpg','/assets/brand/whisk-purr.jpg'];
 }
+if (params.has('swipe') && pageData.groups && pageData.groups.length) pageData.openSwipeId=pageData.groups[0].items[0].id;
 if (params.has('large')) {
   if (pageData.summary) for(const key of ['totalExpense','totalIncome','remaining']) pageData.summary[key] = '123456789012.88';
   pageData.total = '123456789012.88'; pageData.average='123456789012.88';
@@ -70,6 +71,9 @@ function render(node, scope, parent) {
     track.append(fill); parent.append(track); return;
   }
   const tag = node.tagName.toLowerCase();
+  if(tag === 'app-tab-bar') {
+    markup(source.tab.wxml,{...source.tab.data,hidden:false,selected:Number(interpolate(node.getAttribute('selected') || '0',scope))},parent); return;
+  }
   if(tag === 'switch') {
     const toggle = document.createElement('div'); toggle.className='preview-switch'; parent.append(toggle); return;
   }
@@ -77,8 +81,9 @@ function render(node, scope, parent) {
   for (const a of node.attributes) {
     if (a.name.startsWith('wx:')) continue;
     const value = interpolate(a.value,scope);
-    if (/^(bind|catch)/.test(a.name)) { element.setAttribute('data-handler',value); element.onclick = () => act(value,element); }
+    if (/^(bind|catch)tap$/.test(a.name)) { element.setAttribute('data-handler',value); element.onclick = event => { if(a.name.startsWith('catch')) event.stopPropagation(); act(value,element); }; }
     else if (a.name === 'src' && value.startsWith('/assets/')) element.setAttribute('src','../..' + value);
+    else if (['disabled','checked','hidden'].includes(a.name) && value === 'false') continue;
     else element.setAttribute(a.name,value);
   }
   renderChildren([...node.childNodes],scope,element); parent.append(element);
@@ -90,6 +95,7 @@ function markup(text,scope,target) {
 }
 function act(handler,element) {
   if (handler === 'toggleHidden') { pageData.hidden = !pageData.hidden; draw(); }
+  else if (handler === 'closeSwipe') { pageData.openSwipeId=''; draw(); }
   else if (handler === 'chooseCategory') { pageData.selectedCategory = pageData.categories.find(x=>x.id===element.dataset.id); pageData.selectedCategoryId=element.dataset.id; pageData.detailVisible=true; pageData.amount='0'; draw(); }
   else if (handler === 'closeDetail') { pageData.detailVisible=false; draw(); }
   else if (handler === 'setType') { const url = new URL(location); url.searchParams.set('page',current === 'record' ? 'record' : 'charts'); pageData.type=element.dataset.type; if(current==='record') pageData.categories=element.dataset.type==='income'?[{id:'salary',name:'工资',icon:'💼',color:'#CBE8D8'}]:source.pages.record.data.categories; draw(); }
@@ -101,7 +107,6 @@ function draw() {
   const data = source.pages[current], root = document.querySelector('#root'); root.innerHTML='';
   document.querySelector('#page-style').textContent=(data.css+'\n'+source.tab.css).replace(/ image([ ,.{:>])/g,' img$1').replace(/(-?[\d.]+)rpx/g,(_,n)=>'calc('+n+' * 100vw / 750)');
   markup(data.wxml,pageData,root);
-  if(['ledger','assets','charts','profile'].includes(current)) markup(source.tab.wxml,{...source.tab.data,selected:names.indexOf(current)},root);
   const canvas=root.querySelector('canvas');
   if(canvas) {
     canvas.width=canvas.clientWidth*2; canvas.height=canvas.clientHeight*2;

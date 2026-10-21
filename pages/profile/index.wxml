@@ -12,3 +12,4 @@
   </view>
   <view class="brand-signoff"><view class="wordmark-frame"><image src="/assets/brand/whisk-purr.jpg" mode="scaleToFill" aria-label="Whisk & Purr 呼噜厨房手绘标识"/></view><view class="brand-signoff-note">和小猫一起，把日子过得有滋有味。</view></view>
 </view>
+<app-tab-bar selected="4"/>

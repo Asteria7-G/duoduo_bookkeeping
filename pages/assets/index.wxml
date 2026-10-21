@@ -14,3 +14,4 @@
   <view class="tip"><text class="tip-mark">i</text><view><text class="tip-title">每一笔，都替你记好</text><text class="tip-text">支出从账本绑定的资产扣除，收入存入你选择的资产。</text></view></view>
   <view class="companion"><view class="companion-copy"><text class="companion-kicker">LITTLE BY LITTLE</text><view class="companion-title"><text>每一份积累，</text><text>都在悄悄长大。</text></view></view><view class="companion-art"><image src="/assets/brand/kitchen-cats.jpg" mode="scaleToFill" aria-hidden="true"/></view></view>
 </view>
+<app-tab-bar selected="1"/>

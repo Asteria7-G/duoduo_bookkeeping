@@ -4,7 +4,7 @@
   "private": true,
   "description": "哆哆记账微信小程序",
   "scripts": {
-    "test": "node tests/store.test.js && node tests/page-bindings.test.js && node tests/ledger-presentation.test.js && node tests/account-flows.test.js && node tests/migration.test.js && node tests/photos.test.js && node tests/miniprogram-modules.test.js",
+    "test": "node tests/store.test.js && node tests/page-bindings.test.js && node tests/ledger-presentation.test.js && node tests/account-flows.test.js && node tests/migration.test.js && node tests/photos.test.js && node tests/delete-record.test.js && node tests/navigation.test.js && node tests/miniprogram-modules.test.js",
     "preview:build": "node scripts/preview-ui.cjs"
   }
 }
