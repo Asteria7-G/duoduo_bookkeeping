@@ -51,6 +51,26 @@ const url = pathToFileURL(path.join(output, 'index.html')).href
         labelOffsetX:Math.abs((label.left+label.right-finish.left-finish.right)/2),
         labelOffsetY:Math.abs((label.top+label.bottom-finish.top-finish.bottom)/2) }
     }))
+    for (const innerHeight of ['auto','12px']) {
+      results.push(await page.evaluate(innerHeight => {
+        // Model a native picker's extra internal wrapper instead of assuming
+        // that its direct WXML child inherits the grid cell's full height.
+        const picker=document.querySelector('.date-picker')
+        const inner=document.createElement('view')
+        inner.style.cssText='display:block;position:relative;height:'+innerHeight
+        while(picker.firstChild)inner.append(picker.firstChild)
+        picker.append(inner)
+        const cell=document.querySelector('.date-cell').getBoundingClientRect()
+        const date=document.querySelector('.date-key').getBoundingClientRect()
+        const plus=document.querySelector('.operator-key').getBoundingClientRect()
+        const target=picker.getBoundingClientRect()
+        return {page:'record-date-picker-'+innerHeight,width:innerWidth,
+          keypadGap:Math.abs(plus.top-date.bottom),
+          dateFillsCell:Math.abs(date.height-cell.height)<1 && Math.abs(date.top-cell.top)<1,
+          datePickerCovers:Math.abs(target.height-cell.height)<1 && Math.abs(target.width-cell.width)<1,
+          dateTouchable:[.1,.5,.9].every(fraction=>!!document.elementFromPoint(cell.left+cell.width/2,cell.top+cell.height*fraction)?.closest('.date-picker'))}
+      },innerHeight))
+    }
     for (const name of ['ledger','assets','charts']) {
       await page.goto(url + '?page=' + name + '&large=1')
       results.push(await page.evaluate(name => ({ page:name+'-large',width:innerWidth,scrollWidth:document.documentElement.scrollWidth }),name))
@@ -110,5 +130,6 @@ const url = pathToFileURL(path.join(output, 'index.html')).href
   if (results.some(r => r.scrollWidth > r.width + 1 || r.brokenImages?.length || r.errors?.length ||
     r.finishVisible === false || r.hidden === false || (r.expectedBars!==undefined && r.barCount!==r.expectedBars) ||
     r.keypadGap>1 || r.labelOffsetX>2 || r.labelOffsetY>2 || r.columnWidthDifference>1 || r.keypadRightOverflow>1 ||
-    r.labelFits===false || r.deleteCircle===false || r.deleteRed===false || r.deleteFits===false || r.deleteTouchable===false || r.trashVisible===false || r.brandCorrect===false)) process.exitCode = 1
+    r.labelFits===false || r.deleteCircle===false || r.deleteRed===false || r.deleteFits===false || r.deleteTouchable===false || r.trashVisible===false || r.brandCorrect===false ||
+    r.dateFillsCell===false || r.datePickerCovers===false || r.dateTouchable===false)) process.exitCode = 1
 })().catch(error => { console.error(error); process.exitCode = 1 })
