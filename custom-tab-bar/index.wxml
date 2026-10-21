@@ -2,7 +2,7 @@
   <view class="bar">
     <view wx:for="{{items}}" wx:key="pagePath" class="tab {{item.primary ? 'primary-slot' : ''}} {{selected === index ? 'is-active' : ''}}" data-path="{{item.pagePath}}" data-index="{{index}}" bindtap="switchTab" aria-role="button" aria-label="{{item.text}}" aria-current="{{selected === index ? 'page' : 'false'}}">
       <view wx:if="{{item.primary}}" class="primary"><text>＋</text></view>
-      <view wx:else class="tab-glyph tab-glyph--{{item.glyph}}" aria-hidden="true"><view class="glyph-detail"></view></view>
+      <image wx:else class="tab-doodle" src="/assets/doodles/nav-{{item.glyph}}.png" mode="aspectFit" aria-hidden="true"/>
       <text class="label">{{item.text}}</text><view wx:if="{{selected === index && !item.primary}}" class="active-dot"></view>
     </view>
   </view>

@@ -1,0 +1,128 @@
+/* Dodo's cat journal: warm graph paper, pencil outlines and pastel stickers. */
+page {
+  --ink:#55483d; --muted:#796a5a; --mint:#e6ead8; --mint-deep:#697957;
+  --cream:#fff8e7; --yellow:#efd18a; --coral:#ad6558; --lavender:#e8dce7;
+  --line:#ded2bd; --surface:#fffaf0;
+  color:var(--ink); background-color:#f5efdf;
+  background-image:linear-gradient(rgba(174,151,112,.075) 1px,transparent 1px),linear-gradient(90deg,rgba(174,151,112,.075) 1px,transparent 1px);
+  background-size:36rpx 36rpx;
+}
+page .page { padding-left:30rpx; padding-right:30rpx; }
+page input,page textarea,page button { font-family:"DodoHand","Kaiti SC","STKaiti","KaiTi",sans-serif; }
+page .big,page .brand-wordmark,page .ledger-name,page .nav-title { font-weight:400; letter-spacing:1rpx; }
+page .big { font-size:46rpx; }
+page .eyebrow { font-size:19rpx; letter-spacing:2rpx; color:#8a7159; font-weight:400; }
+page .money { font-weight:400; letter-spacing:0; }
+page .card,page .field-card { position:relative; border:2rpx solid #a08a70; border-radius:18rpx 24rpx 20rpx 15rpx; background:#fffaf0; box-shadow:4rpx 5rpx 0 #ddceb5; }
+page .section-title { display:table; font-weight:400; font-size:31rpx; letter-spacing:1rpx; box-shadow:inset 0 -12rpx 0 #eedcb2; }
+page .primary-button { color:#fffaf0; background:#697957; border:2rpx solid #5e644d; border-radius:18rpx 23rpx 15rpx 20rpx; box-shadow:3rpx 5rpx 0 #d8c9af; font-weight:400; }
+page .secondary-button { color:var(--ink); background:#f2dfb7; border:2rpx solid #ac9170; border-radius:18rpx 14rpx 22rpx 16rpx; font-weight:400; }
+page .nav-action,page .check,page .status { color:#697957; font-weight:400; }
+page .helper,page .edit-intro,page .edit-hint { color:var(--muted); }
+page .field-row,page .setting-row { border-bottom-style:dashed; }
+page .pill,page .ledger-filter,page .target-pill { border:2rpx solid #b5a184; background:#fff8e8; border-radius:12rpx 17rpx 14rpx 18rpx; }
+/* The overview becomes a note taped into the ledger. */
+page .overview { position:relative; background:#f2dda1; color:var(--ink); border:2rpx solid #a58c64; border-radius:18rpx 22rpx 16rpx 25rpx; box-shadow:5rpx 6rpx 0 #ded0b3; padding:24rpx 28rpx 20rpx; }
+page .overview::before,page .total-card::before,page .chart-card::before { content:""; position:absolute; pointer-events:none; width:112rpx; height:24rpx; top:-13rpx; left:calc(50% - 56rpx); transform:rotate(-4deg); background:rgba(202,175,143,.62); border-left:2rpx dashed #e3d2bb; border-right:2rpx dashed #e3d2bb; }
+page .month-picker,page .visibility-toggle,page .expense-caption,page .summary-label,page .budget-meta,page .balance-note { color:#736149; }
+page .expense-caption { font-size:25rpx; margin-top:4rpx; }
+page .expense-caption text { font-size:16rpx; letter-spacing:1rpx; }
+page .hero-amount { margin:2rpx 0 14rpx; font-size:74rpx; line-height:1.25; }
+page .currency { color:#75634a; }
+page .overview .summary-grid > view + view { border-left:2rpx dashed #c4ae80; }
+page .summary-value { font-weight:400; }
+page .budget-track { background:#dbc48c; height:7rpx; border-radius:6rpx 3rpx 5rpx 3rpx; }
+page .budget-fill { background:#87986c; border-radius:5rpx 2rpx 6rpx 3rpx; }
+page .budget-fill.over { background:#bc7869; }
+page .budget-meta { font-size:21rpx; }
+page .bill-link { color:#79694f; }
+page .companion { position:relative; background:#fff8e5; border:2rpx dashed #c1a886; border-radius:20rpx 14rpx 26rpx 17rpx; min-height:192rpx; overflow:hidden; }
+page .companion-copy { padding:26rpx 22rpx; }
+page .companion-title { font-weight:400; font-size:29rpx; line-height:1.55; }
+page .companion-kicker { font-size:17rpx; letter-spacing:1rpx; color:#97785d; }
+page .ledger-companion { margin-top:28rpx; min-height:206rpx; }
+page .journal-scene { right:0; top:0; width:360rpx; height:206rpx; }
+page .journal-scene image { position:static; width:100%; height:100%; }
+page .detail-title { font-weight:400; margin-top:34rpx; }
+page .detail-dot { background:#bd8e80; transform:rotate(-10deg); border-radius:2rpx; width:14rpx; height:14rpx; }
+page .day-card { box-shadow:3rpx 4rpx 0 #e2d5bf; }
+page .day-head { border-bottom:2rpx dashed #d8c7ad; }
+page .day-date,page .tx-category { font-weight:400; }
+page .tx-entry + .tx-entry { border-top:1rpx dashed #e0d1b7; }
+page .tx-content { background:#fffaf0; }
+page .category-icon,page .detail-icon,page .rank-icon { background:transparent; border-radius:15rpx 20rpx 16rpx 24rpx; }
+page .category-icon image,page .detail-icon image,page .rank-icon image { display:block; width:100%; height:100%; }
+page .tx-row .category-icon { width:74rpx; height:74rpx; }
+page .tx-photo { border:3rpx solid #fffdf6; box-shadow:1rpx 2rpx 0 #c8b596; border-radius:5rpx; }
+/* Assets are little paper envelopes; category shapes stay recognisable. */
+page .total-card { background:#dfe6d0; border-color:#98a47d; margin-top:28rpx; }
+page .total-money { margin-bottom:18rpx; font-size:68rpx; }
+page .total-label,page .eye,page .total-note { color:#60704d; }
+page .asset-card { border-radius:15rpx 22rpx 18rpx 23rpx; }
+page .asset-card:nth-child(2n) { background:#f9f0df; }
+page .asset-top .asset-icon { background:transparent; width:88rpx; height:88rpx; }
+page .asset-icon image { width:88rpx; height:88rpx; }
+page .asset-name { font-size:29rpx; font-weight:400; margin-top:12rpx; }
+page .asset-kind { font-size:21rpx; }
+page .asset-money { font-size:33rpx; }
+page .add-card { background:#f2e8d2; border:2rpx dashed #ac9575; box-shadow:none; }
+page .tip-title { font-weight:400; }
+page .preview,page .option-icon { border-radius:18rpx 25rpx 19rpx 26rpx; }
+page .preview image { width:94rpx; height:94rpx; }
+page .option-icon image { width:70rpx; height:70rpx; }
+page .category-option.selected { border:2rpx dashed #8b9473; background:#e7ead9; font-weight:400; }
+/* Keep the repaired keypad geometry and native picker click layer intact. */
+page .record-title { font-weight:400; font-size:43rpx; }
+page .type-tabs { background:#e8ddc7; border:2rpx solid #b7a182; border-radius:16rpx 24rpx 18rpx 14rpx; }
+page .type-tab { color:#77664f; border-radius:12rpx 20rpx 12rpx 17rpx; }
+page .type-tab.active { background:#8a9c73; color:#25301f; font-weight:400; }
+page .category-heading { font-weight:400; font-size:30rpx; }
+page .category-grid { background:#fffaf0; border:2rpx solid #b7a182; border-radius:18rpx 24rpx 16rpx 22rpx; padding:22rpx 10rpx; gap:20rpx 6rpx; box-shadow:4rpx 5rpx 0 #ddceb5; }
+page .category-tile { font-size:25rpx; min-height:124rpx; font-weight:400; }
+page .category-tile .category-icon { width:88rpx; height:88rpx; margin-bottom:4rpx; border:2rpx solid transparent; }
+page .category-tile.selected .category-icon { background:#f0e2b3; border:2rpx dashed #9a855a; }
+page .detail-layer { background:#f8f1df; border:2rpx solid #a08a70; border-bottom:0; border-radius:26rpx 30rpx 0 0; }
+page .layer-grab { background:#beae92; height:6rpx; }
+page .detail-icon { width:74rpx; height:74rpx; }
+page .detail-name { font-size:30rpx; font-weight:400; }
+page .detail-card { background:#fffaf0; border:2rpx solid #c8b497; border-radius:13rpx 19rpx 12rpx 20rpx; }
+page .detail-row { border-bottom-style:dashed; font-size:26rpx; }
+page .amount { font-size:68rpx; }
+page .photo-add { border-radius:9rpx 13rpx 8rpx 14rpx; border-color:#a99674; color:#7b7657; }
+page .keypad { background:#fffaf0; border-color:#b9a789; }
+page .key { border-color:#ddceb5; font-size:40rpx; }
+page .action-column,page .date-cell,page .action-key { background:#e8e6d0; color:#697452; }
+page .action-key { border-color:#cfcab3; }
+page .date-key { font-size:22rpx; }
+page .finish { background:#697957; color:#fffaf0; font-weight:400; font-size:29rpx; }
+page .finish[disabled] { background:#9ba98a; }
+/* Charts, bills, account editing, settings and personal pages share the paper. */
+page .chart-card { background:#fffaf0; border-color:#a99476; }
+page .period-tabs { border-bottom:2rpx dashed #c5b295; }
+page .period-tabs .active::after { background:#b58a6a; height:6rpx; transform:rotate(-3deg); border-radius:3rpx; }
+page .type-switch { background:#e5ddc9; border:2rpx solid #ad987a; }
+page .type-switch .active,page .type-switch .active.income { background:#8b9a74; color:#25301f; }
+page .rank-row { border-bottom-style:dashed; }
+page .rank-info text:first-child,page .rank-money { font-weight:400; }
+page .mode-tabs { background:#e8dfc9; border:2rpx solid #b29b7b; }
+page .mode-tabs .active { background:#869770; color:#25301f; }
+page .bill-hero { background:#e8e6d1; border-color:#9eaa83; }
+page .table-head { background:#f0e2c5; color:#73614a; }
+page .table-row { border-bottom-style:dashed; }
+page .ledger-card.active { border:2rpx dashed #819069; background:#eceddc; }
+page .streak-card { background:#e5e9d5; border-color:#a8ad8b; }
+page .streak-copy { border-left:2rpx dashed #b4b79a; color:#737759; }
+page .streak-number { font-size:62rpx; }
+page .nickname { font-weight:400; font-size:40rpx; }
+page .avatar-button { border:2rpx solid #a4a98a; border-radius:30rpx 39rpx 31rpx 37rpx; background:#e5e9d7; }
+page .vip-card { background:#f1ddaf; border:2rpx solid #bea071; border-radius:16rpx 22rpx 18rpx 25rpx; }
+page .vip-title,page .menu-main text:first-child { font-weight:400; }
+page .menu-row { border-bottom-style:dashed; }
+page .brand-signoff { border:2rpx dashed #c4a582; background:#f7e9c9; border-radius:20rpx 15rpx 24rpx 18rpx; }
+page .signoff-title { font-weight:400; font-size:41rpx; }
+page .signoff-credit { color:#806d57; }
+page .about-logo { color:#8d9b72; }
+page .about-logo image { width:88rpx; height:88rpx; }
+page .setting-name { font-weight:400; }
+page .settings image { display:block; width:54rpx; height:54rpx; }
+page .menu-icon image { display:block; width:50rpx; height:50rpx; }

@@ -6,14 +6,14 @@
   <view class="target-row"><view><text class="target-label">{{type === 'expense' ? '记入账本' : '存入资产'}}</text><text class="target-sub">每笔小事，都有自己的位置</text></view><picker range="{{targets}}" range-key="name" value="{{targetIndex}}" bindchange="chooseTarget"><view class="target-pill">{{targets[targetIndex].name}} <text>⌄</text></view></picker></view>
   <view class="category-heading"><text>{{type === 'expense' ? '这笔钱花在哪里？' : '这笔钱从哪里来？'}}</text><text class="category-count">{{categories.length}} 个分类</text></view>
   <view class="category-grid">
-    <view wx:for="{{categories}}" wx:key="id" data-id="{{item.id}}" bindtap="chooseCategory" aria-role="button" aria-label="{{item.name}}" class="category-tile {{selectedCategoryId === item.id ? 'selected' : ''}}"><view class="category-icon" style="background: {{item.color}};">{{item.icon}}</view><text>{{item.name}}</text></view>
+    <view wx:for="{{categories}}" wx:key="id" data-id="{{item.id}}" bindtap="chooseCategory" aria-role="button" aria-label="{{item.name}}" class="category-tile {{selectedCategoryId === item.id ? 'selected' : ''}}"><view class="category-icon"><image src="{{item.iconPath}}" mode="aspectFit" aria-hidden="true"/></view><text>{{item.name}}</text></view>
   </view>
   <view class="select-tip">选个分类，就可以填写金额和详情了。</view>
   <view class="companion" wx:if="{{!detailVisible}}"><view class="companion-copy"><text class="companion-kicker">WHISK &amp; PURR</text><view class="companion-title"><text>一餐一饭，</text><text>都有小猫陪你记。</text></view></view><view class="companion-art"><image src="/assets/brand/kitchen-cats.jpg" mode="scaleToFill" aria-hidden="true"/></view></view>
   <view wx:if="{{detailVisible}}" class="detail-mask" bindtap="closeDetail" aria-label="关闭记账详情"></view>
   <view wx:if="{{detailVisible}}" class="detail-layer">
     <view class="layer-grab" aria-hidden="true"></view>
-    <view class="detail-header"><view class="detail-category"><view class="detail-icon" style="background: {{selectedCategory.color}};">{{selectedCategory.icon}}</view><view><text class="detail-type">{{type === 'expense' ? '支出分类' : '收入分类'}}</text><text class="detail-name">{{selectedCategory.name}}</text></view></view><view class="close" bindtap="closeDetail" aria-role="button" aria-label="关闭记账详情">×</view></view>
+    <view class="detail-header"><view class="detail-category"><view class="detail-icon"><image src="{{selectedCategory.iconPath}}" mode="aspectFit" aria-hidden="true"/></view><view><text class="detail-type">{{type === 'expense' ? '支出分类' : '收入分类'}}</text><text class="detail-name">{{selectedCategory.name}}</text></view></view><view class="close" bindtap="closeDetail" aria-role="button" aria-label="关闭记账详情">×</view></view>
     <scroll-view class="detail-scroll" scroll-y enhanced show-scrollbar="false">
       <view class="amount-card"><text wx:if="{{formula}}" class="formula">{{formula}}</text><view class="amount-line"><text class="currency">¥</text><text class="amount">{{amount}}</text></view></view>
       <view class="detail-card">

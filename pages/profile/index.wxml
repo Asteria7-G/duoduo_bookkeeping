@@ -1,14 +1,14 @@
 <view class="page profile-page">
   <view class="safe-top"></view>
-  <view class="nav"><view><view class="eyebrow">A LIFE WELL NOTED</view><view class="nav-title big">我的</view></view><view class="settings" bindtap="settings" aria-role="button" aria-label="打开设置">⚙</view></view>
+  <view class="nav"><view><view class="eyebrow">A LIFE WELL NOTED</view><view class="nav-title big">我的</view></view><view class="settings" bindtap="settings" aria-role="button" aria-label="打开设置"><image src="/assets/doodles/nav-settings.png" mode="aspectFit" aria-hidden="true"/></view></view>
   <view class="profile-card"><button class="avatar-button" open-type="chooseAvatar" bindchooseavatar="chooseAvatar" aria-label="选择头像"><image wx:if="{{profile.avatarUrl}}" src="{{profile.avatarUrl}}" mode="aspectFill"/><view wx:else class="avatar-placeholder"><view class="cat-avatar"><text>· ᴥ ·</text></view></view><view class="camera">＋</view></button><view class="profile-info"><input type="nickname" value="{{profile.nickname}}" bindblur="nickname" class="nickname" aria-label="昵称"/><view class="profile-tag">{{profile.vip ? '哆哆 VIP 会员' : '认真生活的小账房'}}</view></view></view>
   <view class="streak-card card"><view class="streak-main"><text class="streak-title">连续记账</text><view><text class="streak-number money">{{streak}}</text><text class="streak-unit"> 天</text></view></view><view class="streak-copy"><text>一点点坚持，</text><text>把生活照顾好。</text></view><view class="paw" aria-hidden="true"><view class="paw-pad"></view><view class="paw-toe a"></view><view class="paw-toe b"></view><view class="paw-toe c"></view><view class="paw-toe d"></view></view></view>
   <view class="vip-card" bindtap="vip" aria-role="button"><view><view class="vip-title">{{profile.vip ? '哆哆会员已点亮' : '哆哆 VIP · 多一点陪伴'}}</view><view class="vip-desc">{{profile.vip ? '谢谢你，和哆哆一起慢慢成长' : '多账本 / 专属主题 / 数据导出'}}</view></view><view class="vip-button">{{profile.vip ? '已点亮' : '去看看'}} ↗</view></view>
   <view class="section-title">生活的整理箱</view>
   <view class="menu card">
-    <view class="menu-row" bindtap="ledgers" aria-role="button"><view class="menu-icon">▤</view><view class="menu-main"><text>我的账本</text><text>{{ledgerCount}} 个账本，各有小天地</text></view><text class="menu-arrow">›</text></view>
-    <view class="menu-row" bindtap="assets" aria-role="button"><view class="menu-icon">▱</view><view class="menu-main"><text>我的资产</text><text>{{assetCount}} 个资产账户</text></view><text class="menu-arrow">›</text></view>
-    <view class="menu-row" bindtap="settings" aria-role="button"><view class="menu-icon">⚙</view><view class="menu-main"><text>偏好设置</text><text>金额隐私、触感与本地数据</text></view><text class="menu-arrow">›</text></view>
+    <view class="menu-row" bindtap="ledgers" aria-role="button"><view class="menu-icon"><image src="/assets/doodles/nav-ledger.png" mode="aspectFit" aria-hidden="true"/></view><view class="menu-main"><text>我的账本</text><text>{{ledgerCount}} 个账本，各有小天地</text></view><text class="menu-arrow">›</text></view>
+    <view class="menu-row" bindtap="assets" aria-role="button"><view class="menu-icon"><image src="/assets/doodles/nav-wallet.png" mode="aspectFit" aria-hidden="true"/></view><view class="menu-main"><text>我的资产</text><text>{{assetCount}} 个资产账户</text></view><text class="menu-arrow">›</text></view>
+    <view class="menu-row" bindtap="settings" aria-role="button"><view class="menu-icon"><image src="/assets/doodles/nav-settings.png" mode="aspectFit" aria-hidden="true"/></view><view class="menu-main"><text>偏好设置</text><text>金额隐私、触感与本地数据</text></view><text class="menu-arrow">›</text></view>
   </view>
   <view class="brand-signoff"><view class="signoff-title">哆哆记账</view><view class="signoff-credit">呼噜厨房出品</view><view class="brand-signoff-note">和小猫一起，把日子过得有滋有味。</view></view>
 </view>

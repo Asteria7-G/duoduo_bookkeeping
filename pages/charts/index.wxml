@@ -8,7 +8,7 @@
     <view class="axis"><text wx:for="{{labels}}" wx:key="*this" wx:if="{{period !== 'month' || index === 0 || index === 9 || index === 19 || index === labels.length - 1}}">{{item}}</text></view>
   </view>
   <view class="section-title">{{type === 'expense' ? '支出' : '收入'}}排行榜</view>
-  <view wx:if="{{ranking.length}}" class="rank-card card"><view wx:for="{{ranking}}" wx:key="id" class="rank-row"><view class="rank-icon" style="background:{{item.category.color}}">{{item.category.icon}}</view><view class="rank-main"><view class="rank-info"><text>{{index + 1}}. {{item.category.name}}</text><text>{{item.percent}}%</text></view><progress-bar value="{{item.percent}}" color="{{type === 'expense' ? '#A95344' : '#425F40'}}"/></view><text class="rank-money money">{{item.amount}}</text></view></view>
+  <view wx:if="{{ranking.length}}" class="rank-card card"><view wx:for="{{ranking}}" wx:key="id" class="rank-row"><view class="rank-icon"><image src="{{item.category.iconPath}}" mode="aspectFit" aria-hidden="true"/></view><view class="rank-main"><view class="rank-info"><text>{{index + 1}}. {{item.category.name}}</text><text>{{item.percent}}%</text></view><progress-bar value="{{item.percent}}" color="{{type === 'expense' ? '#B57867' : '#788963'}}"/></view><text class="rank-money money">{{item.amount}}</text></view></view>
   <view wx:else class="empty card"><view class="empty-face">ฅ^•ﻌ•^ฅ</view><view>这个周期还没有{{type === 'expense' ? '支出' : '收入'}}记录</view></view>
 </view>
 <app-tab-bar selected="3"/>

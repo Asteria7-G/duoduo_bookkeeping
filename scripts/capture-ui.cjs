@@ -11,8 +11,9 @@ const url = pathToFileURL(path.join(output, 'index.html')).href
     const page = await browser.newPage({ viewport: { width, height: width === 320 ? 568 : 852 }, deviceScaleFactor: 2 })
     const errors = []
     page.on('pageerror', e => errors.push(e.message))
-    for (const name of ['ledger', 'assets', 'record', 'charts', 'profile', 'ledger-manage', 'ledger-edit', 'asset-edit']) {
+    for (const name of ['ledger', 'assets', 'record', 'charts', 'profile', 'ledger-manage', 'ledger-edit', 'asset-edit', 'bill', 'settings']) {
       await page.goto(url + '?page=' + name)
+      await page.evaluate(()=>document.fonts.ready)
       await page.evaluate(() => Promise.all([...document.images].map(img => img.decode().catch(() => {}))))
       await page.evaluate(() => new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(resolve))))
       if (width === 393) await page.screenshot({ path: path.join(output, name + '.png'), fullPage: true })
@@ -21,15 +22,19 @@ const url = pathToFileURL(path.join(output, 'index.html')).href
         brokenImages: [...document.images].filter(i => !i.naturalWidth).map(i => i.src),
         pageTitle: document.querySelector('.brand')?.getAttribute('aria-label') || document.querySelector('.big,.nav-title')?.textContent.trim(),
         tabVisible: !!document.querySelector('.bar'),
-        barCount:document.querySelectorAll('.bar').length
+        barCount:document.querySelectorAll('.bar').length,
+        handwritingLoaded:document.fonts.check('16px DodoHand'),
+        handwritingApplied:getComputedStyle(document.querySelector('.page')).fontFamily.includes('DodoHand')
       }))
       metrics.expectedBars=['ledger','assets','charts','profile'].includes(name)?1:0
       if(name==='profile') metrics.brandCorrect=await page.locator('.signoff-title').textContent().then(t=>t==='哆哆记账') && await page.locator('.signoff-credit').textContent().then(t=>t==='呼噜厨房出品')
       results.push({ page: name, ...metrics, errors: [...errors] })
     }
     await page.goto(url + '?page=record&detail=1')
+    await page.evaluate(()=>document.fonts.ready)
     if (width === 393) await page.screenshot({ path: path.join(output, 'record-detail.png'), fullPage: true })
     await page.goto(url + '?page=record&detail=1&large=1')
+    await page.evaluate(()=>document.fonts.ready)
     results.push(await page.evaluate(() => {
       const sheet = document.querySelector('.detail-layer').getBoundingClientRect()
       const finish = document.querySelector('.finish').getBoundingClientRect()
@@ -71,6 +76,13 @@ const url = pathToFileURL(path.join(output, 'index.html')).href
           dateTouchable:[.1,.5,.9].every(fraction=>!!document.elementFromPoint(cell.left+cell.width/2,cell.top+cell.height*fraction)?.closest('.date-picker'))}
       },innerHeight))
     }
+    await page.goto(url+'?page=record&income=1')
+    await page.evaluate(()=>document.fonts.ready)
+    await page.evaluate(()=>Promise.all([...document.images].map(img=>img.decode().catch(()=>{}))))
+    if(width===393)await page.screenshot({path:path.join(output,'record-income.png'),fullPage:true})
+    results.push(await page.evaluate(()=>({page:'record-income',width:innerWidth,scrollWidth:document.documentElement.scrollWidth,
+      incomeIcons:document.querySelectorAll('.category-icon img').length,
+      brokenImages:[...document.images].filter(i=>!i.naturalWidth).map(i=>i.src)})))
     for (const name of ['ledger','assets','charts']) {
       await page.goto(url + '?page=' + name + '&large=1')
       results.push(await page.evaluate(name => ({ page:name+'-large',width:innerWidth,scrollWidth:document.documentElement.scrollWidth }),name))
@@ -131,5 +143,5 @@ const url = pathToFileURL(path.join(output, 'index.html')).href
     r.finishVisible === false || r.hidden === false || (r.expectedBars!==undefined && r.barCount!==r.expectedBars) ||
     r.keypadGap>1 || r.labelOffsetX>2 || r.labelOffsetY>2 || r.columnWidthDifference>1 || r.keypadRightOverflow>1 ||
     r.labelFits===false || r.deleteCircle===false || r.deleteRed===false || r.deleteFits===false || r.deleteTouchable===false || r.trashVisible===false || r.brandCorrect===false ||
-    r.dateFillsCell===false || r.datePickerCovers===false || r.dateTouchable===false)) process.exitCode = 1
+    r.dateFillsCell===false || r.datePickerCovers===false || r.dateTouchable===false || r.handwritingLoaded===false || r.handwritingApplied===false)) process.exitCode = 1
 })().catch(error => { console.error(error); process.exitCode = 1 })

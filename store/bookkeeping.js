@@ -27,7 +27,7 @@ const expenseCategories = [
   { id: 'loss', name: '亏损', icon: '📉', color: '#FFE7A8' },
   { id: 'gift', name: '礼物', icon: '🎁', color: '#F9D7E0' },
   { id: 'office', name: '办公', icon: '📒', color: '#D9EACB' }
-]
+].map(category => ({ ...category, iconPath:'/assets/doodles/category-' + category.id + '.png' }))
 
 const incomeCategories = [
   { id: 'salary', name: '工资', icon: '💼', color: '#CBE8D8' },
@@ -35,7 +35,7 @@ const incomeCategories = [
   { id: 'invest', name: '收益', icon: '📈', color: '#FFE7A8' },
   { id: 'bonus', name: '红包', icon: '🧧', color: '#F8D4D0' },
   { id: 'other-income', name: '其它', icon: '☀️', color: '#D3E5FA' }
-]
+].map(category => ({ ...category, iconPath:'/assets/doodles/category-' + category.id + '.png' }))
 
 function uid(prefix) { return `${prefix}_${Date.now()}_${Math.random().toString(36).slice(2, 7)}` }
 
@@ -83,7 +83,7 @@ function persist() { storage.save(state) }
 function getState() { return clone(init()) }
 
 function getCategory(id) {
-  return [...expenseCategories, ...incomeCategories].find(item => item.id === id) || { id, name: '其他', icon: '✨', color: '#E6EAE8' }
+  return [...expenseCategories, ...incomeCategories].find(item => item.id === id) || { id, name:'其他', iconPath:'/assets/doodles/category-other.png', color:'#E6EAE8' }
 }
 
 function setActiveLedger(id) { init(); state.activeLedgerId = id; persist() }

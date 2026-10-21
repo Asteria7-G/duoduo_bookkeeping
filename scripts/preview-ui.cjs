@@ -15,7 +15,7 @@ function css(file) {
   return fs.readFileSync(path.join(root, file), 'utf8').replace(/@import\s+"([^"]+)";/g,
     (_, imported) => css(path.join(path.dirname(file), imported)))
 }
-for (const name of ['ledger', 'assets', 'record', 'charts', 'profile', 'ledger-manage', 'ledger-edit', 'asset-edit']) {
+for (const name of ['ledger', 'assets', 'record', 'charts', 'profile', 'ledger-manage', 'ledger-edit', 'asset-edit', 'bill', 'settings']) {
   let definition
   global.Page = value => { definition = value }
   require(path.join(root, 'pages', name, 'index.js'))
@@ -31,7 +31,7 @@ for (const name of ['ledger', 'assets', 'record', 'charts', 'profile', 'ledger-m
 let tab
 global.Component = value => { tab = value }
 require(path.join(root, 'custom-tab-bar', 'index.js'))
-const payload = { pages, tab: { data: tab.data, css: css('custom-tab-bar/index.wxss'),
+const payload = { pages, incomeCategories:require('../store/bookkeeping').incomeCategories, tab: { data: tab.data, css: css('custom-tab-bar/index.wxss'),
   wxml: fs.readFileSync(path.join(root, 'custom-tab-bar/index.wxml'), 'utf8') } }
 const shell = fs.readFileSync(path.join(__dirname, 'preview-shell.html'), 'utf8')
 fs.writeFileSync(path.join(output, 'index.html'),

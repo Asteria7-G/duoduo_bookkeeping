@@ -9,7 +9,7 @@ const assetCategories = [
   { id:'travel', label:'旅行基金', defaultName:'旅行基金', icon:'🧳', color:'#E1E9EC', description:'留给下一次出发的积蓄' },
   { id:'emergency', label:'应急备用', defaultName:'应急备用金', icon:'🛡️', color:'#EFE2DA', description:'应对临时需要的备用金' },
   { id:'family', label:'家庭公用', defaultName:'家庭公用', icon:'🏠', color:'#EEE8D8', description:'家人共同使用的资金' }
-].map(category => ({ ...category, iconPath:'/assets/icons/asset-' + category.id + '.svg' }))
+].map(category => ({ ...category, iconPath:'/assets/doodles/asset-' + category.id + '.png' }))
 
 const legacyIcons = {
   '🍃':'daily', '☁️':'savings', '🌊':'travel', '🏠':'family',

@@ -25,3 +25,13 @@
 .primary::before,.primary::after { content:""; position:absolute; z-index:-1; width:23rpx; height:24rpx; top:-5rpx; border-radius:4rpx; background:#303e2f; transform:rotate(45deg); }
 .primary::before { left:6rpx; } .primary::after { right:6rpx; }
 .primary + .label { margin-top:2rpx; }
+/* The navigation is a strip of illustrated paper tabs. */
+.bar { font-family:"DodoHand","Kaiti SC","STKaiti","KaiTi",sans-serif; height:114rpx; border:2rpx solid #a58e70; border-radius:20rpx 25rpx 18rpx 22rpx; background:#fff8e8; box-shadow:3rpx 5rpx 0 #d8c6a7; }
+.tab { color:#86755e; }
+.label { font-size:23rpx; margin-top:2rpx; }
+.tab-doodle { display:block; flex:none; width:49rpx; height:49rpx; }
+.tab.is-active { color:#65754d; }
+.is-active .label { font-weight:400; }
+.active-dot { background:#c99c78; width:24rpx; height:4rpx; border-radius:3rpx 1rpx 3rpx 1rpx; transform:rotate(-5deg); bottom:4rpx; }
+.primary { background:#8c9c75; color:#25301f; border-color:#f5efdf; border-radius:23rpx 29rpx 22rpx 28rpx; font-size:49rpx; }
+.primary::before,.primary::after { background:#8c9c75; }

@@ -10,15 +10,16 @@ button { display:block; width:100%; border:0; cursor:pointer; } input { border:0
 .preview-switch::after { content:""; position:absolute; right:2px; top:2px; width:23px; height:23px; border-radius:50%; background:white; }
 img { object-fit:fill; } [data-handler],picker { cursor:pointer; }
 img[mode="aspectFill"] { object-fit:cover; } img[mode="aspectFit"] { object-fit:contain; }
-.status { position:absolute; left:22px; top:10px; font:600 12px -apple-system,"Microsoft YaHei",sans-serif; color:#30382f; }
+.preview-status { position:absolute; left:22px; top:10px; font:600 12px -apple-system,"Microsoft YaHei",sans-serif; color:#30382f; }
 .capsule { position:absolute; top:38px; right:10px; height:29px; width:81px; border-radius:18px; border:1px solid #d8d9ce; background:#fffef988; display:flex; align-items:center; justify-content:space-evenly; font-size:18px; }
-</style></head><body><page id="root"></page><div class="status">9:41</div><div class="capsule" aria-hidden="true"><span>•••</span><span>│</span><span>⊙</span></div>
+</style></head><body><page id="root"></page><div class="preview-status">9:41</div><div class="capsule" aria-hidden="true"><span>•••</span><span>│</span><span>⊙</span></div>
 <script>
 /* PREVIEW_DATA */
 const names = Object.keys(source.pages);
 const current = new URLSearchParams(location.search).get('page') || 'ledger';
 const pageData = structuredClone(source.pages[current].data);
 const params = new URLSearchParams(location.search);
+if (params.has('income') && current==='record') { pageData.type='income'; pageData.categories=source.incomeCategories; pageData.targets=source.pages.assets.data.assets; pageData.targetIndex=0; }
 if (params.has('hidden')) pageData.hidden = true;
 if (params.has('empty')) { pageData.groups = []; pageData.ranking = []; }
 // Layout fixture only; never added to the actual mini program's seed data.
@@ -75,7 +76,7 @@ function render(node, scope, parent) {
     markup(source.tab.wxml,{...source.tab.data,hidden:false,selected:Number(interpolate(node.getAttribute('selected') || '0',scope))},parent); return;
   }
   if(tag === 'switch') {
-    const toggle = document.createElement('div'); toggle.className='preview-switch'; parent.append(toggle); return;
+    const toggle = document.createElement('div'); toggle.className='preview-switch'; if(interpolate(node.getAttribute('checked') || 'false',scope)==='false')toggle.style.cssText='background:#c7bca6;transform:scaleX(-1)'; parent.append(toggle); return;
   }
   const element = document.createElement(tag);
   for (const a of node.attributes) {
@@ -98,22 +99,22 @@ function act(handler,element) {
   else if (handler === 'closeSwipe') { pageData.openSwipeId=''; draw(); }
   else if (handler === 'chooseCategory') { pageData.selectedCategory = pageData.categories.find(x=>x.id===element.dataset.id); pageData.selectedCategoryId=element.dataset.id; pageData.detailVisible=true; pageData.amount='0'; draw(); }
   else if (handler === 'closeDetail') { pageData.detailVisible=false; draw(); }
-  else if (handler === 'setType') { const url = new URL(location); url.searchParams.set('page',current === 'record' ? 'record' : 'charts'); pageData.type=element.dataset.type; if(current==='record') pageData.categories=element.dataset.type==='income'?[{id:'salary',name:'工资',icon:'💼',color:'#CBE8D8'}]:source.pages.record.data.categories; draw(); }
+  else if (handler === 'setType') { const url = new URL(location); url.searchParams.set('page',current === 'record' ? 'record' : 'charts'); pageData.type=element.dataset.type; if(current==='record') pageData.categories=element.dataset.type==='income'?source.incomeCategories:source.pages.record.data.categories; draw(); }
   else if (handler === 'setPeriod') { pageData.period=element.dataset.period; draw(); }
   else if (handler === 'switchTab') location.search='?page='+element.dataset.path.split('/')[2];
   else if (handler === 'cancel') location.search='?page=ledger';
 }
 function draw() {
   const data = source.pages[current], root = document.querySelector('#root'); root.innerHTML='';
-  document.querySelector('#page-style').textContent=(data.css+'\n'+source.tab.css).replace(/ image([ ,.{:>])/g,' img$1').replace(/(-?[\d.]+)rpx/g,(_,n)=>'calc('+n+' * 100vw / 750)');
+  document.querySelector('#page-style').textContent=(data.css+'\n'+source.tab.css).replace(/ image([ ,.{:>])/g,' img$1').replace(/url\([^)]*\)|(-?[\d.]+)rpx/g,(match,n)=>n===undefined?match:'calc('+n+' * 100vw / 750)');
   markup(data.wxml,pageData,root);
   const canvas=root.querySelector('canvas');
   if(canvas) {
     canvas.width=canvas.clientWidth*2; canvas.height=canvas.clientHeight*2;
     const ctx=canvas.getContext('2d'); ctx.scale(2,2); const w=canvas.clientWidth,h=canvas.clientHeight,pad=22;
-    ctx.strokeStyle='#e6e8dc'; for(let i=1;i<=3;i++){const y=pad+(h-pad*2)*i/4;ctx.beginPath();ctx.moveTo(pad,y);ctx.lineTo(w-pad,y);ctx.stroke();}
+    ctx.strokeStyle='#dfd1b9'; for(let i=1;i<=3;i++){const y=pad+(h-pad*2)*i/4;ctx.beginPath();ctx.moveTo(pad,y);ctx.lineTo(w-pad,y);ctx.stroke();}
     const points=pageData.values.map((v,i)=>({x:pad+(w-pad*2)*i/(pageData.values.length-1),y:h-pad-(h-pad*2)*v/pageData.max}));
-    ctx.strokeStyle=pageData.type==='expense'?'#A95344':'#425F40';ctx.lineWidth=3;ctx.beginPath();
+    ctx.strokeStyle=pageData.type==='expense'?'#B57867':'#788963';ctx.lineWidth=3;ctx.beginPath();
     points.forEach((p,i)=>{if(!i)ctx.moveTo(p.x,p.y);else {const mid=(points[i-1].x+p.x)/2;ctx.bezierCurveTo(mid,points[i-1].y,mid,p.y,p.x,p.y)}});ctx.stroke();
   }
 }

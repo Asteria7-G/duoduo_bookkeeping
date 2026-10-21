@@ -1,5 +1,6 @@
 @import "./theme/cat.wxss";
-page { min-height:100%; font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei",sans-serif; font-size:28rpx; line-height:1.5; }
+@import "./theme/handwriting.wxss";
+page { min-height:100%; font-family:"DodoHand","Kaiti SC","STKaiti","KaiTi",sans-serif; font-size:28rpx; line-height:1.6; }
 button { font:inherit; } button::after { border:0; }
 .page { min-height:100vh; box-sizing:border-box; padding:0 32rpx calc(176rpx + env(safe-area-inset-bottom)); }
 .safe-top { height:env(safe-area-inset-top); min-height:64rpx; }
@@ -20,3 +21,4 @@ button { font:inherit; } button::after { border:0; }
 .pill { display:inline-flex; padding:12rpx 22rpx; border-radius:999rpx; background:#e9ede3; color:var(--mint-deep); }
 .pill.active { background:var(--mint-deep); color:#fffdf5; }
 .fab-shadow { box-shadow:0 8rpx 24rpx rgba(48,64,49,.16); }
+@import "./theme/journal.wxss";
