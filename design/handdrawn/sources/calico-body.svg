@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="300" height="185" viewBox="0 0 300 185"><g stroke="#5b4b40" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><defs><clipPath id="calico-head"><path d="M108 91 Q94 76 104 54 L101 26 L122 43 Q140 36 157 43 L180 26 L177 55 Q188 80 173 94 Q143 108 108 91Z"/></clipPath><clipPath id="calico-body"><path d="M104 140 Q93 114 112 91 L166 91 Q189 115 177 148 Q148 160 104 149Z"/></clipPath></defs>
+  <path d="M104 140 Q93 114 112 91 L166 91 Q189 115 177 148 Q148 160 104 149Z" fill="#fff9eb"/>
+  <g clip-path="url(#calico-body)" stroke="none"><path d="M154 101 Q182 97 186 131 Q176 151 160 138 Q152 124 154 101Z" fill="#dca16c"/><path d="M106 112 Q120 111 119 131 Q112 141 102 136Z" fill="#75655e"/></g>
+  <path d="M109 98 Q91 102 97 119 Q104 124 116 116 M168 102 Q182 106 178 121 Q173 125 164 118" fill="#fff9eb"/>
+  <path d="M113 142 Q99 140 102 153 Q115 160 130 151 M151 151 Q172 162 180 151 Q179 142 167 141" fill="#fff9eb"/>
+  <path d="M108 91 Q94 76 104 54 L101 26 L122 43 Q140 36 157 43 L180 26 L177 55 Q188 80 173 94 Q143 108 108 91Z" fill="#fff9eb"/>
+  <g clip-path="url(#calico-head)" stroke="none"><path d="M98 20 L139 28 Q143 45 133 56 Q125 60 127 75 Q108 84 99 65Z" fill="#dca16c"/><path d="M152 21 L188 19 L185 64 Q168 73 157 58 Q151 45 152 21Z" fill="#75655e"/></g>
+  <path d="M108 91 Q94 76 104 54 L101 26 L122 43 Q140 36 157 43 L180 26 L177 55 Q188 80 173 94 Q143 108 108 91Z" fill="none"/>
+  <path d="M105 32 L116 43 M175 32 L162 44" fill="none" stroke="#dda5a1"/>
+  <path d="M108 75 L119 77 M163 77 L178 73 M109 84 L119 81 M163 82 L177 87" fill="none"/>
+  <path d="M135 74 Q141 70 147 74 L141 79Z" fill="#dda5a1"/><path d="M141 79 Q135 87 129 81 M141 79 Q148 87 155 81" fill="none"/>
+  <path d="M112 149 L112 153 M119 149 L119 154 M163 149 L163 154 M170 148 L170 153" fill="none" stroke-width="1.2"/></g></svg>

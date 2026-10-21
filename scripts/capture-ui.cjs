@@ -30,7 +30,36 @@ const url = pathToFileURL(path.join(preview, 'index.html')).href
         handwritingApplied:getComputedStyle(document.querySelector('.page')).fontFamily.includes('DodoHand')
       }))
       metrics.expectedBars=['ledger','assets','charts','profile'].includes(name)?1:0
-      if(name==='assets') metrics.wealthCatVisible=await page.locator('.wealth-companion .journal-scene img').evaluate(img=>img.naturalWidth>0 && img.getAttribute('src').endsWith('/cat-wealth.png'))
+      if(['ledger','assets','record'].includes(name)) {
+        Object.assign(metrics,await page.evaluate(()=>{
+          const host=document.querySelector('calico-cat'),body=host.querySelector('img[src$="calico-body.png"]')
+          const scene=host.querySelector('img[src*="calico-scene-"]')
+          return {sameCalico:body.naturalWidth===900,catScene:scene.getAttribute('src').split('calico-scene-')[1].split('.')[0],
+            animatedCat:host.querySelector('.cat-breath').getAnimations().length>0 && host.querySelector('.cat-tail').getAnimations().length>0}
+        }))
+        Object.assign(metrics,await page.evaluate(async()=>{
+          const breath=document.querySelector('.cat-breath'),tail=document.querySelector('.cat-tail')
+          const open=document.querySelector('.cat-eyes-open'),closed=document.querySelector('.cat-eyes-closed')
+          const animations=[breath,tail,open,closed].map(node=>node.getAnimations()[0])
+          for(const animation of animations){animation.pause();animation.currentTime=0}
+          await new Promise(requestAnimationFrame)
+          const first=[getComputedStyle(breath).transform,getComputedStyle(tail).transform,getComputedStyle(open).opacity]
+          animations[0].currentTime=1800;animations[1].currentTime=1400;animations[2].currentTime=2924;animations[3].currentTime=2924
+          await new Promise(requestAnimationFrame)
+          const result={catBreathes:first[0]!==getComputedStyle(breath).transform,catWagsTail:first[1]!==getComputedStyle(tail).transform,
+            catBlinks:first[2]==='1' && getComputedStyle(open).opacity==='0' && getComputedStyle(closed).opacity==='1'}
+          for(const animation of animations)animation.play()
+          return result
+        }))
+        await page.emulateMedia({reducedMotion:'reduce'})
+        metrics.catReducedMotion=await page.evaluate(()=>getComputedStyle(document.querySelector('.cat-tail')).animationName==='none')
+        await page.emulateMedia({reducedMotion:'no-preference'})
+      }
+      if(name==='profile') Object.assign(metrics,await page.evaluate(()=>{
+        const button=document.querySelector('.avatar-button'),rect=button.getBoundingClientRect(),image=button.querySelector('img').getBoundingClientRect()
+        return {squareAvatar:Math.abs(rect.width-rect.height)<1 && getComputedStyle(button).borderRadius==='0px',avatarFits:image.width<=rect.width && image.height<=rect.height,
+          vipText:document.querySelector('.vip-desc').textContent.trim()==='拍照数上限 / 照片漫画风 / 家庭账本'}
+      }))
       if(name==='profile') metrics.brandCorrect=await page.locator('.signoff-title').textContent().then(t=>t==='哆哆记账') && await page.locator('.signoff-credit').textContent().then(t=>t==='呼噜厨房出品')
       results.push({ page: name, ...metrics, errors: [...errors] })
     }
@@ -145,7 +174,8 @@ const url = pathToFileURL(path.join(preview, 'index.html')).href
   if (results.some(r => r.scrollWidth > r.width + 1 || r.brokenImages?.length || r.errors?.length ||
     r.finishVisible === false || r.hidden === false || (r.expectedBars!==undefined && r.barCount!==r.expectedBars) ||
     r.keypadGap>1 || r.labelOffsetX>2 || r.labelOffsetY>2 || r.columnWidthDifference>1 || r.keypadRightOverflow>1 ||
-    r.labelFits===false || r.deleteNoBackground===false || r.deleteFits===false || r.deleteTouchable===false || r.eraserVisible===false || r.eraserFits===false || r.deleteHitSize===false || r.wealthCatVisible===false || r.brandCorrect===false ||
+    r.labelFits===false || r.deleteNoBackground===false || r.deleteFits===false || r.deleteTouchable===false || r.eraserVisible===false || r.eraserFits===false || r.deleteHitSize===false || r.brandCorrect===false ||
+    r.sameCalico===false || r.animatedCat===false || r.catBreathes===false || r.catWagsTail===false || r.catBlinks===false || r.catReducedMotion===false || r.squareAvatar===false || r.avatarFits===false || r.vipText===false ||
     r.dateFillsCell===false || r.datePickerCovers===false || r.dateTouchable===false || r.handwritingLoaded===false || r.handwritingApplied===false)) process.exitCode = 1
   } finally { await browser.close() }
 })().catch(error => { console.error(error); process.exitCode = 1 })

@@ -36,7 +36,7 @@
   </view>
   <view class="companion ledger-companion">
     <view class="companion-copy"><text class="companion-kicker">WHISK &amp; PURR</text><view class="companion-title"><text>日常有数，</text><text>生活有猫。</text></view></view>
-    <view class="companion-art journal-scene"><image src="/assets/doodles/cat-journal.png" mode="aspectFit" aria-label="陪你写手账的小猫、书本和花"/></view>
+    <view class="companion-art journal-scene"><calico-cat scene="journal" label="三花猫哆哆陪你写手账"/></view>
   </view>
   <view class="detail-title"><view>本月明细 <text class="detail-dot"></text></view><text class="count">{{groups.length}} 天有记录</text></view>
   <view wx:if="{{groups.length}}">

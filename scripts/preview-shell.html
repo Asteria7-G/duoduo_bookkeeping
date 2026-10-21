@@ -75,6 +75,11 @@ function render(node, scope, parent) {
   if(tag === 'app-tab-bar') {
     markup(source.tab.wxml,{...source.tab.data,hidden:false,selected:Number(interpolate(node.getAttribute('selected') || '0',scope))},parent); return;
   }
+  if(tag === 'calico-cat') {
+    const host=document.createElement('calico-cat')
+    markup(source.calico.wxml,{scene:interpolate(node.getAttribute('scene') || 'journal',scope),label:interpolate(node.getAttribute('label') || '三花猫哆哆',scope)},host)
+    parent.append(host); return;
+  }
   if(tag === 'switch') {
     const toggle = document.createElement('div'); toggle.className='preview-switch'; if(interpolate(node.getAttribute('checked') || 'false',scope)==='false')toggle.style.cssText='background:#c7bca6;transform:scaleX(-1)'; parent.append(toggle); return;
   }
@@ -106,7 +111,7 @@ function act(handler,element) {
 }
 function draw() {
   const data = source.pages[current], root = document.querySelector('#root'); root.innerHTML='';
-  document.querySelector('#page-style').textContent=(data.css+'\n'+source.tab.css).replace(/ image([ ,.{:>])/g,' img$1').replace(/url\([^)]*\)|(-?[\d.]+)rpx/g,(match,n)=>n===undefined?match:'calc('+n+' * 100vw / 750)');
+  document.querySelector('#page-style').textContent=(data.css+'\n'+source.tab.css+'\n'+source.calico.css).replace(/ image([ ,.{:>])/g,' img$1').replace(/url\([^)]*\)|(-?[\d.]+)rpx/g,(match,n)=>n===undefined?match:'calc('+n+' * 100vw / 750)');
   markup(data.wxml,pageData,root);
   const canvas=root.querySelector('canvas');
   if(canvas) {

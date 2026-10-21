@@ -10,6 +10,13 @@
     "handwritingLoaded": true,
     "handwritingApplied": true,
     "expectedBars": 1,
+    "sameCalico": true,
+    "catScene": "journal",
+    "animatedCat": true,
+    "catBreathes": true,
+    "catWagsTail": true,
+    "catBlinks": true,
+    "catReducedMotion": true,
     "errors": []
   },
   {
@@ -23,7 +30,13 @@
     "handwritingLoaded": true,
     "handwritingApplied": true,
     "expectedBars": 1,
-    "wealthCatVisible": true,
+    "sameCalico": true,
+    "catScene": "wealth",
+    "animatedCat": true,
+    "catBreathes": true,
+    "catWagsTail": true,
+    "catBlinks": true,
+    "catReducedMotion": true,
     "errors": []
   },
   {
@@ -36,6 +49,13 @@
     "handwritingLoaded": true,
     "handwritingApplied": true,
     "expectedBars": 0,
+    "sameCalico": true,
+    "catScene": "record",
+    "animatedCat": true,
+    "catBreathes": true,
+    "catWagsTail": true,
+    "catBlinks": true,
+    "catReducedMotion": true,
     "errors": []
   },
   {
@@ -62,6 +82,9 @@
     "handwritingLoaded": true,
     "handwritingApplied": true,
     "expectedBars": 1,
+    "squareAvatar": true,
+    "avatarFits": true,
+    "vipText": true,
     "brandCorrect": true,
     "errors": []
   },
@@ -231,6 +254,13 @@
     "handwritingLoaded": true,
     "handwritingApplied": true,
     "expectedBars": 1,
+    "sameCalico": true,
+    "catScene": "journal",
+    "animatedCat": true,
+    "catBreathes": true,
+    "catWagsTail": true,
+    "catBlinks": true,
+    "catReducedMotion": true,
     "errors": []
   },
   {
@@ -244,7 +274,13 @@
     "handwritingLoaded": true,
     "handwritingApplied": true,
     "expectedBars": 1,
-    "wealthCatVisible": true,
+    "sameCalico": true,
+    "catScene": "wealth",
+    "animatedCat": true,
+    "catBreathes": true,
+    "catWagsTail": true,
+    "catBlinks": true,
+    "catReducedMotion": true,
     "errors": []
   },
   {
@@ -257,6 +293,13 @@
     "handwritingLoaded": true,
     "handwritingApplied": true,
     "expectedBars": 0,
+    "sameCalico": true,
+    "catScene": "record",
+    "animatedCat": true,
+    "catBreathes": true,
+    "catWagsTail": true,
+    "catBlinks": true,
+    "catReducedMotion": true,
     "errors": []
   },
   {
@@ -283,6 +326,9 @@
     "handwritingLoaded": true,
     "handwritingApplied": true,
     "expectedBars": 1,
+    "squareAvatar": true,
+    "avatarFits": true,
+    "vipText": true,
     "brandCorrect": true,
     "errors": []
   },
@@ -452,6 +498,13 @@
     "handwritingLoaded": true,
     "handwritingApplied": true,
     "expectedBars": 1,
+    "sameCalico": true,
+    "catScene": "journal",
+    "animatedCat": true,
+    "catBreathes": true,
+    "catWagsTail": true,
+    "catBlinks": true,
+    "catReducedMotion": true,
     "errors": []
   },
   {
@@ -465,7 +518,13 @@
     "handwritingLoaded": true,
     "handwritingApplied": true,
     "expectedBars": 1,
-    "wealthCatVisible": true,
+    "sameCalico": true,
+    "catScene": "wealth",
+    "animatedCat": true,
+    "catBreathes": true,
+    "catWagsTail": true,
+    "catBlinks": true,
+    "catReducedMotion": true,
     "errors": []
   },
   {
@@ -478,6 +537,13 @@
     "handwritingLoaded": true,
     "handwritingApplied": true,
     "expectedBars": 0,
+    "sameCalico": true,
+    "catScene": "record",
+    "animatedCat": true,
+    "catBreathes": true,
+    "catWagsTail": true,
+    "catBlinks": true,
+    "catReducedMotion": true,
     "errors": []
   },
   {
@@ -504,6 +570,9 @@
     "handwritingLoaded": true,
     "handwritingApplied": true,
     "expectedBars": 1,
+    "squareAvatar": true,
+    "avatarFits": true,
+    "vipText": true,
     "brandCorrect": true,
     "errors": []
   },

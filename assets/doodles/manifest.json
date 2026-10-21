@@ -51,5 +51,21 @@
     "cat-journal",
     "cat-wealth"
   ],
-  "style": "original ink and pastel journal doodles"
+  "style": "original ink and pastel journal doodles",
+  "calico": {
+    "identity": "dodo-calico",
+    "markings": "orange left forehead, dark right ear, orange flank and dark-tipped tail",
+    "layers": [
+      "calico-body",
+      "calico-tail",
+      "calico-eyes-open",
+      "calico-eyes-closed"
+    ],
+    "scenes": [
+      "journal",
+      "wealth",
+      "record"
+    ],
+    "avatar": "calico-avatar"
+  }
 }

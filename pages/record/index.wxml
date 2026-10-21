@@ -9,7 +9,7 @@
     <view wx:for="{{categories}}" wx:key="id" data-id="{{item.id}}" bindtap="chooseCategory" aria-role="button" aria-label="{{item.name}}" class="category-tile {{selectedCategoryId === item.id ? 'selected' : ''}}"><view class="category-icon"><image src="{{item.iconPath}}" mode="aspectFit" aria-hidden="true"/></view><text>{{item.name}}</text></view>
   </view>
   <view class="select-tip">选个分类，就可以填写金额和详情了。</view>
-  <view class="companion" wx:if="{{!detailVisible}}"><view class="companion-copy"><text class="companion-kicker">WHISK &amp; PURR</text><view class="companion-title"><text>一餐一饭，</text><text>都有小猫陪你记。</text></view></view><view class="companion-art"><image src="/assets/brand/kitchen-cats.jpg" mode="scaleToFill" aria-hidden="true"/></view></view>
+  <view class="companion record-companion" wx:if="{{!detailVisible}}"><view class="companion-copy"><text class="companion-kicker">ONE LITTLE PAW</text><view class="companion-title"><text>一餐一饭，</text><text>都有小猫陪你记。</text></view></view><view class="companion-art journal-scene"><calico-cat scene="record" label="三花猫哆哆陪你记下每一笔"/></view></view>
   <view wx:if="{{detailVisible}}" class="detail-mask" bindtap="closeDetail" aria-label="关闭记账详情"></view>
   <view wx:if="{{detailVisible}}" class="detail-layer">
     <view class="layer-grab" aria-hidden="true"></view>

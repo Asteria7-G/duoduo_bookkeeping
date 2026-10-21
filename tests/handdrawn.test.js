@@ -24,6 +24,12 @@ for(const name of illustrations) {
   assert.ok(file.subarray(0,8).equals(pngSignature),name+' is not a PNG')
   assert.equal(file.readUInt32BE(16),900,name+' illustration width')
 }
+const calico=JSON.parse(fs.readFileSync(path.join(root,'assets/doodles/manifest.json'),'utf8')).calico
+for(const name of [...calico.layers,...calico.scenes.map(scene=>'calico-scene-'+scene),calico.avatar]) {
+  const file=fs.readFileSync(path.join(root,'assets/doodles',name+'.png'))
+  assert.ok(file.subarray(0,8).equals(pngSignature),name+' is not a PNG')
+  assert.equal(file.readUInt32BE(16),name===calico.avatar?192:900)
+}
 const legacy={name:'我的银行卡',icon:'旧图标',balance:123.45}
 const presented=presentAsset(legacy)
 assert.equal(presented.iconPath,'/assets/doodles/asset-bank-card.png')

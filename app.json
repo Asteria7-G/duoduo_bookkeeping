@@ -18,7 +18,8 @@
     "backgroundTextStyle": "dark"
   },
   "usingComponents": {
-    "app-tab-bar": "/custom-tab-bar/index"
+    "app-tab-bar": "/custom-tab-bar/index",
+    "calico-cat": "/components/calico-cat/index"
   },
   "tabBar": {
     "custom": false,
