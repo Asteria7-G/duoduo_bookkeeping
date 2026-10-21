@@ -48,7 +48,10 @@
 .tx-entry + .tx-entry { border-top:1rpx solid #f0f0e8; }
 .tx-content { position:relative; z-index:1; background:var(--surface); transform:translateX(0); transition:transform .18s ease-out; }
 .tx-entry.is-open .tx-content { transform:translateX(-132rpx); }
-.tx-delete { position:absolute; z-index:0; top:0; right:0; bottom:0; width:132rpx; min-width:0; height:100%; margin:0; padding:0; border:0; border-radius:0; display:flex; align-items:center; justify-content:center; background:#a95344; color:#fffdf5; font-size:25rpx; line-height:1.4; }
+.tx-delete { position:absolute; z-index:0; top:60rpx; right:16rpx; transform:translateY(-50%); box-sizing:border-box; width:88rpx; height:88rpx; min-width:44px; min-height:44px; margin:0; padding:0; border:0; border-radius:50%; display:flex; align-items:center; justify-content:center; background:#dc4b4b; line-height:1; }
+.tx-delete::after { border:0; }
+.tx-delete:active { background:#c63c3c; }
+.tx-delete-icon { display:block; flex:none; width:40rpx; height:40rpx; }
 .tx-photos { display:flex; flex-wrap:wrap; align-items:center; gap:12rpx; padding:0 0 22rpx 86rpx; }
 .tx-photo { flex:none; width:92rpx; height:92rpx; min-width:44px; min-height:44px; border:1rpx solid var(--line); border-radius:16rpx; background:#eeeee3; }
 .tx-photo-hint { color:var(--muted); font-size:20rpx; line-height:1.5; }

@@ -43,7 +43,7 @@
     <view wx:for="{{groups}}" wx:key="date" class="day-card card">
       <view class="day-head"><view><text class="day-date">{{item.label}}</text><text class="weekday">{{item.weekday}}</text></view><text>支出 {{hidden ? '••••' : item.totalText}}</text></view>
       <view wx:for="{{item.items}}" wx:for-item="tx" wx:key="id" class="tx-entry {{openSwipeId === tx.id ? 'is-open' : ''}}" data-id="{{tx.id}}" bindtouchstart="startSwipe" bindtouchend="endSwipe" bindtouchcancel="cancelSwipe">
-        <button wx:if="{{openSwipeId === tx.id}}" class="tx-delete" data-id="{{tx.id}}" catchtap="deleteRecord" aria-label="删除这笔{{tx.category.name}}记录">删除</button>
+        <button wx:if="{{openSwipeId === tx.id}}" class="tx-delete" data-id="{{tx.id}}" catchtap="deleteRecord" aria-label="删除这笔{{tx.category.name}}记录"><image class="tx-delete-icon" src="/assets/icons/trash-white.svg" mode="aspectFit" aria-hidden="true"/></button>
         <view class="tx-content" bindtap="closeSwipe">
           <view class="tx-row">
             <view class="category-icon" style="background: {{tx.category.color}};">{{tx.category.icon}}</view>

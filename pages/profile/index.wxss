@@ -31,3 +31,5 @@
 .menu-main text:first-child { font-weight:500; font-size:28rpx; }
 .menu-main text:last-child { font-size:22rpx; color:var(--muted); margin-top:5rpx; }
 .menu-arrow { font-size:34rpx; color:#7d806e; }
+.signoff-title { color:var(--ink); font-size:38rpx; font-weight:650; letter-spacing:3rpx; line-height:1.4; }
+.signoff-credit { margin-top:6rpx; color:var(--muted); font-size:20rpx; letter-spacing:2rpx; }

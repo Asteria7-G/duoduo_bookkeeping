@@ -10,6 +10,6 @@
     <view class="menu-row" bindtap="assets" aria-role="button"><view class="menu-icon">▱</view><view class="menu-main"><text>我的资产</text><text>{{assetCount}} 个资产账户</text></view><text class="menu-arrow">›</text></view>
     <view class="menu-row" bindtap="settings" aria-role="button"><view class="menu-icon">⚙</view><view class="menu-main"><text>偏好设置</text><text>金额隐私、触感与本地数据</text></view><text class="menu-arrow">›</text></view>
   </view>
-  <view class="brand-signoff"><view class="wordmark-frame"><image src="/assets/brand/whisk-purr.jpg" mode="scaleToFill" aria-label="Whisk & Purr 呼噜厨房手绘标识"/></view><view class="brand-signoff-note">和小猫一起，把日子过得有滋有味。</view></view>
+  <view class="brand-signoff"><view class="signoff-title">哆哆记账</view><view class="signoff-credit">呼噜厨房出品</view><view class="brand-signoff-note">和小猫一起，把日子过得有滋有味。</view></view>
 </view>
 <app-tab-bar selected="4"/>
