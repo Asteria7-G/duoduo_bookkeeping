@@ -42,15 +42,18 @@
   <view wx:if="{{groups.length}}">
     <view wx:for="{{groups}}" wx:key="date" class="day-card card">
       <view class="day-head"><view><text class="day-date">{{item.label}}</text><text class="weekday">{{item.weekday}}</text></view><text>支出 {{hidden ? '••••' : item.totalText}}</text></view>
-      <view wx:for="{{item.items}}" wx:for-item="tx" wx:key="id" class="tx-entry">
-        <view class="tx-row">
-          <view class="category-icon" style="background: {{tx.category.color}};">{{tx.category.icon}}</view>
-          <view class="tx-main"><text class="tx-category">{{tx.category.name}}</text><text class="tx-note">{{tx.note || '日常的小事，也值得记下'}}</text></view>
-          <text class="tx-amount money">−{{hidden ? '••••' : tx.amountText}}</text>
-        </view>
-        <view wx:if="{{tx.photos.length}}" class="tx-photos">
-          <image wx:for="{{tx.photos}}" wx:for-item="photo" wx:for-index="photoIndex" wx:key="*this" src="{{photo}}" mode="aspectFill" lazy-load class="tx-photo" data-id="{{tx.id}}" data-index="{{photoIndex}}" bindtap="previewPhotos" aria-role="button" aria-label="查看{{tx.category.name}}的第{{photoIndex + 1}}张照片"/>
-          <text class="tx-photo-hint">{{tx.photos.length}} 张 · 点击查看</text>
+      <view wx:for="{{item.items}}" wx:for-item="tx" wx:key="id" class="tx-entry {{openSwipeId === tx.id ? 'is-open' : ''}}" data-id="{{tx.id}}" bindtouchstart="startSwipe" bindtouchend="endSwipe" bindtouchcancel="cancelSwipe">
+        <button wx:if="{{openSwipeId === tx.id}}" class="tx-delete" data-id="{{tx.id}}" catchtap="deleteRecord" aria-label="删除这笔{{tx.category.name}}记录">删除</button>
+        <view class="tx-content" bindtap="closeSwipe">
+          <view class="tx-row">
+            <view class="category-icon" style="background: {{tx.category.color}};">{{tx.category.icon}}</view>
+            <view class="tx-main"><text class="tx-category">{{tx.category.name}}</text><text class="tx-note">{{tx.note || '日常的小事，也值得记下'}}</text></view>
+            <text class="tx-amount money">−{{hidden ? '••••' : tx.amountText}}</text>
+          </view>
+          <view wx:if="{{tx.photos.length}}" class="tx-photos">
+            <image wx:for="{{tx.photos}}" wx:for-item="photo" wx:for-index="photoIndex" wx:key="*this" src="{{photo}}" mode="aspectFill" lazy-load class="tx-photo" data-id="{{tx.id}}" data-index="{{photoIndex}}" bindtap="previewPhotos" aria-role="button" aria-label="查看{{tx.category.name}}的第{{photoIndex + 1}}张照片"/>
+            <text class="tx-photo-hint">{{tx.photos.length}} 张 · 点击查看</text>
+          </view>
         </view>
       </view>
     </view>
@@ -58,3 +61,4 @@
   <view wx:else class="empty card"><view class="empty-face">ฅ^•ﻌ•^ฅ</view><view>这个月，等你写下第一笔</view><button class="secondary-button empty-tip" bindtap="goRecord">去记一笔</button></view>
   <view class="companion-foot"><view class="paw" aria-hidden="true"><view class="paw-pad"></view><view class="paw-toe a"></view><view class="paw-toe b"></view><view class="paw-toe c"></view><view class="paw-toe d"></view></view><text>把平凡日子，过得有滋有味</text></view>
 </view>
+<app-tab-bar selected="0"/>
