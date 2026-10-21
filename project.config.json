@@ -18,7 +18,7 @@
     "minified": true
   },
   "compileType": "miniprogram",
-  "libVersion": "3.7.8",
+  "libVersion": "2.30.4",
   "appid": "touristappid",
   "projectname": "duoduo-bookkeeping-miniprogram",
   "condition": {}

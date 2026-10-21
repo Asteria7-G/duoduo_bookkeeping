@@ -1,0 +1,32 @@
+const assert = require('node:assert/strict')
+const fs = require('node:fs')
+const os = require('node:os')
+const path = require('node:path')
+const { configureWeChat } = require('../scripts/configure-wechat.cjs')
+const root = fs.mkdtempSync(path.join(os.tmpdir(), 'duoduo-devtools-'))
+const projectFile = path.join(root, 'project.config.json')
+const localFile = path.join(root, 'project.private.config.json')
+const read = file => JSON.parse(fs.readFileSync(file, 'utf8'))
+const write = (file, value) => fs.writeFileSync(file, JSON.stringify(value))
+try {
+  const project = {libVersion:'2.30.4', appid:'personal-app-id', setting:{es6:true}}
+  write(projectFile, project)
+  assert.deepEqual(configureWeChat(root), {version:'2.30.4', changed:true})
+  assert.deepEqual(read(localFile), {libVersion:'2.30.4'})
+  const personal = {libVersion:'3.17.4', projectname:'My project', setting:{useApiHook:true}, condition:{custom:1}}
+  fs.writeFileSync(localFile, '\uFEFF' + JSON.stringify(personal))
+  configureWeChat(root)
+  assert.deepEqual(read(localFile), {...personal, libVersion:'2.30.4'})
+  assert.deepEqual(read(projectFile), project, 'Do not change AppID or public settings')
+  const before = fs.readFileSync(localFile, 'utf8')
+  assert.deepEqual(configureWeChat(root), {version:'2.30.4', changed:false})
+  assert.equal(fs.readFileSync(localFile, 'utf8'), before)
+  fs.writeFileSync(localFile, '{invalid')
+  assert.throws(() => configureWeChat(root))
+  assert.equal(fs.readFileSync(localFile, 'utf8'), '{invalid', 'Do not overwrite malformed personal configuration')
+  write(projectFile, {...project, libVersion:'latest'})
+  assert.throws(() => configureWeChat(root), /fixed debug libVersion/)
+} finally {
+  fs.rmSync(root, {recursive:true, force:true})
+}
+console.log('DevTools configuration passed: private override, personal settings, idempotency and invalid files')
