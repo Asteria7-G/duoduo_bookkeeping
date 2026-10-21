@@ -1,7 +1,9 @@
 Component({
+  properties: {
+    selected: { type:Number, value:0 },
+    hidden: { type:Boolean, value:false }
+  },
   data: {
-    selected: 0,
-    hidden: false,
     items: [
       { text: '账本', glyph: 'ledger', pagePath: '/pages/ledger/index' },
       { text: '资产', glyph: 'wallet', pagePath: '/pages/assets/index' },
