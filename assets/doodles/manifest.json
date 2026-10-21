@@ -46,5 +46,9 @@
     "nav-settings"
   ],
   "illustration": "cat-journal",
+  "illustrations": [
+    "cat-journal",
+    "cat-wealth"
+  ],
   "style": "original ink and pastel journal doodles"
 }

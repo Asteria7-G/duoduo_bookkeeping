@@ -18,6 +18,12 @@ for(const item of [...categories,...assetCategories]) {
   assert.equal(file.readUInt32BE(20),192,item.id+' icon height')
 }
 assert.equal(new Set(categories.map(x=>x.iconPath)).size,categories.length)
+const illustrations=JSON.parse(fs.readFileSync(path.join(root,'assets/doodles/manifest.json'),'utf8')).illustrations
+for(const name of illustrations) {
+  const file=fs.readFileSync(path.join(root,'assets/doodles',name+'.png'))
+  assert.ok(file.subarray(0,8).equals(pngSignature),name+' is not a PNG')
+  assert.equal(file.readUInt32BE(16),900,name+' illustration width')
+}
 const legacy={name:'我的银行卡',icon:'旧图标',balance:123.45}
 const presented=presentAsset(legacy)
 assert.equal(presented.iconPath,'/assets/doodles/asset-bank-card.png')

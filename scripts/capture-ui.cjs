@@ -2,10 +2,13 @@ const { chromium } = require('playwright')
 const fs = require('node:fs')
 const path = require('node:path')
 const { pathToFileURL } = require('node:url')
-const output = path.resolve(__dirname, '../design/preview')
-const url = pathToFileURL(path.join(output, 'index.html')).href
+const preview = path.resolve(__dirname, '../design/preview')
+const output = path.resolve(process.argv[2] || preview)
+fs.mkdirSync(output,{recursive:true})
+const url = pathToFileURL(path.join(preview, 'index.html')).href
 ;(async () => {
   const browser = await chromium.launch({ headless: true })
+  try {
   const results = []
   for (const width of [393, 320, 430]) {
     const page = await browser.newPage({ viewport: { width, height: width === 320 ? 568 : 852 }, deviceScaleFactor: 2 })
@@ -27,6 +30,7 @@ const url = pathToFileURL(path.join(output, 'index.html')).href
         handwritingApplied:getComputedStyle(document.querySelector('.page')).fontFamily.includes('DodoHand')
       }))
       metrics.expectedBars=['ledger','assets','charts','profile'].includes(name)?1:0
+      if(name==='assets') metrics.wealthCatVisible=await page.locator('.wealth-companion .journal-scene img').evaluate(img=>img.naturalWidth>0 && img.getAttribute('src').endsWith('/cat-wealth.png'))
       if(name==='profile') metrics.brandCorrect=await page.locator('.signoff-title').textContent().then(t=>t==='哆哆记账') && await page.locator('.signoff-credit').textContent().then(t=>t==='呼噜厨房出品')
       results.push({ page: name, ...metrics, errors: [...errors] })
     }
@@ -113,16 +117,19 @@ const url = pathToFileURL(path.join(output, 'index.html')).href
       const circleNode=document.querySelector('.tx-delete-circle')
       const circle=circleNode.getBoundingClientRect()
       const style=getComputedStyle(circleNode)
-      const lid=document.querySelector('.trash-lid').getBoundingClientRect()
-      const body=document.querySelector('.trash-body').getBoundingClientRect()
+      const eraserNode=document.querySelector('.eraser-icon')
+      const eraser=eraserNode.getBoundingClientRect()
       const iconCenter=document.elementFromPoint(circle.left+circle.width/2,circle.top+circle.height/2)
       return {page:photos ? 'ledger-swipe' : 'ledger-swipe-plain',width:innerWidth,scrollWidth:document.documentElement.scrollWidth,
         revealWidth:row.right-content.right,deleteWidth:button.width,
         deleteCircle:Math.abs(circle.width-circle.height)<1 && style.borderRadius==='50%',
+        deleteDiameter:circle.width,
+        deleteHitSize:button.width>=44 && button.height>=44,
         deleteRed:style.backgroundColor==='rgb(220, 75, 75)',
         deleteFits:circle.left>=content.right && circle.right<=row.right && circle.top>=row.top && circle.bottom<=row.bottom,
         deleteTouchable:!!iconCenter?.closest('.tx-delete'),
-        trashVisible:lid.width>0 && body.height>0 && getComputedStyle(document.querySelector('.trash-lid')).backgroundColor==='rgb(255, 255, 255)' && getComputedStyle(document.querySelector('.trash-body')).borderLeftColor==='rgb(255, 255, 255)',
+        eraserVisible:eraser.width>0 && eraser.height>0 && getComputedStyle(eraserNode).borderLeftColor==='rgb(255, 255, 255)' && getComputedStyle(document.querySelector('.eraser-end')).backgroundColor==='rgb(255, 255, 255)',
+        eraserFits:eraser.left>=circle.left && eraser.right<=circle.right && eraser.top>=circle.top && eraser.bottom<=circle.bottom,
         brokenImages:[...document.images].filter(img=>!img.naturalWidth).map(img=>img.src)}
     },photos))
     }
@@ -133,15 +140,16 @@ const url = pathToFileURL(path.join(output, 'index.html')).href
   }
   fs.writeFileSync(path.join(output,'browser-audit.json'), JSON.stringify(results,null,2))
   const board = await browser.newPage({ viewport:{width:1240,height:1040}, deviceScaleFactor:1 })
-  await board.goto(pathToFileURL(path.join(output,'../preview-board.html')).href)
+  await board.goto(pathToFileURL(path.join(preview,'../preview-board.html')).href)
+  await board.evaluate(base=>{for(const img of document.images)img.src=base+img.getAttribute('src').split('/').pop()},pathToFileURL(output+path.sep).href)
   await board.evaluate(() => Promise.all([...document.images].map(img => img.decode())))
   await board.screenshot({path:path.join(output,'overview.png'),fullPage:true})
   await board.close()
   console.log(JSON.stringify(results,null,2))
-  await browser.close()
   if (results.some(r => r.scrollWidth > r.width + 1 || r.brokenImages?.length || r.errors?.length ||
     r.finishVisible === false || r.hidden === false || (r.expectedBars!==undefined && r.barCount!==r.expectedBars) ||
     r.keypadGap>1 || r.labelOffsetX>2 || r.labelOffsetY>2 || r.columnWidthDifference>1 || r.keypadRightOverflow>1 ||
-    r.labelFits===false || r.deleteCircle===false || r.deleteRed===false || r.deleteFits===false || r.deleteTouchable===false || r.trashVisible===false || r.brandCorrect===false ||
+    r.labelFits===false || r.deleteCircle===false || r.deleteRed===false || r.deleteFits===false || r.deleteTouchable===false || r.eraserVisible===false || r.eraserFits===false || r.deleteHitSize===false || r.wealthCatVisible===false || r.brandCorrect===false ||
     r.dateFillsCell===false || r.datePickerCovers===false || r.dateTouchable===false || r.handwritingLoaded===false || r.handwritingApplied===false)) process.exitCode = 1
+  } finally { await browser.close() }
 })().catch(error => { console.error(error); process.exitCode = 1 })

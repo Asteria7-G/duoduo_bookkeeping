@@ -23,6 +23,7 @@
     "handwritingLoaded": true,
     "handwritingApplied": true,
     "expectedBars": 1,
+    "wealthCatVisible": true,
     "errors": []
   },
   {
@@ -193,10 +194,13 @@
     "revealWidth": 64,
     "deleteWidth": 64,
     "deleteCircle": true,
+    "deleteDiameter": 36,
+    "deleteHitSize": true,
     "deleteRed": true,
     "deleteFits": true,
     "deleteTouchable": true,
-    "trashVisible": true,
+    "eraserVisible": true,
+    "eraserFits": true,
     "brokenImages": []
   },
   {
@@ -206,10 +210,13 @@
     "revealWidth": 64,
     "deleteWidth": 64,
     "deleteCircle": true,
+    "deleteDiameter": 36,
+    "deleteHitSize": true,
     "deleteRed": true,
     "deleteFits": true,
     "deleteTouchable": true,
-    "trashVisible": true,
+    "eraserVisible": true,
+    "eraserFits": true,
     "brokenImages": []
   },
   {
@@ -241,6 +248,7 @@
     "handwritingLoaded": true,
     "handwritingApplied": true,
     "expectedBars": 1,
+    "wealthCatVisible": true,
     "errors": []
   },
   {
@@ -411,10 +419,13 @@
     "revealWidth": 64,
     "deleteWidth": 64,
     "deleteCircle": true,
+    "deleteDiameter": 36,
+    "deleteHitSize": true,
     "deleteRed": true,
     "deleteFits": true,
     "deleteTouchable": true,
-    "trashVisible": true,
+    "eraserVisible": true,
+    "eraserFits": true,
     "brokenImages": []
   },
   {
@@ -424,10 +435,13 @@
     "revealWidth": 64,
     "deleteWidth": 64,
     "deleteCircle": true,
+    "deleteDiameter": 36,
+    "deleteHitSize": true,
     "deleteRed": true,
     "deleteFits": true,
     "deleteTouchable": true,
-    "trashVisible": true,
+    "eraserVisible": true,
+    "eraserFits": true,
     "brokenImages": []
   },
   {
@@ -459,6 +473,7 @@
     "handwritingLoaded": true,
     "handwritingApplied": true,
     "expectedBars": 1,
+    "wealthCatVisible": true,
     "errors": []
   },
   {
@@ -629,10 +644,13 @@
     "revealWidth": 64,
     "deleteWidth": 64,
     "deleteCircle": true,
+    "deleteDiameter": 36,
+    "deleteHitSize": true,
     "deleteRed": true,
     "deleteFits": true,
     "deleteTouchable": true,
-    "trashVisible": true,
+    "eraserVisible": true,
+    "eraserFits": true,
     "brokenImages": []
   },
   {
@@ -642,10 +660,13 @@
     "revealWidth": 64,
     "deleteWidth": 64,
     "deleteCircle": true,
+    "deleteDiameter": 36,
+    "deleteHitSize": true,
     "deleteRed": true,
     "deleteFits": true,
     "deleteTouchable": true,
-    "trashVisible": true,
+    "eraserVisible": true,
+    "eraserFits": true,
     "brokenImages": []
   },
   {

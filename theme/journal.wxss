@@ -43,6 +43,7 @@ page .companion-kicker { font-size:17rpx; letter-spacing:1rpx; color:#97785d; }
 page .ledger-companion { margin-top:28rpx; min-height:206rpx; }
 page .journal-scene { right:0; top:0; width:360rpx; height:206rpx; }
 page .journal-scene image { position:static; width:100%; height:100%; }
+page .wealth-companion { min-height:206rpx; }
 page .detail-title { font-weight:400; margin-top:34rpx; }
 page .detail-dot { background:#bd8e80; transform:rotate(-10deg); border-radius:2rpx; width:14rpx; height:14rpx; }
 page .day-card { box-shadow:3rpx 4rpx 0 #e2d5bf; }
