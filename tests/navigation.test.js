@@ -10,7 +10,8 @@ global.wx={
 }
 const config=JSON.parse(fs.readFileSync(path.join(root,'app.json'),'utf8'))
 assert.equal(config.tabBar.custom,false)
-assert.equal(config.usingComponents['app-tab-bar'],'/custom-tab-bar/index')
+assert.equal(config.lazyCodeLoading,'requiredComponents')
+assert.deepEqual(config.usingComponents || {},{})
 const indexes={ledger:0,assets:1,record:2,charts:3,profile:4}
 for(const [name,index] of Object.entries(indexes)) {
   let definition
@@ -23,6 +24,8 @@ for(const [name,index] of Object.entries(indexes)) {
   if(page.onLoad)page.onLoad({})
   page.onShow()
   const markup=fs.readFileSync(path.join(root,'pages',name,'index.wxml'),'utf8')
+  const pageConfig=JSON.parse(fs.readFileSync(path.join(root,'pages',name,'index.json'),'utf8'))
+  if(name!=='record')assert.equal(pageConfig.usingComponents['app-tab-bar'],'/custom-tab-bar/index')
   const bars=[...markup.matchAll(/<app-tab-bar\s+selected="(\d+)"/g)]
   assert.equal(bars.length,name==='record'?0:1)
   if(bars.length)assert.equal(Number(bars[0][1]),index)

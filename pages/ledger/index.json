@@ -1,1 +1,1 @@
-{ "navigationBarTitleText": "账本" }
+{ "navigationBarTitleText": "账本", "usingComponents": { "app-tab-bar": "/custom-tab-bar/index", "calico-cat": "/components/calico-cat/index", "brand-wordmark": "/components/brand-wordmark/index" } }

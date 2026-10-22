@@ -46,7 +46,7 @@ function avatarMetrics() {
           const host=document.querySelector('calico-cat'),body=host.querySelector('.cat-body')
           const scene=host.querySelector('img[src*="calico-scene-"]')
           const sceneName=scene.getAttribute('src').split('calico-scene-')[1].split('.')[0]
-          return {sameCalico:body.naturalWidth===600 && body.src.endsWith('calico-body-'+sceneName+'.png'),catScene:sceneName,
+          return {sameCalico:body.naturalWidth===480 && body.src.endsWith('calico-body-'+sceneName+'.png'),catScene:sceneName,
             catPose:body.getAttribute('src'),catGesture:getComputedStyle(host.querySelector('.cat-paw')).animationName,
             animatedCat:['.cat-breath','.cat-tail','.cat-paw'].every(selector=>host.querySelector(selector).getAnimations().length>0)}
         }))
@@ -193,7 +193,7 @@ function avatarMetrics() {
         deleteNoBackground:style.backgroundColor==='rgba(0, 0, 0, 0)',
         deleteFits:button.left>=content.right && button.right<=row.right && button.top>=row.top && button.bottom<=row.bottom,
         deleteTouchable:!!iconCenter?.closest('.tx-delete'),
-        eraserVisible:eraser.width>0 && eraser.height>0 && eraserNode.naturalWidth===192,
+        eraserVisible:eraser.width>0 && eraser.height>0 && eraserNode.naturalWidth===144,
         eraserFits:eraser.left>=button.left && eraser.right<=button.right && eraser.top>=button.top && eraser.bottom<=button.bottom,
         brokenImages:[...document.images].filter(img=>!img.naturalWidth).map(img=>img.src)}
     },photos))

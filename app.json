@@ -17,11 +17,7 @@
     "backgroundColor": "#F7F7EF",
     "backgroundTextStyle": "dark"
   },
-  "usingComponents": {
-    "app-tab-bar": "/custom-tab-bar/index",
-    "calico-cat": "/components/calico-cat/index",
-    "brand-wordmark": "/components/brand-wordmark/index"
-  },
+  "lazyCodeLoading": "requiredComponents",
   "tabBar": {
     "custom": false,
     "color": "#716F63",

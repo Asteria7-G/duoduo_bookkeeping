@@ -1,0 +1,21 @@
+{
+  "measurement": "local source inventory, not the compiled WeChat package",
+  "sourceBytes": 1096723,
+  "sourceMiB": 1.046,
+  "mediaBytes": 202705,
+  "mediaKiB": 198,
+  "mediaFiles": 71,
+  "sourceBudgetBytes": 1572864,
+  "mediaBudgetBytes": 204800,
+  "lazyCodeLoading": "requiredComponents",
+  "sourceBudgetPassed": true,
+  "mediaBudgetPassed": true,
+  "componentsDeclaredPerPage": true,
+  "compiledPackageRequiresDevToolsCheck": true,
+  "excludedHistoricalAssets": [
+    "assets/brand/",
+    "assets/icons/",
+    "assets/doodles/cat-journal.png",
+    "assets/doodles/cat-wealth.png"
+  ]
+}

@@ -64,12 +64,16 @@ function svg(body, width=64,height=64) {
   return `<svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${height}" viewBox="0 0 ${width} ${height}"><g stroke="${ink}" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">${body}</g></svg>`
 }
 async function write(name, text, width) {
-  fs.writeFileSync(path.join(source,name+'.svg'),text)
-  await sharp(Buffer.from(text)).resize({width}).png({palette:true}).toFile(path.join(out,name+'.png'))
+  const editable=path.join(source,name+'.svg')
+  if(!fs.existsSync(editable) || fs.readFileSync(editable,'utf8').replace(/\r\n/g,'\n')!==text.replace(/\r\n/g,'\n'))fs.writeFileSync(editable,text)
+  const temporary=path.join(root,'design/preview/asset-build',name+'.png')
+  fs.mkdirSync(path.dirname(temporary),{recursive:true})
+  await sharp(Buffer.from(text)).resize({width}).png({palette:true,colours:64,dither:0,compressionLevel:9,effort:10}).toFile(temporary)
+  fs.renameSync(temporary,path.join(out,name+'.png'))
 }
 ;(async()=>{
   fs.mkdirSync(out,{recursive:true});fs.mkdirSync(source,{recursive:true})
-  for(const [name,body] of Object.entries(icons)) await write(name,svg(body),192)
+  for(const [name,body] of Object.entries(icons)) await write(name,svg(body),144)
   // A fresh illustration: a cat keeping a little journal on its desk.
   const scene = `<path d="M25 164 Q145 154 285 164" fill="none"/>
     <path d="M35 146 L150 146 L150 161 L34 161Z" fill="${sage}"/>
@@ -123,6 +127,6 @@ async function write(name, text, width) {
   await write('cat-wealth',svg(wealth,300,185),900)
   const manifestPath=path.join(out,'manifest.json')
   const previous=fs.existsSync(manifestPath)?JSON.parse(fs.readFileSync(manifestPath,'utf8')):{}
-  fs.writeFileSync(manifestPath,JSON.stringify({...previous,icons:Object.keys(icons),illustration:'cat-journal',illustrations:['cat-journal','cat-wealth'],style:'original ink and pastel journal doodles'},null,2)+'\n')
+  fs.writeFileSync(manifestPath,JSON.stringify({...previous,icons:Object.keys(icons),iconSize:144,illustration:'cat-journal',illustrations:['cat-journal','cat-wealth'],style:'original ink and pastel journal doodles'},null,2)+'\n')
   console.log('Generated '+Object.keys(icons).length+' hand-drawn icons and two cat illustrations')
 })().catch(e=>{console.error(e);process.exitCode=1})

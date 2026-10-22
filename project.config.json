@@ -2,12 +2,46 @@
   "description": "喵扑记账 - 微信小程序",
   "packOptions": {
     "ignore": [
-      { "type": "folder", "value": "prototype" },
-      { "type": "folder", "value": "demo" },
-      { "type": "folder", "value": "design" },
-      { "type": "folder", "value": "tests" },
-      { "type": "folder", "value": "scripts" },
-      { "type": "folder", "value": "node_modules" }
+      {
+        "type": "folder",
+        "value": "prototype"
+      },
+      {
+        "type": "folder",
+        "value": "demo"
+      },
+      {
+        "type": "folder",
+        "value": "design"
+      },
+      {
+        "type": "folder",
+        "value": "tests"
+      },
+      {
+        "type": "folder",
+        "value": "scripts"
+      },
+      {
+        "type": "folder",
+        "value": "node_modules"
+      },
+      {
+        "type": "folder",
+        "value": "assets/brand"
+      },
+      {
+        "type": "folder",
+        "value": "assets/icons"
+      },
+      {
+        "type": "file",
+        "value": "assets/doodles/cat-journal.png"
+      },
+      {
+        "type": "file",
+        "value": "assets/doodles/cat-wealth.png"
+      }
     ]
   },
   "setting": {
@@ -15,7 +49,9 @@
     "es6": true,
     "enhance": true,
     "postcss": true,
-    "minified": true
+    "minified": true,
+    "minifyWXSS": true,
+    "minifyWXML": true
   },
   "compileType": "miniprogram",
   "libVersion": "2.30.4",

@@ -20,17 +20,17 @@ const body=`<defs><clipPath id="calico-head"><path d="${head}"/></clipPath><clip
   <path d="M135 74 Q141 70 147 74 L141 79Z" fill="${rose}"/><path d="M141 79 Q135 87 129 81 M141 79 Q148 87 155 81" fill="none"/>
   <path d="M112 149 L112 153 M119 149 L119 154 M163 149 L163 154 M170 148 L170 153" fill="none" stroke-width="1.2"/>`
 const eyesOpen='<circle cx="126" cy="66" r="2.1" fill="'+ink+'" stroke="none"/><circle cx="156" cy="66" r="2.1" fill="'+ink+'" stroke="none"/>'
-async function write(name,text,width=900){fs.writeFileSync(path.join(source,name+'.svg'),text);await sharp(Buffer.from(text)).resize({width}).png({palette:true}).toFile(path.join(out,name+'.png'))}
+async function write(name,text,width=900){const editable=path.join(source,name+'.svg');if(!fs.existsSync(editable)||fs.readFileSync(editable,'utf8').replace(/\r\n/g,'\n')!==text.replace(/\r\n/g,'\n'))fs.writeFileSync(editable,text);const temporary=path.join(root,'design/preview/asset-build',name+'.png');fs.mkdirSync(path.dirname(temporary),{recursive:true});await sharp(Buffer.from(text)).resize({width}).png({palette:true,colours:64,dither:0,compressionLevel:9,effort:10}).toFile(temporary);fs.renameSync(temporary,path.join(out,name+'.png'))}
 ;(async()=>{
   fs.mkdirSync(out,{recursive:true});fs.mkdirSync(source,{recursive:true})
   const sceneArt=require('./calico-scenes.cjs'),layers=[]
   for(const [scene,art] of Object.entries(sceneArt))for(const [layer,content] of Object.entries(art)) {
     const name='calico-'+layer+'-'+scene
-    await write(name,svg(content),600);layers.push(name)
+    await write(name,svg(content),480);layers.push(name)
   }
   await write('calico-avatar',svg('<g transform="translate(-66,-14) scale(.7)">'+body+eyesOpen+'</g>',64,64),192)
   const manifestPath=path.join(out,'manifest.json'),manifest=JSON.parse(fs.readFileSync(manifestPath,'utf8'))
-  manifest.calico={identity:'miaopu-calico',markings:'orange left forehead, dark right ear, orange flank and dark-tipped tail',layers,scenes:['journal','wealth','record'],width:600,avatar:'calico-avatar',gestures:{journal:'look down and write in an open journal',wealth:'smile and hug a coin behind the treasure chest',record:'peek over a notebook, wink and tap a pencil'}}
+  manifest.calico={identity:'miaopu-calico',markings:'orange left forehead, dark right ear, orange flank and dark-tipped tail',layers,scenes:['journal','wealth','record'],width:480,avatar:'calico-avatar',gestures:{journal:'look down and write in an open journal',wealth:'smile and hug a coin behind the treasure chest',record:'peek over a notebook, wink and tap a pencil'}}
   fs.writeFileSync(manifestPath,JSON.stringify(manifest,null,2)+'\n')
   console.log('Built three individual calico poses with foreground props and animated paws')
 })().catch(error=>{console.error(error);process.exitCode=1})

@@ -1,1 +1,1 @@
-{ "navigationBarTitleText": "资产" }
+{ "navigationBarTitleText": "资产", "usingComponents": { "app-tab-bar": "/custom-tab-bar/index", "calico-cat": "/components/calico-cat/index" } }

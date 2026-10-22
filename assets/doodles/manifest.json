@@ -87,12 +87,13 @@
       "wealth",
       "record"
     ],
-    "width": 600,
+    "width": 480,
     "avatar": "calico-avatar",
     "gestures": {
       "journal": "look down and write in an open journal",
       "wealth": "smile and hug a coin behind the treasure chest",
       "record": "peek over a notebook, wink and tap a pencil"
     }
-  }
+  },
+  "iconSize": 144
 }

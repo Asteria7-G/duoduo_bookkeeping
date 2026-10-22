@@ -1,1 +1,1 @@
-{ "navigationBarTitleText": "图表", "usingComponents": { "progress-bar": "/components/progress-bar/index" } }
+{ "navigationBarTitleText": "图表", "usingComponents": { "app-tab-bar": "/custom-tab-bar/index", "progress-bar": "/components/progress-bar/index" } }
