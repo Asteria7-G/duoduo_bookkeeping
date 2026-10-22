@@ -1,11 +1,36 @@
 .calico-scene { position:relative; width:100%; height:100%; overflow:hidden; pointer-events:none; }
 .calico-scene .scene-layer,.calico-scene .cat-breath { position:absolute; display:block; top:0; left:0; width:100%; height:100%; }
-.cat-breath { transform-origin:48% 84%; animation:calico-breathe 3.6s ease-in-out infinite; }
-.cat-tail { transform-origin:59% 76%; animation:calico-tail 2.8s ease-in-out infinite; }
-.cat-eyes-open { opacity:1; animation:calico-eyes-open 6.8s linear infinite; }
-.cat-eyes-closed { opacity:0; animation:calico-eyes-closed 6.8s linear infinite; }
-@keyframes calico-breathe { 0%,100% { transform:translateY(0) scaleY(1); } 50% { transform:translateY(-1px) scaleY(1.018); } }
-@keyframes calico-tail { 0%,100% { transform:rotate(-7deg); } 50% { transform:rotate(9deg); } }
-@keyframes calico-eyes-open { 0%,41%,46%,90%,95%,100% { opacity:1; } 42%,45%,91%,94% { opacity:0; } }
-@keyframes calico-eyes-closed { 0%,41%,46%,90%,95%,100% { opacity:0; } 42%,45%,91%,94% { opacity:1; } }
-@media (prefers-reduced-motion:reduce) { .cat-breath,.cat-tail,.cat-eyes-open,.cat-eyes-closed { animation:none; } }
+.cat-eyes-open { opacity:1; }
+.cat-eyes-closed { opacity:0; }
+/* Still foregrounds occlude the body; each paw gestures around its own prop. */
+.calico-journal .cat-breath { transform-origin:48% 65%; animation:journal-nod 5.2s ease-in-out infinite; }
+.calico-journal .cat-tail { transform-origin:61% 75%; animation:journal-swish 6.2s ease-in-out infinite; }
+.calico-journal .cat-paw { transform-origin:57% 63%; animation:journal-write 2.6s ease-in-out infinite; }
+.calico-journal .cat-eyes-open { animation:journal-open 7.4s linear infinite; }
+.calico-journal .cat-eyes-closed { animation:journal-blink 7.4s linear infinite; }
+.calico-wealth .cat-breath { transform-origin:53% 62%; animation:wealth-sigh 6.4s ease-in-out infinite; }
+.calico-wealth .cat-tail { transform-origin:69% 75%; animation:wealth-curl 7.6s ease-in-out infinite; }
+.calico-wealth .cat-paw { transform-origin:60% 58%; animation:wealth-hug 6.4s ease-in-out infinite; }
+.calico-wealth .cat-eyes-open { animation:wealth-open 9s linear infinite; }
+.calico-wealth .cat-eyes-closed { animation:wealth-blink 9s linear infinite; }
+.calico-record .cat-breath { transform-origin:47% 60%; animation:record-peek 4.6s ease-in-out infinite; }
+.calico-record .cat-tail { transform-origin:52% 77%; animation:record-flick 4.6s ease-in-out infinite; }
+.calico-record .cat-paw { transform-origin:57% 58%; animation:record-tap 4.6s ease-in-out infinite; }
+.calico-record .cat-eyes-open { animation:record-open 4.6s linear infinite; }
+.calico-record .cat-eyes-closed { animation:record-wink 4.6s linear infinite; }
+@keyframes journal-nod { 0%,100% { transform:rotate(0); } 45%,60% { transform:translateY(1px) rotate(2deg); } }
+@keyframes journal-swish { 0%,100% { transform:rotate(-3deg); } 50% { transform:rotate(4deg); } }
+@keyframes journal-write { 0%,55%,100% { transform:rotate(0); } 12%,36% { transform:translateX(1px) rotate(4deg); } 24%,48% { transform:rotate(-3deg); } }
+@keyframes journal-open { 0%,69%,74%,100% { opacity:1; } 70%,73% { opacity:0; } }
+@keyframes journal-blink { 0%,69%,74%,100% { opacity:0; } 70%,73% { opacity:1; } }
+@keyframes wealth-sigh { 0%,100% { transform:translateY(0) rotate(0); } 50% { transform:translateY(-1px) rotate(-2deg); } }
+@keyframes wealth-curl { 0%,65%,100% { transform:rotate(0); } 30% { transform:rotate(-9deg); } }
+@keyframes wealth-hug { 0%,100% { transform:rotate(0); } 40%,60% { transform:translate(-1px,-1px) rotate(-7deg); } }
+@keyframes wealth-open { 0%,81%,88%,100% { opacity:1; } 82%,87% { opacity:0; } }
+@keyframes wealth-blink { 0%,81%,88%,100% { opacity:0; } 82%,87% { opacity:1; } }
+@keyframes record-peek { 0%,75%,100% { transform:translateY(1px) rotate(0); } 30%,55% { transform:translateY(-3px) rotate(3deg); } }
+@keyframes record-flick { 0%,30%,65%,100% { transform:rotate(-3deg); } 40%,55% { transform:rotate(10deg); } 48% { transform:rotate(0); } }
+@keyframes record-tap { 0%,25%,70%,100% { transform:rotate(0); } 35%,52% { transform:rotate(7deg); } 43%,60% { transform:rotate(-3deg); } }
+@keyframes record-open { 0%,49%,60%,100% { opacity:1; } 50%,59% { opacity:0; } }
+@keyframes record-wink { 0%,49%,60%,100% { opacity:0; } 50%,59% { opacity:1; } }
+@media (prefers-reduced-motion:reduce) { .calico-scene .cat-breath,.calico-scene .cat-tail,.calico-scene .cat-paw,.calico-scene .cat-eyes-open,.calico-scene .cat-eyes-closed { animation:none; } }

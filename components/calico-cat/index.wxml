@@ -1,9 +1,11 @@
-<view class="calico-scene" aria-label="{{label}}" aria-role="img">
+<view class="calico-scene calico-{{scene}}" aria-label="{{label}}" aria-role="img">
   <image class="scene-layer" src="/assets/doodles/calico-scene-{{scene}}.png" mode="aspectFit" aria-hidden="true"/>
-  <image class="cat-tail scene-layer" src="/assets/doodles/calico-tail.png" mode="aspectFit" aria-hidden="true"/>
+  <image class="cat-tail scene-layer" src="/assets/doodles/calico-tail-{{scene}}.png" mode="aspectFit" aria-hidden="true"/>
   <view class="cat-breath">
-    <image class="scene-layer" src="/assets/doodles/calico-body.png" mode="aspectFit" aria-hidden="true"/>
-    <image class="cat-eyes-open scene-layer" src="/assets/doodles/calico-eyes-open.png" mode="aspectFit" aria-hidden="true"/>
-    <image class="cat-eyes-closed scene-layer" src="/assets/doodles/calico-eyes-closed.png" mode="aspectFit" aria-hidden="true"/>
+    <image class="cat-body scene-layer" src="/assets/doodles/calico-body-{{scene}}.png" mode="aspectFit" aria-hidden="true"/>
+    <image class="cat-eyes-open scene-layer" src="/assets/doodles/calico-eyes-open-{{scene}}.png" mode="aspectFit" aria-hidden="true"/>
+    <image class="cat-eyes-closed scene-layer" src="/assets/doodles/calico-eyes-closed-{{scene}}.png" mode="aspectFit" aria-hidden="true"/>
   </view>
+  <image class="cat-foreground scene-layer" src="/assets/doodles/calico-foreground-{{scene}}.png" mode="aspectFit" aria-hidden="true"/>
+  <image class="cat-paw scene-layer" src="/assets/doodles/calico-paw-{{scene}}.png" mode="aspectFit" aria-hidden="true"/>
 </view>

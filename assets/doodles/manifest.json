@@ -60,16 +60,39 @@
     "identity": "dodo-calico",
     "markings": "orange left forehead, dark right ear, orange flank and dark-tipped tail",
     "layers": [
-      "calico-body",
-      "calico-tail",
-      "calico-eyes-open",
-      "calico-eyes-closed"
+      "calico-scene-journal",
+      "calico-tail-journal",
+      "calico-body-journal",
+      "calico-eyes-open-journal",
+      "calico-eyes-closed-journal",
+      "calico-foreground-journal",
+      "calico-paw-journal",
+      "calico-scene-wealth",
+      "calico-tail-wealth",
+      "calico-body-wealth",
+      "calico-eyes-open-wealth",
+      "calico-eyes-closed-wealth",
+      "calico-foreground-wealth",
+      "calico-paw-wealth",
+      "calico-scene-record",
+      "calico-tail-record",
+      "calico-body-record",
+      "calico-eyes-open-record",
+      "calico-eyes-closed-record",
+      "calico-foreground-record",
+      "calico-paw-record"
     ],
     "scenes": [
       "journal",
       "wealth",
       "record"
     ],
-    "avatar": "calico-avatar"
+    "width": 600,
+    "avatar": "calico-avatar",
+    "gestures": {
+      "journal": "look down and write in an open journal",
+      "wealth": "smile and hug a coin behind the treasure chest",
+      "record": "peek over a notebook, wink and tap a pencil"
+    }
   }
 }

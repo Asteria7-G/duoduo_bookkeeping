@@ -25,10 +25,15 @@ for(const name of illustrations) {
   assert.equal(file.readUInt32BE(16),900,name+' illustration width')
 }
 const calico=JSON.parse(fs.readFileSync(path.join(root,'assets/doodles/manifest.json'),'utf8')).calico
-for(const name of [...calico.layers,...calico.scenes.map(scene=>'calico-scene-'+scene),calico.avatar]) {
+for(const name of [...calico.layers,calico.avatar]) {
   const file=fs.readFileSync(path.join(root,'assets/doodles',name+'.png'))
   assert.ok(file.subarray(0,8).equals(pngSignature),name+' is not a PNG')
-  assert.equal(file.readUInt32BE(16),name===calico.avatar?192:900)
+  assert.equal(file.readUInt32BE(16),name===calico.avatar?192:calico.width)
+  assert.equal(file.readUInt32BE(20),name===calico.avatar?192:370)
+}
+for(const layer of ['body','eyes-open','eyes-closed','foreground','paw']) {
+  const hashes=calico.scenes.map(scene=>crypto.createHash('sha256').update(fs.readFileSync(path.join(root,'assets/doodles','calico-'+layer+'-'+scene+'.png'))).digest('hex'))
+  assert.equal(new Set(hashes).size,3,'Each scene needs its own '+layer)
 }
 const legacy={name:'我的银行卡',icon:'旧图标',balance:123.45}
 const presented=presentAsset(legacy)

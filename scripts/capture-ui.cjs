@@ -43,27 +43,34 @@ function avatarMetrics() {
       metrics.expectedBars=['ledger','assets','charts','profile'].includes(name)?1:0
       if(['ledger','assets','record'].includes(name)) {
         Object.assign(metrics,await page.evaluate(()=>{
-          const host=document.querySelector('calico-cat'),body=host.querySelector('img[src$="calico-body.png"]')
+          const host=document.querySelector('calico-cat'),body=host.querySelector('.cat-body')
           const scene=host.querySelector('img[src*="calico-scene-"]')
-          return {sameCalico:body.naturalWidth===900,catScene:scene.getAttribute('src').split('calico-scene-')[1].split('.')[0],
-            animatedCat:host.querySelector('.cat-breath').getAnimations().length>0 && host.querySelector('.cat-tail').getAnimations().length>0}
+          const sceneName=scene.getAttribute('src').split('calico-scene-')[1].split('.')[0]
+          return {sameCalico:body.naturalWidth===600 && body.src.endsWith('calico-body-'+sceneName+'.png'),catScene:sceneName,
+            catPose:body.getAttribute('src'),catGesture:getComputedStyle(host.querySelector('.cat-paw')).animationName,
+            animatedCat:['.cat-breath','.cat-tail','.cat-paw'].every(selector=>host.querySelector(selector).getAnimations().length>0)}
         }))
         Object.assign(metrics,await page.evaluate(async()=>{
           const breath=document.querySelector('.cat-breath'),tail=document.querySelector('.cat-tail')
-          const open=document.querySelector('.cat-eyes-open'),closed=document.querySelector('.cat-eyes-closed')
-          const animations=[breath,tail,open,closed].map(node=>node.getAnimations()[0])
+          const open=document.querySelector('.cat-eyes-open'),closed=document.querySelector('.cat-eyes-closed'),paw=document.querySelector('.cat-paw')
+          const scene=document.querySelector('.calico-scene').className.split(' ').find(name=>name!=='calico-scene').replace('calico-','')
+          const blink={journal:.715,wealth:.85,record:.55}[scene]
+          const animations=[breath,tail,open,closed,paw].map(node=>node.getAnimations()[0])
           for(const animation of animations){animation.pause();animation.currentTime=0}
           await new Promise(requestAnimationFrame)
-          const first=[getComputedStyle(breath).transform,getComputedStyle(tail).transform,getComputedStyle(open).opacity]
-          animations[0].currentTime=1800;animations[1].currentTime=1400;animations[2].currentTime=2924;animations[3].currentTime=2924
+          const first=[getComputedStyle(breath).transform,getComputedStyle(tail).transform,getComputedStyle(open).opacity,getComputedStyle(paw).transform]
+          const samples=[.5,scene==='wealth'?.3:scene==='record'?.4:.5,blink,blink,scene==='journal'?.12:scene==='record'?.35:.5]
+          animations.forEach((animation,i)=>{animation.currentTime=animation.effect.getTiming().duration*samples[i]})
           await new Promise(requestAnimationFrame)
-          const result={catBreathes:first[0]!==getComputedStyle(breath).transform,catWagsTail:first[1]!==getComputedStyle(tail).transform,
-            catBlinks:first[2]==='1' && getComputedStyle(open).opacity==='0' && getComputedStyle(closed).opacity==='1'}
+          const foreground=document.querySelector('.cat-foreground')
+          const result={catBodyMoves:first[0]!==getComputedStyle(breath).transform,catWagsTail:first[1]!==getComputedStyle(tail).transform,
+            catBlinks:first[2]==='1' && getComputedStyle(open).opacity==='0' && getComputedStyle(closed).opacity==='1',
+            catPropInteraction:first[3]!==getComputedStyle(paw).transform && !!(breath.compareDocumentPosition(foreground)&Node.DOCUMENT_POSITION_FOLLOWING) && !!(foreground.compareDocumentPosition(paw)&Node.DOCUMENT_POSITION_FOLLOWING)}
           for(const animation of animations)animation.play()
           return result
         }))
         await page.emulateMedia({reducedMotion:'reduce'})
-        metrics.catReducedMotion=await page.evaluate(()=>getComputedStyle(document.querySelector('.cat-tail')).animationName==='none')
+        metrics.catReducedMotion=await page.evaluate(()=>['.cat-breath','.cat-tail','.cat-paw','.cat-eyes-open','.cat-eyes-closed'].every(selector=>getComputedStyle(document.querySelector(selector)).animationName==='none'))
         await page.emulateMedia({reducedMotion:'no-preference'})
       }
       if(name==='profile') Object.assign(metrics,await page.evaluate(avatarMetrics))
@@ -189,6 +196,11 @@ function avatarMetrics() {
     results.push({ page:'ledger-privacy',width,hidden:await page.locator('.hero-amount').textContent().then(t=>t.includes('••••')) })
     await page.close()
   }
+  for(const width of [320,393,430]) {
+    const cats=results.filter(result=>result.width===width && result.catScene)
+    results.push({page:'calico-variants',width,distinctCatPoses:new Set(cats.map(cat=>cat.catPose)).size===3,
+      distinctCatGestures:new Set(cats.map(cat=>cat.catGesture)).size===3})
+  }
   fs.writeFileSync(path.join(output,'browser-audit.json'), JSON.stringify(results,null,2))
   const board = await browser.newPage({ viewport:{width:1240,height:1040}, deviceScaleFactor:1 })
   await board.goto(pathToFileURL(path.join(preview,'../preview-board.html')).href)
@@ -201,8 +213,8 @@ function avatarMetrics() {
     r.finishVisible === false || r.hidden === false || (r.expectedBars!==undefined && r.barCount!==r.expectedBars) ||
     r.keypadGap>1 || r.labelOffsetX>2 || r.labelOffsetY>2 || r.columnWidthDifference>1 || r.keypadRightOverflow>1 ||
     r.labelFits===false || r.deleteNoBackground===false || r.deleteFits===false || r.deleteTouchable===false || r.eraserVisible===false || r.eraserFits===false || r.deleteHitSize===false || r.brandCorrect===false ||
-    r.sameCalico===false || r.animatedCat===false || r.catBreathes===false || r.catWagsTail===false || r.catBlinks===false || r.catReducedMotion===false || r.squareAvatar===false || r.avatarFits===false || r.vipText===false ||
-    r.roundedAvatar===false || r.avatarCropped===false || r.avatarHitTarget===false || r.ledgerSummaryCorrect===false || r.fundCategoriesCorrect===false ||
+    r.sameCalico===false || r.animatedCat===false || r.catBodyMoves===false || r.catWagsTail===false || r.catBlinks===false || r.catPropInteraction===false || r.catReducedMotion===false || r.squareAvatar===false || r.avatarFits===false || r.vipText===false ||
+    r.roundedAvatar===false || r.avatarCropped===false || r.avatarHitTarget===false || r.ledgerSummaryCorrect===false || r.fundCategoriesCorrect===false || r.distinctCatPoses===false || r.distinctCatGestures===false ||
     r.dateFillsCell===false || r.datePickerCovers===false || r.dateTouchable===false || r.handwritingLoaded===false || r.handwritingApplied===false)) process.exitCode = 1
   } finally { await browser.close() }
 })().catch(error => { console.error(error); process.exitCode = 1 })
