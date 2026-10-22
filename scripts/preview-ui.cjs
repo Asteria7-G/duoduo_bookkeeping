@@ -33,7 +33,8 @@ global.Component = value => { tab = value }
 require(path.join(root, 'custom-tab-bar', 'index.js'))
 const payload = { pages, incomeCategories:require('../store/bookkeeping').incomeCategories, tab: { data: tab.data, css: css('custom-tab-bar/index.wxss'),
   wxml: fs.readFileSync(path.join(root, 'custom-tab-bar/index.wxml'), 'utf8') },
-  calico:{css:css('components/calico-cat/index.wxss'),wxml:fs.readFileSync(path.join(root,'components/calico-cat/index.wxml'),'utf8')} }
+  calico:{css:css('components/calico-cat/index.wxss'),wxml:fs.readFileSync(path.join(root,'components/calico-cat/index.wxml'),'utf8')},
+  wordmark:{css:css('components/brand-wordmark/index.wxss').replace(/:host/g,'brand-wordmark'),wxml:fs.readFileSync(path.join(root,'components/brand-wordmark/index.wxml'),'utf8')} }
 const shell = fs.readFileSync(path.join(__dirname, 'preview-shell.html'), 'utf8')
 fs.writeFileSync(path.join(output, 'index.html'),
   shell.replace('/* PREVIEW_DATA */', 'const source = ' + JSON.stringify(payload).replace(/</g, '\\u003c') + ';'))

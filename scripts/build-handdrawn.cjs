@@ -1,4 +1,4 @@
-/* Original doodles for Dodo. Sources stay editable; PNGs work in native image views. */
+/* Original doodles for Miaopu. Sources stay editable; PNGs work in native image views. */
 const fs = require('node:fs')
 const path = require('node:path')
 const sharp = require('sharp')

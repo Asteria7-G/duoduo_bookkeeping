@@ -30,7 +30,7 @@ async function write(name,text,width=900){fs.writeFileSync(path.join(source,name
   }
   await write('calico-avatar',svg('<g transform="translate(-66,-14) scale(.7)">'+body+eyesOpen+'</g>',64,64),192)
   const manifestPath=path.join(out,'manifest.json'),manifest=JSON.parse(fs.readFileSync(manifestPath,'utf8'))
-  manifest.calico={identity:'dodo-calico',markings:'orange left forehead, dark right ear, orange flank and dark-tipped tail',layers,scenes:['journal','wealth','record'],width:600,avatar:'calico-avatar',gestures:{journal:'look down and write in an open journal',wealth:'smile and hug a coin behind the treasure chest',record:'peek over a notebook, wink and tap a pencil'}}
+  manifest.calico={identity:'miaopu-calico',markings:'orange left forehead, dark right ear, orange flank and dark-tipped tail',layers,scenes:['journal','wealth','record'],width:600,avatar:'calico-avatar',gestures:{journal:'look down and write in an open journal',wealth:'smile and hug a coin behind the treasure chest',record:'peek over a notebook, wink and tap a pencil'}}
   fs.writeFileSync(manifestPath,JSON.stringify(manifest,null,2)+'\n')
   console.log('Built three individual calico poses with foreground props and animated paws')
 })().catch(error=>{console.error(error);process.exitCode=1})

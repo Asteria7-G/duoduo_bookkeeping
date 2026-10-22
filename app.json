@@ -13,13 +13,14 @@
   ],
   "window": {
     "navigationStyle": "custom",
-    "navigationBarTitleText": "哆哆记账",
+    "navigationBarTitleText": "喵扑记账",
     "backgroundColor": "#F7F7EF",
     "backgroundTextStyle": "dark"
   },
   "usingComponents": {
     "app-tab-bar": "/custom-tab-bar/index",
-    "calico-cat": "/components/calico-cat/index"
+    "calico-cat": "/components/calico-cat/index",
+    "brand-wordmark": "/components/brand-wordmark/index"
   },
   "tabBar": {
     "custom": false,

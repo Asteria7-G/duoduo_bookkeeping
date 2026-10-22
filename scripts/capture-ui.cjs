@@ -79,7 +79,14 @@ function avatarMetrics() {
         const labels=[...document.querySelectorAll('.category-option')].map(node=>node.textContent.trim())
         return ['娱乐','教育基金','养老基金','住房基金'].every(label=>labels.includes(label)) && !labels.some(label=>['现金零钱','银行卡','支付账户'].includes(label))
       })
-      if(name==='profile') metrics.brandCorrect=await page.locator('.signoff-title').textContent().then(t=>t==='哆哆记账') && await page.locator('.signoff-credit').textContent().then(t=>t==='呼噜厨房出品')
+      if(name==='profile') metrics.brandCorrect=await page.locator('.signoff-title .wordmark').getAttribute('aria-label').then(t=>t==='喵扑记账') && await page.locator('.signoff-credit').textContent().then(t=>t==='呼噜厨房出品')
+      if(['ledger','profile'].includes(name)) Object.assign(metrics,await page.evaluate(()=>{
+        const mark=document.querySelector('.wordmark'),rect=mark.getBoundingClientRect(),paw=mark.querySelector('.wordmark-paw').getBoundingClientRect()
+        const capsule=document.querySelector('.capsule').getBoundingClientRect()
+        return {wordmarkCorrect:mark.getAttribute('aria-label')==='喵扑记账' && mark.textContent.replace(/\s/g,'')==='苗扑记账' && mark.querySelectorAll('.wordmark-paw').length===1,
+          wordmarkFits:rect.left>=0 && rect.right<=innerWidth && paw.width>0 && paw.height>0 && (document.querySelector('.brand')?rect.right<=capsule.left-8:true)}
+      }))
+      metrics.productBrandCorrect=await page.evaluate(()=>!/(哆哆|DUODUO)/.test(document.querySelector('.page').textContent))
       results.push({ page: name, ...metrics, errors: [...errors] })
       if(name==='profile') {
         for(const [shape,w,h] of [['portrait',240,720],['landscape',720,240]]) {
@@ -214,7 +221,7 @@ function avatarMetrics() {
     r.keypadGap>1 || r.labelOffsetX>2 || r.labelOffsetY>2 || r.columnWidthDifference>1 || r.keypadRightOverflow>1 ||
     r.labelFits===false || r.deleteNoBackground===false || r.deleteFits===false || r.deleteTouchable===false || r.eraserVisible===false || r.eraserFits===false || r.deleteHitSize===false || r.brandCorrect===false ||
     r.sameCalico===false || r.animatedCat===false || r.catBodyMoves===false || r.catWagsTail===false || r.catBlinks===false || r.catPropInteraction===false || r.catReducedMotion===false || r.squareAvatar===false || r.avatarFits===false || r.vipText===false ||
-    r.roundedAvatar===false || r.avatarCropped===false || r.avatarHitTarget===false || r.ledgerSummaryCorrect===false || r.fundCategoriesCorrect===false || r.distinctCatPoses===false || r.distinctCatGestures===false ||
+    r.roundedAvatar===false || r.avatarCropped===false || r.avatarHitTarget===false || r.ledgerSummaryCorrect===false || r.fundCategoriesCorrect===false || r.distinctCatPoses===false || r.distinctCatGestures===false || r.wordmarkCorrect===false || r.wordmarkFits===false || r.productBrandCorrect===false ||
     r.dateFillsCell===false || r.datePickerCovers===false || r.dateTouchable===false || r.handwritingLoaded===false || r.handwritingApplied===false)) process.exitCode = 1
   } finally { await browser.close() }
 })().catch(error => { console.error(error); process.exitCode = 1 })

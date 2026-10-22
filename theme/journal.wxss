@@ -1,4 +1,4 @@
-/* Dodo's cat journal: warm graph paper, pencil outlines and pastel stickers. */
+/* Miaopu's cat journal: warm graph paper, pencil outlines and pastel stickers. */
 page {
   --ink:#55483d; --muted:#796a5a; --mint:#e6ead8; --mint-deep:#697957;
   --cream:#fff8e7; --yellow:#efd18a; --coral:#ad6558; --lavender:#e8dce7;
@@ -9,7 +9,7 @@ page {
 }
 page .page { padding-left:30rpx; padding-right:30rpx; }
 page input,page textarea,page button { font-family:"DodoHand","Kaiti SC","STKaiti","KaiTi",sans-serif; }
-page .big,page .brand-wordmark,page .ledger-name,page .nav-title { font-weight:400; letter-spacing:1rpx; }
+page .big,page .ledger-name,page .nav-title { font-weight:400; letter-spacing:1rpx; }
 page .big { font-size:46rpx; }
 page .eyebrow { font-size:19rpx; letter-spacing:2rpx; color:#8a7159; font-weight:400; }
 page .money { font-weight:400; letter-spacing:0; }

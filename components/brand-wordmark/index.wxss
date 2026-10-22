@@ -1,0 +1,16 @@
+:host { display:inline-block; vertical-align:middle; }
+.wordmark { display:inline-flex; align-items:center; gap:2rpx; height:64rpx; color:#55483d; font-family:inherit; font-weight:400; letter-spacing:0; line-height:1.15; white-space:nowrap; }
+.wordmark-miao { display:flex; align-items:center; }
+.wordmark-glyph { font-size:52rpx; }
+.wordmark-suffix { font-size:48rpx; margin-left:4rpx; }
+.wordmark-paw { position:relative; flex:none; width:30rpx; height:34rpx; margin-right:0; transform:rotate(-12deg); }
+.wordmark .paw-pad { position:absolute; width:20rpx; height:17rpx; left:5rpx; bottom:1rpx; border-radius:60% 60% 42% 42%; background:#d990a1; }
+.wordmark .paw-toe { position:absolute; width:7rpx; height:10rpx; background:#d990a1; border-radius:50%; }
+.wordmark .paw-toe.a { left:0; top:10rpx; transform:rotate(-30deg); }
+.wordmark .paw-toe.b { left:7rpx; top:1rpx; transform:rotate(-12deg); }
+.wordmark .paw-toe.c { right:7rpx; top:0; transform:rotate(12deg); }
+.wordmark .paw-toe.d { right:0; top:9rpx; transform:rotate(30deg); }
+.wordmark-small { height:56rpx; }
+.wordmark-small .wordmark-glyph { font-size:44rpx; }
+.wordmark-small .wordmark-suffix { font-size:42rpx; }
+.wordmark-small .wordmark-paw { transform:scale(.85) rotate(-12deg); margin-right:-2rpx; }

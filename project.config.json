@@ -1,5 +1,5 @@
 {
-  "description": "哆哆记账 - 微信小程序",
+  "description": "喵扑记账 - 微信小程序",
   "packOptions": {
     "ignore": [
       { "type": "folder", "value": "prototype" },
@@ -20,6 +20,6 @@
   "compileType": "miniprogram",
   "libVersion": "2.30.4",
   "appid": "touristappid",
-  "projectname": "duoduo-bookkeeping-miniprogram",
+  "projectname": "miaopu-bookkeeping-miniprogram",
   "condition": {}
 }

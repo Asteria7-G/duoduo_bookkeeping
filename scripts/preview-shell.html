@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>哆哆记账 · 界面预览</title>
+<html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>喵扑记账 · 界面预览</title>
 <style id="page-style"></style><style>
 html,body { margin:0; padding:0; }
 page,view,picker,scroll-view { display:block; } text { display:inline; }
@@ -77,7 +77,12 @@ function render(node, scope, parent) {
   }
   if(tag === 'calico-cat') {
     const host=document.createElement('calico-cat')
-    markup(source.calico.wxml,{scene:interpolate(node.getAttribute('scene') || 'journal',scope),label:interpolate(node.getAttribute('label') || '三花猫哆哆',scope)},host)
+    markup(source.calico.wxml,{scene:interpolate(node.getAttribute('scene') || 'journal',scope),label:interpolate(node.getAttribute('label') || '三花猫喵扑',scope)},host)
+    parent.append(host); return;
+  }
+  if(tag === 'brand-wordmark') {
+    const host=document.createElement('brand-wordmark')
+    markup(source.wordmark.wxml,{size:interpolate(node.getAttribute('size') || 'large',scope)},host)
     parent.append(host); return;
   }
   if(tag === 'switch') {
@@ -111,7 +116,7 @@ function act(handler,element) {
 }
 function draw() {
   const data = source.pages[current], root = document.querySelector('#root'); root.innerHTML='';
-  document.querySelector('#page-style').textContent=(data.css+'\n'+source.tab.css+'\n'+source.calico.css).replace(/ image([ ,.{:>])/g,' img$1').replace(/url\([^)]*\)|(-?[\d.]+)rpx/g,(match,n)=>n===undefined?match:'calc('+n+' * 100vw / 750)');
+  document.querySelector('#page-style').textContent=(data.css+'\n'+source.tab.css+'\n'+source.calico.css + '\n' + source.wordmark.css).replace(/ image([ ,.{:>])/g,' img$1').replace(/url\([^)]*\)|(-?[\d.]+)rpx/g,(match,n)=>n===undefined?match:'calc('+n+' * 100vw / 750)');
   markup(data.wxml,pageData,root);
   const canvas=root.querySelector('canvas');
   if(canvas) {

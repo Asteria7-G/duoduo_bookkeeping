@@ -34,6 +34,6 @@ Page({
     else{this._pendingNickname=null;this._reviewedNickname=null;this.setData({nicknameDraft:hasNickname(this.data.profile)?this.data.profile.nickname:''});wx.showToast({title:'昵称未通过校验，请重新填写',icon:'none'})}
   },
   saveNickname(nickname){store.updateProfile({nickname});this.setData({profile:store.getState().profile,nicknameDraft:nickname})},
-  vip(){if(this.data.profile.vip)return wx.showToast({title:'你已经是哆哆会员'});wx.showModal({title:'升级哆哆会员',content:'演示版本可免费体验会员身份，后续可接入微信支付。',confirmText:'立即体验',confirmColor:'#42583E',success:r=>{if(r.confirm){store.updateProfile({vip:true});this.refresh();wx.showToast({title:'升级成功'})}}})},
+  vip(){if(this.data.profile.vip)return wx.showToast({title:'你已经是喵扑会员'});wx.showModal({title:'升级喵扑会员',content:'演示版本可免费体验会员身份，后续可接入微信支付。',confirmText:'立即体验',confirmColor:'#42583E',success:r=>{if(r.confirm){store.updateProfile({vip:true});this.refresh();wx.showToast({title:'升级成功'})}}})},
   ledgers(){wx.navigateTo({url:'/pages/ledger-manage/index'})},assets(){wx.switchTab({url:'/pages/assets/index'})},settings(){wx.navigateTo({url:'/pages/settings/index'})}
 })

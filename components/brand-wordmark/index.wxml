@@ -1,0 +1,4 @@
+<view class="wordmark wordmark-{{size}}" aria-label="喵扑记账" aria-role="img">
+  <view class="wordmark-miao" aria-hidden="true"><view class="wordmark-paw"><view class="paw-pad"></view><view class="paw-toe a"></view><view class="paw-toe b"></view><view class="paw-toe c"></view><view class="paw-toe d"></view></view><text class="wordmark-glyph">苗</text></view>
+  <text class="wordmark-glyph" aria-hidden="true">扑</text><text class="wordmark-suffix" aria-hidden="true">记账</text>
+</view>

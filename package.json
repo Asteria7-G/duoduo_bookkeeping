@@ -1,8 +1,8 @@
 {
-  "name": "duoduo-bookkeeping-miniprogram",
+  "name": "miaopu-bookkeeping-miniprogram",
   "version": "1.0.0",
   "private": true,
-  "description": "哆哆记账微信小程序",
+  "description": "喵扑记账微信小程序",
   "scripts": {
     "test": "node tests/store.test.js && node tests/page-bindings.test.js && node tests/ledger-presentation.test.js && node tests/account-flows.test.js && node tests/migration.test.js && node tests/photos.test.js && node tests/delete-record.test.js && node tests/navigation.test.js && node tests/handdrawn.test.js && node tests/profile.test.js && node tests/miniprogram-modules.test.js && node tests/devtools-config.test.js",
     "dev:configure": "node scripts/configure-wechat.cjs",

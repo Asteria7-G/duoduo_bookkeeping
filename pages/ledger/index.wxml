@@ -1,13 +1,9 @@
 <view class="page ledger-page">
   <view class="safe-top"></view>
   <view class="nav">
-    <view class="brand" aria-label="哆哆记账">
-      <view class="eyebrow">DUODUO BOOKKEEPING</view>
-      <view class="brand-wordmark" aria-hidden="true">
-        <view class="dodo-character"><view class="paw brand-paw"><view class="paw-pad"></view><view class="paw-toe a"></view><view class="paw-toe b"></view><view class="paw-toe c"></view><view class="paw-toe d"></view></view><text class="dodo-duo">多</text></view>
-        <view class="dodo-character"><view class="paw brand-paw"><view class="paw-pad"></view><view class="paw-toe a"></view><view class="paw-toe b"></view><view class="paw-toe c"></view><view class="paw-toe d"></view></view><text class="dodo-duo">多</text></view>
-        <text class="brand-suffix">记账</text>
-      </view>
+    <view class="brand" aria-label="喵扑记账">
+      <view class="eyebrow">MIAOPU BOOKKEEPING</view>
+      <brand-wordmark/>
     </view>
   </view>
   <view class="ledger-heading">
@@ -35,7 +31,7 @@
   </view>
   <view class="companion ledger-companion">
     <view class="companion-copy"><view class="journal-motto"><text>Little notes,</text><text>lovely days</text></view><view class="companion-title"><text>日常有数，</text><text>生活有猫。</text></view></view>
-    <view class="companion-art journal-scene"><calico-cat scene="journal" label="三花猫哆哆陪你写手账"/></view>
+    <view class="companion-art journal-scene"><calico-cat scene="journal" label="三花猫喵扑陪你写手账"/></view>
   </view>
   <view class="detail-title"><view>本月明细 <text class="detail-dot"></text></view><text class="count">{{groups.length}} 天有记录</text></view>
   <view wx:if="{{groups.length}}">
