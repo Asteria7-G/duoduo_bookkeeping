@@ -1,5 +1,4 @@
 const storage = require('../services/storage')
-const dateUtil = require('../utils/date')
 const { getAssetCategory } = require('../utils/asset-categories')
 
 const expenseCategories = [
@@ -40,24 +39,16 @@ const incomeCategories = [
 function uid(prefix) { return `${prefix}_${Date.now()}_${Math.random().toString(36).slice(2, 7)}` }
 
 function seed() {
-  const today = new Date()
-  const dates = [0, -1, -2].map(offset => dateUtil.formatDate(dateUtil.addDays(today, offset)))
   return {
     version: 3,
     activeLedgerId: 'ledger_daily',
     ledgers: [
-      { id: 'ledger_daily', name: '日常账本', monthlySummary: true, budget: 5000, assetId: 'asset_daily', categoryIds: expenseCategories.map(item => item.id), createdAt: Date.now() }
+      { id: 'ledger_daily', name: '日常账本', monthlySummary: true, budget: 3000, assetId: 'asset_daily', categoryIds: expenseCategories.map(item => item.id), createdAt: Date.now() }
     ],
     assets: [
-      { id: 'asset_daily', name: '日常开支', categoryId:'daily', icon: '👛', balance: 0, color: '#E6EBDD' },
-      { id: 'asset_saving', name: '安心储蓄', categoryId:'savings', icon: '🏦', balance: 0, color: '#EEE8D8' }
+      { id: 'asset_daily', name: '日常钱包', categoryId:'daily', icon: '👛', balance: 0, color: '#E6EBDD' }
     ],
-    transactions: [
-      { id: 'tx_seed_1', type: 'expense', ledgerId: 'ledger_daily', assetId: 'asset_daily', categoryId: 'food', amount: 36, note: '午餐', date: dates[0], photos: [] },
-      { id: 'tx_seed_2', type: 'expense', ledgerId: 'ledger_daily', assetId: 'asset_daily', categoryId: 'transport', amount: 12, note: '地铁', date: dates[0], photos: [] },
-      { id: 'tx_seed_3', type: 'expense', ledgerId: 'ledger_daily', assetId: 'asset_daily', categoryId: 'shopping', amount: 89, note: '生活用品', date: dates[1], photos: [] },
-      { id: 'tx_seed_4', type: 'income', ledgerId: '', assetId: 'asset_daily', categoryId: 'salary', amount: 6800, note: '工资到账', date: dates[2], photos: [] }
-    ],
+    transactions: [],
     profile: { nickname: '微信用户', avatarUrl: '', vip: false },
     settings: { amountHidden: false, vibration: true }
   }
@@ -67,7 +58,9 @@ let state = null
 function clone(value) { return JSON.parse(JSON.stringify(value)) }
 function init() {
   if (!state) {
-    state = storage.load() || seed()
+    const saved = storage.load()
+    state = saved || seed()
+    if (!saved) storage.save(state)
     if (!state.version || state.version < 3) {
       state.ledgers = state.ledgers.map(({ icon, ...ledger }) => ({
         ...ledger, categoryIds: expenseCategories.map(item => item.id)

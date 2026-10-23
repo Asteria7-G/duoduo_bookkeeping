@@ -23,6 +23,11 @@ if (params.has('income') && current==='record') { pageData.type='income'; pageDa
 if (params.has('hidden')) pageData.hidden = true;
 if (params.has('empty')) { pageData.groups = []; pageData.ranking = []; }
 // Layout fixture only; never added to the actual mini program's seed data.
+if (current==='ledger' && (params.has('photos') || params.has('swipe') || params.has('large')) && !pageData.groups.length) {
+  const category=source.pages.record.data.categories[0];
+  pageData.groups=[{date:'2026-10-23',label:'10月23日',weekday:'周五',total:36,totalText:'36.00',
+    items:[{id:'preview-only-expense',category,amount:36,amountText:'36.00',note:'午餐',photos:[]}]}];
+}
 if (params.has('photos') && pageData.groups && pageData.groups.length) {
   pageData.groups[0].items[0].photos=['/assets/brand/kitchen-cats.jpg','/assets/brand/whisk-purr.jpg'];
 }

@@ -1,6 +1,6 @@
 // Shared by seed data, migration, account cards and the account editor.
 const assetCategories = [
-  { id:'daily', label:'日常钱包', defaultName:'日常开支', icon:'👛', color:'#E6EBDD', description:'日常消费与生活开支' },
+  { id:'daily', label:'日常钱包', defaultName:'日常钱包', icon:'👛', color:'#E6EBDD', description:'日常消费与生活开支' },
   { id:'savings', label:'储蓄存款', defaultName:'安心储蓄', icon:'🏦', color:'#EEE8D8', description:'储蓄、定期与长期积累' },
   { id:'entertainment', label:'娱乐', defaultName:'娱乐小金库', icon:'🎟️', color:'#F1DEDC', description:'电影、演出与喜欢的小快乐' },
   { id:'education', label:'教育基金', defaultName:'教育基金', icon:'🎓', color:'#E1E9EC', description:'为学习、成长和未来留一份积蓄' },

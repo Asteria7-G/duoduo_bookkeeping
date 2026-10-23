@@ -6,6 +6,9 @@ const original = require('../store/bookkeeping')
 original.reset()
 const legacy = original.getState()
 legacy.version = 2
+legacy.ledgers[0].budget = 5000
+legacy.assets[0].name = '日常开支'
+legacy.assets.push({ id:'asset_saving', name:'安心储蓄', icon:'☁️', balance:321.45, color:'#EEE8D8' })
 legacy.ledgers[0].icon = '🌿'
 legacy.ledgers[0].categoryIds = ['food']
 for (const asset of legacy.assets) delete asset.categoryId
@@ -25,6 +28,8 @@ assert.equal(state.version, 3)
 assert.equal(state.ledgers.length, legacy.ledgers.length)
 assert.equal(state.assets.length, legacy.assets.length)
 assert.equal(state.activeLedgerId, legacy.activeLedgerId)
+assert.equal(state.ledgers[0].budget, 5000)
+assert.deepEqual(state.assets.map(item => item.name), legacy.assets.map(item => item.name))
 assert.deepEqual(state.transactions, legacy.transactions)
 assert.deepEqual(state.assets.map(item => item.balance), legacy.assets.map(item => item.balance))
 assert.deepEqual(state.assets.map(item => item.color), legacy.assets.map(item => item.color))

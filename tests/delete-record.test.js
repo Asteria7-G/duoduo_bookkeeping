@@ -12,7 +12,9 @@ const expense = store.addTransaction({ type:'expense', ledgerId:'ledger_daily', 
 const income = store.addTransaction({ type:'income', assetId:'asset_daily',
   categoryId:'salary', amount:9.87, date:'2000-03-11' })
 // Rebinding a ledger must never refund a different account.
-store.saveLedger({ id:'ledger_daily', assetId:'asset_saving' })
+store.saveAsset({ name:'测试储蓄', categoryId:'savings', balance:0 })
+const savingsId = store.getState().assets[1].id
+store.saveLedger({ id:'ledger_daily', assetId:savingsId })
 assert.equal(store.removeTransaction(expense.id), true)
 assert.equal(store.getState().assets[0].balance, 109.87)
 assert.equal(store.getState().assets[1].balance, 0)
