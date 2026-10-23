@@ -30,7 +30,15 @@ async function write(name,text,width=900){const editable=path.join(source,name+'
   }
   await write('calico-avatar',svg('<g transform="translate(-66,-14) scale(.7)">'+body+eyesOpen+'</g>',64,64),192)
   const manifestPath=path.join(out,'manifest.json'),manifest=JSON.parse(fs.readFileSync(manifestPath,'utf8'))
-  manifest.calico={identity:'miaopu-calico',markings:'orange left forehead, dark right ear, orange flank and dark-tipped tail',layers,scenes:['journal','wealth','record'],width:480,avatar:'calico-avatar',gestures:{journal:'look down and write in an open journal',wealth:'smile and hug a coin behind the treasure chest',record:'peek over a notebook, wink and tap a pencil'}}
+  manifest.calico={identity:'miaopu-calico',markings:'orange left forehead, dark right ear, orange flank and dark-tipped tail',layers,scenes:['journal','wealth','record'],width:480,avatar:'calico-avatar',gestures:{journal:'look down and write in an open journal',wealth:'smile and hug a coin behind the treasure chest',record:'wear a camera on a neck strap, raise it and get ready to take a photo'}}
+  // A standalone export from the identical vector layers, not an enlargement
+  // of the small runtime PNG. Keep the large export outside the upload package.
+  const exportDir=path.join(root,'design/exports');fs.mkdirSync(exportDir,{recursive:true})
+  const art=sceneArt.record
+  const character=art.tail+art.body+art['eyes-open']+art.foreground+art.paw
+  const large=`<svg xmlns="http://www.w3.org/2000/svg" width="4096" height="4096" viewBox="56 3 180 180"><title>喵扑记账 · 挂相机的三花猫</title><g stroke="${ink}" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">${character}</g></svg>`
+  fs.writeFileSync(path.join(exportDir,'miaopu-camera-cat.svg'),large)
+  await sharp(Buffer.from(large)).png({compressionLevel:9}).toFile(path.join(exportDir,'miaopu-camera-cat-4096.png'))
   fs.writeFileSync(manifestPath,JSON.stringify(manifest,null,2)+'\n')
   console.log('Built three individual calico poses with foreground props and animated paws')
 })().catch(error=>{console.error(error);process.exitCode=1})

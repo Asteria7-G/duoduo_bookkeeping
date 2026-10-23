@@ -1,9 +1,9 @@
 {
   "measurement": "local source inventory, not the compiled WeChat package",
-  "sourceBytes": 1096723,
-  "sourceMiB": 1.046,
-  "mediaBytes": 202705,
-  "mediaKiB": 198,
+  "sourceBytes": 1095520,
+  "sourceMiB": 1.045,
+  "mediaBytes": 201436,
+  "mediaKiB": 196.7,
   "mediaFiles": 71,
   "sourceBudgetBytes": 1572864,
   "mediaBudgetBytes": 204800,

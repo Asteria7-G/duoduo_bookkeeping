@@ -17,7 +17,7 @@ const url=pathToFileURL(path.join(root,'design/preview/index.html')).href
       scenes.push(await page.locator('.calico-scene').evaluate(node=>node.outerHTML))
     }
     await page.evaluate(scenes=>{
-      document.body.innerHTML='<page class="motion-board">'+scenes.map((scene,i)=>'<section><h2>'+['写手账 · 专注','守金库 · 满足','记一笔 · 好奇'][i]+'</h2><div class="motion-scene">'+scene+'</div></section>').join('')+'</page>'
+      document.body.innerHTML='<page class="motion-board">'+scenes.map((scene,i)=>'<section><h2>'+['写手账 · 专注','守金库 · 满足','挂相机 · 准备拍照'][i]+'</h2><div class="motion-scene">'+scene+'</div></section>').join('')+'</page>'
       const style=document.createElement('style')
       style.textContent='html,body{width:960px;height:250px;overflow:hidden}.motion-board{display:flex;min-height:0;width:960px;height:250px;background:#f5efdf}.motion-board section{box-sizing:border-box;width:320px;padding:12px 10px}.motion-board h2{margin:0 0 5px;font-size:18px;text-align:center;font-weight:400}.motion-scene{width:300px;height:185px;background:#fff8e5;border:1px dashed #c1a886;border-radius:12px}'
       document.head.append(style)
